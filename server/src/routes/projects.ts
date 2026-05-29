@@ -120,9 +120,14 @@ export function projectRoutes(db: Db) {
     assertCompanyAccess(req, companyId);
     type CreateProjectPayload = Parameters<typeof svc.create>[1] & {
       workspace?: Parameters<typeof svc.createWorkspace>[1];
+      workspaces?: Array<Parameters<typeof svc.createWorkspace>[1]>;
     };
 
-    const { workspace, ...projectData } = req.body as CreateProjectPayload;
+    const { workspace, workspaces: requestedWorkspaces, ...projectData } = req.body as CreateProjectPayload;
+    const workspaceInputs = [
+      ...(workspace ? [workspace] : []),
+      ...(requestedWorkspaces ?? []),
+    ];
     await assertProjectEnvironmentSelection(
       companyId,
       readProjectPolicyEnvironmentId(projectData.executionWorkspacePolicy),
@@ -131,7 +136,9 @@ export function projectRoutes(db: Db) {
       req,
       [
         ...collectProjectExecutionWorkspaceCommandPaths(projectData.executionWorkspacePolicy),
-        ...collectProjectWorkspaceCommandPaths(workspace, "workspace"),
+        ...workspaceInputs.flatMap((input, index) =>
+          collectProjectWorkspaceCommandPaths(input, `workspaces.${index}`),
+        ),
       ],
     );
     if (projectData.env !== undefined) {
@@ -142,6 +149,16 @@ export function projectRoutes(db: Db) {
       );
     }
     const project = await svc.create(companyId, projectData);
+    const createdWorkspaceIds: string[] = [];
+    for (const workspaceInput of workspaceInputs) {
+      const createdWorkspace = await svc.createWorkspace(project.id, workspaceInput);
+      if (!createdWorkspace) {
+        await svc.remove(project.id);
+        res.status(422).json({ error: "Invalid project workspace payload" });
+        return;
+      }
+      createdWorkspaceIds.push(createdWorkspace.id);
+    }
     if (project.env) {
       await secretsSvc.syncEnvBindingsForTarget?.(
         companyId,
@@ -149,17 +166,7 @@ export function projectRoutes(db: Db) {
         project.env,
       );
     }
-    let createdWorkspaceId: string | null = null;
-    if (workspace) {
-      const createdWorkspace = await svc.createWorkspace(project.id, workspace);
-      if (!createdWorkspace) {
-        await svc.remove(project.id);
-        res.status(422).json({ error: "Invalid project workspace payload" });
-        return;
-      }
-      createdWorkspaceId = createdWorkspace.id;
-    }
-    const hydratedProject = workspace ? await svc.getById(project.id) : project;
+    const hydratedProject = createdWorkspaceIds.length > 0 ? await svc.getById(project.id) : project;
 
     const actor = getActorInfo(req);
     await logActivity(db, {
@@ -172,7 +179,8 @@ export function projectRoutes(db: Db) {
       entityId: project.id,
       details: {
         name: project.name,
-        workspaceId: createdWorkspaceId,
+        workspaceId: createdWorkspaceIds[0] ?? null,
+        workspaceIds: createdWorkspaceIds,
         envKeys: project.env ? Object.keys(project.env).sort() : [],
       },
     });

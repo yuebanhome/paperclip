@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "@/lib/router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { Project } from "@paperclipai/shared";
+import type { Project, ProjectWorkspace } from "@paperclipai/shared";
 import { StatusBadge } from "./StatusBadge";
 import { cn, formatDate } from "../lib/utils";
 import { environmentsApi } from "../api/environments";
@@ -156,6 +156,31 @@ function ProjectStatusPicker({ status, onChange }: { status: string; onChange: (
   );
 }
 
+type WorkspaceEditorMode =
+  | { kind: "new" }
+  | { kind: "edit"; workspaceId: string }
+  | null;
+
+type WorkspaceFormDraft = {
+  name: string;
+  repoUrl: string;
+  cwd: string;
+};
+
+const emptyWorkspaceDraft: WorkspaceFormDraft = {
+  name: "",
+  repoUrl: "",
+  cwd: "",
+};
+
+function workspaceDraftFromWorkspace(workspace: ProjectWorkspace): WorkspaceFormDraft {
+  return {
+    name: workspace.name,
+    repoUrl: workspace.repoUrl ?? "",
+    cwd: workspace.cwd ?? "",
+  };
+}
+
 function ArchiveDangerZone({
   project,
   onArchive,
@@ -226,9 +251,8 @@ export function ProjectProperties({ project, onUpdate, onFieldUpdate, getFieldSa
   const queryClient = useQueryClient();
   const [goalOpen, setGoalOpen] = useState(false);
   const [executionWorkspaceAdvancedOpen, setExecutionWorkspaceAdvancedOpen] = useState(false);
-  const [workspaceMode, setWorkspaceMode] = useState<"local" | "repo" | null>(null);
-  const [workspaceCwd, setWorkspaceCwd] = useState("");
-  const [workspaceRepoUrl, setWorkspaceRepoUrl] = useState("");
+  const [workspaceEditorMode, setWorkspaceEditorMode] = useState<WorkspaceEditorMode>(null);
+  const [workspaceDraft, setWorkspaceDraft] = useState<WorkspaceFormDraft>(emptyWorkspaceDraft);
   const [workspaceError, setWorkspaceError] = useState<string | null>(null);
 
   const commitField = (field: ProjectConfigFieldKey, data: Record<string, unknown>) => {
@@ -288,8 +312,6 @@ export function ProjectProperties({ project, onUpdate, onFieldUpdate, getFieldSa
   const availableGoals = (allGoals ?? []).filter((g) => !linkedGoalIds.includes(g.id));
   const workspaces = project.workspaces ?? [];
   const codebase = project.codebase;
-  const primaryCodebaseWorkspace = project.primaryWorkspace ?? null;
-  const hasAdditionalLegacyWorkspaces = workspaces.some((workspace) => workspace.id !== primaryCodebaseWorkspace?.id);
   const executionWorkspacePolicy = project.executionWorkspacePolicy ?? null;
   const executionWorkspacesEnabled = executionWorkspacePolicy?.enabled === true;
   const isolatedWorkspacesEnabled = experimentalSettings?.enableIsolatedWorkspaces === true;
@@ -319,37 +341,34 @@ export function ProjectProperties({ project, onUpdate, onFieldUpdate, getFieldSa
     }
   };
 
-  const createWorkspace = useMutation({
-    mutationFn: (data: Record<string, unknown>) => projectsApi.createWorkspace(project.id, data),
-    onSuccess: () => {
-      setWorkspaceCwd("");
-      setWorkspaceRepoUrl("");
-      setWorkspaceMode(null);
-      setWorkspaceError(null);
-      invalidateProject();
-    },
-  });
+    const createWorkspace = useMutation({
+      mutationFn: (data: Record<string, unknown>) => projectsApi.createWorkspace(project.id, data),
+      onSuccess: () => {
+        setWorkspaceDraft(emptyWorkspaceDraft);
+        setWorkspaceEditorMode(null);
+        setWorkspaceError(null);
+        invalidateProject();
+      },
+    });
 
-  const removeWorkspace = useMutation({
-    mutationFn: (workspaceId: string) => projectsApi.removeWorkspace(project.id, workspaceId),
-    onSuccess: () => {
-      setWorkspaceCwd("");
-      setWorkspaceRepoUrl("");
-      setWorkspaceMode(null);
-      setWorkspaceError(null);
-      invalidateProject();
-    },
-  });
-  const updateWorkspace = useMutation({
-    mutationFn: ({ workspaceId, data }: { workspaceId: string; data: Record<string, unknown> }) =>
-      projectsApi.updateWorkspace(project.id, workspaceId, data),
-    onSuccess: () => {
-      setWorkspaceCwd("");
-      setWorkspaceRepoUrl("");
-      setWorkspaceMode(null);
-      setWorkspaceError(null);
-      invalidateProject();
-    },
+    const removeWorkspace = useMutation({
+      mutationFn: (workspaceId: string) => projectsApi.removeWorkspace(project.id, workspaceId),
+      onSuccess: () => {
+        setWorkspaceDraft(emptyWorkspaceDraft);
+        setWorkspaceEditorMode(null);
+        setWorkspaceError(null);
+        invalidateProject();
+      },
+    });
+    const updateWorkspace = useMutation({
+      mutationFn: ({ workspaceId, data }: { workspaceId: string; data: Record<string, unknown> }) =>
+        projectsApi.updateWorkspace(project.id, workspaceId, data),
+      onSuccess: () => {
+        setWorkspaceDraft(emptyWorkspaceDraft);
+        setWorkspaceEditorMode(null);
+        setWorkspaceError(null);
+        invalidateProject();
+      },
   });
 
   const removeGoal = (goalId: string) => {
@@ -378,12 +397,15 @@ export function ProjectProperties({ project, onUpdate, onFieldUpdate, getFieldSa
 
   const isAbsolutePath = (value: string) => value.startsWith("/") || /^[A-Za-z]:[\\/]/.test(value);
 
-  const looksLikeRepoUrl = (value: string) => {
-    try {
-      const parsed = new URL(value);
-      if (parsed.protocol !== "https:") return false;
-      const segments = parsed.pathname.split("/").filter(Boolean);
-      return segments.length >= 2;
+    const looksLikeRepoUrl = (value: string) => {
+      const trimmed = value.trim();
+      if (/^git@[^:\s]+:[^:\s]+\/[^:\s]+(?:\.git)?$/i.test(trimmed)) return true;
+      if (/^ssh:\/\/git@[^/\s]+\/[^/\s]+\/[^/\s]+(?:\.git)?$/i.test(trimmed)) return true;
+      try {
+        const parsed = new URL(trimmed);
+        if (parsed.protocol !== "https:" && parsed.protocol !== "http:") return false;
+        const segments = parsed.pathname.split("/").filter(Boolean);
+        return segments.length >= 2;
     } catch {
       return false;
     }
@@ -399,9 +421,21 @@ export function ProjectProperties({ project, onUpdate, onFieldUpdate, getFieldSa
     }
   };
 
-  const formatRepoUrl = (value: string) => {
-    try {
-      const parsed = new URL(value);
+    const formatRepoUrl = (value: string) => {
+      const sshPath = value.trim().match(/^git@([^:]+):(.+)$/i);
+      if (sshPath) {
+        const host = sshPath[1];
+        const path = sshPath[2]?.replace(/\.git$/i, "");
+        return path ? `${host}/${path}` : value;
+      }
+      const sshUrlPath = value.trim().match(/^ssh:\/\/git@([^/]+)\/(.+)$/i);
+      if (sshUrlPath) {
+        const host = sshUrlPath[1];
+        const path = sshUrlPath[2]?.replace(/\.git$/i, "");
+        return path ? `${host}/${path}` : value;
+      }
+      try {
+        const parsed = new URL(value);
       const segments = parsed.pathname.split("/").filter(Boolean);
       if (segments.length < 2) return parsed.host;
       const owner = segments[0];
@@ -413,94 +447,74 @@ export function ProjectProperties({ project, onUpdate, onFieldUpdate, getFieldSa
     }
   };
 
-  const deriveSourceType = (cwd: string | null, repoUrl: string | null) => {
-    if (repoUrl) return "git_repo";
-    if (cwd) return "local_path";
-    return undefined;
-  };
-
-  const persistCodebase = (patch: { cwd?: string | null; repoUrl?: string | null }) => {
-    const nextCwd = patch.cwd !== undefined ? patch.cwd : codebase.localFolder;
-    const nextRepoUrl = patch.repoUrl !== undefined ? patch.repoUrl : codebase.repoUrl;
-    if (!nextCwd && !nextRepoUrl) {
-      if (primaryCodebaseWorkspace) {
-        removeWorkspace.mutate(primaryCodebaseWorkspace.id);
-      }
-      return;
-    }
-
-    const data: Record<string, unknown> = {
-      ...(patch.cwd !== undefined ? { cwd: patch.cwd } : {}),
-      ...(patch.repoUrl !== undefined ? { repoUrl: patch.repoUrl } : {}),
-      ...(deriveSourceType(nextCwd, nextRepoUrl) ? { sourceType: deriveSourceType(nextCwd, nextRepoUrl) } : {}),
-      isPrimary: true,
+    const deriveSourceType = (cwd: string | null, repoUrl: string | null) => {
+      if (repoUrl) return "git_repo";
+      if (cwd) return "local_path";
+      return undefined;
     };
 
-    if (primaryCodebaseWorkspace) {
-      updateWorkspace.mutate({ workspaceId: primaryCodebaseWorkspace.id, data });
-      return;
-    }
-
-    createWorkspace.mutate(data);
-  };
-
-  const submitLocalWorkspace = () => {
-    const cwd = workspaceCwd.trim();
-    if (!cwd) {
+    const openNewWorkspaceEditor = () => {
+      setWorkspaceDraft(emptyWorkspaceDraft);
+      setWorkspaceEditorMode({ kind: "new" });
       setWorkspaceError(null);
-      persistCodebase({ cwd: null });
-      return;
-    }
-    if (!isAbsolutePath(cwd)) {
-      setWorkspaceError("Local folder must be a full absolute path.");
-      return;
-    }
-    setWorkspaceError(null);
-    persistCodebase({ cwd });
-  };
+    };
 
-  const submitRepoWorkspace = () => {
-    const repoUrl = workspaceRepoUrl.trim();
-    if (!repoUrl) {
+    const openEditWorkspaceEditor = (workspace: ProjectWorkspace) => {
+      setWorkspaceDraft(workspaceDraftFromWorkspace(workspace));
+      setWorkspaceEditorMode({ kind: "edit", workspaceId: workspace.id });
       setWorkspaceError(null);
-      persistCodebase({ repoUrl: null });
-      return;
-    }
-    if (!looksLikeRepoUrl(repoUrl)) {
-      setWorkspaceError("Repo must use a valid GitHub or GitHub Enterprise repo URL.");
-      return;
-    }
-    setWorkspaceError(null);
-    persistCodebase({ repoUrl });
-  };
+    };
 
-  const clearLocalWorkspace = () => {
-    const confirmed = window.confirm(
-      codebase.repoUrl
-        ? "Clear local folder from this workspace?"
-        : "Delete this workspace local folder?",
-    );
-    if (!confirmed) return;
-    persistCodebase({ cwd: null });
-  };
+    const closeWorkspaceEditor = () => {
+      setWorkspaceDraft(emptyWorkspaceDraft);
+      setWorkspaceEditorMode(null);
+      setWorkspaceError(null);
+    };
 
-  const clearRepoWorkspace = () => {
-    const hasLocalFolder = Boolean(codebase.localFolder);
-    const confirmed = window.confirm(
-      hasLocalFolder
-        ? "Clear repo from this workspace?"
-        : "Delete this workspace repo?",
-    );
-    if (!confirmed) return;
-    if (primaryCodebaseWorkspace && hasLocalFolder) {
-      updateWorkspace.mutate({
-        workspaceId: primaryCodebaseWorkspace.id,
-        data: { repoUrl: null, repoRef: null, defaultRef: null, sourceType: deriveSourceType(codebase.localFolder, null) },
+    const submitWorkspaceEditor = () => {
+      const name = workspaceDraft.name.trim();
+      const cwd = workspaceDraft.cwd.trim();
+      const repoUrl = workspaceDraft.repoUrl.trim();
+      if (!cwd && !repoUrl) {
+        setWorkspaceError("Workspace requires a repo URL or local folder.");
+        return;
+      }
+      if (cwd && !isAbsolutePath(cwd)) {
+        setWorkspaceError("Local folder must be a full absolute path.");
+        return;
+      }
+      if (repoUrl && !looksLikeRepoUrl(repoUrl)) {
+        setWorkspaceError("Repo must be a valid HTTP(S) or SSH git URL.");
+        return;
+      }
+
+      const sourceType = deriveSourceType(cwd || null, repoUrl || null);
+      const data: Record<string, unknown> = {
+        ...(name ? { name } : {}),
+        cwd: cwd || null,
+        repoUrl: repoUrl || null,
+        ...(sourceType ? { sourceType } : {}),
+      };
+      setWorkspaceError(null);
+
+      if (workspaceEditorMode?.kind === "edit") {
+        updateWorkspace.mutate({ workspaceId: workspaceEditorMode.workspaceId, data });
+        return;
+      }
+      createWorkspace.mutate({
+        ...data,
+        isPrimary: workspaces.length === 0,
       });
-      return;
-    }
-    persistCodebase({ repoUrl: null });
-  };
+    };
+
+    const markWorkspacePrimary = (workspaceId: string) => {
+      updateWorkspace.mutate({ workspaceId, data: { isPrimary: true } });
+    };
+
+    const deleteWorkspace = (workspace: ProjectWorkspace) => {
+      if (!window.confirm(`Delete workspace "${workspace.name}" from this project?`)) return;
+      removeWorkspace.mutate(workspace.id);
+    };
 
   return (
     <div>
@@ -651,186 +665,236 @@ export function ProjectProperties({ project, onUpdate, onFieldUpdate, getFieldSa
 
       <Separator className="my-4" />
 
-      <div className="space-y-1 py-4">
-        <div className="space-y-2">
-          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <span>Codebase</span>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  type="button"
-                  className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-border text-[10px] text-muted-foreground hover:text-foreground"
-                  aria-label="Codebase help"
-                >
-                  ?
-                </button>
-              </TooltipTrigger>
-              <TooltipContent side="top">
-                Repo identifies the source of truth. Local folder is the default place agents write code.
-              </TooltipContent>
-            </Tooltip>
+        <div className="space-y-2 py-4">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+              <span>Workspaces</span>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    type="button"
+                    className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-border text-[10px] text-muted-foreground hover:text-foreground"
+                    aria-label="Workspaces help"
+                  >
+                    ?
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="top">
+                  Issues can target any workspace linked to this project. The primary workspace stays the default.
+                </TooltipContent>
+              </Tooltip>
+            </div>
+            <Button
+              variant="outline"
+              size="xs"
+              className="h-6 px-2"
+              onClick={openNewWorkspaceEditor}
+            >
+              <Plus className="h-3 w-3" />
+              Workspace
+            </Button>
           </div>
-          <div className="space-y-2 rounded-md border border-border/70 p-3">
-            <div className="space-y-1">
-              <div className="text-[11px] uppercase tracking-wide text-muted-foreground">Repo</div>
-              {codebase.repoUrl ? (
-                <div className="flex items-center justify-between gap-2">
-                  {isSafeExternalUrl(codebase.repoUrl) ? (
-                    <a
-                      href={codebase.repoUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex min-w-0 items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground hover:underline"
-                    >
-                      <Github className="h-3 w-3 shrink-0" />
-                      <span className="break-all min-w-0">{formatRepoUrl(codebase.repoUrl)}</span>
-                      <ExternalLink className="h-3 w-3 shrink-0" />
-                    </a>
-                  ) : (
-                    <div className="inline-flex min-w-0 items-center gap-1.5 text-xs text-muted-foreground">
-                      <Github className="h-3 w-3 shrink-0" />
-                      <span className="break-all min-w-0">{codebase.repoUrl}</span>
-                    </div>
-                  )}
-                  <div className="flex items-center gap-1">
-                    <Button
-                      variant="outline"
-                      size="xs"
-                      className="h-6 px-2"
-                      onClick={() => {
-                        setWorkspaceMode("repo");
-                        setWorkspaceRepoUrl(codebase.repoUrl ?? "");
-                        setWorkspaceError(null);
-                      }}
-                    >
-                      Change repo
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon-xs"
-                      onClick={clearRepoWorkspace}
-                      aria-label="Clear repo"
-                    >
-                      <Trash2 className="h-3 w-3" />
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex items-center justify-between gap-2">
-                  <div className="text-xs text-muted-foreground">Not set.</div>
-                  <Button
-                    variant="outline"
-                    size="xs"
-                    className="h-6 px-2"
-                    onClick={() => {
-                      setWorkspaceMode("repo");
-                      setWorkspaceRepoUrl(codebase.repoUrl ?? "");
-                      setWorkspaceError(null);
-                    }}
-                  >
-                    Set repo
-                  </Button>
-                </div>
-              )}
+
+          {workspaces.length === 0 ? (
+            <div className="rounded-md border border-border/70 p-3 text-xs text-muted-foreground">
+              No linked workspaces. Agents will fall back to the managed folder at{" "}
+              <span className="font-mono">{codebase.effectiveLocalFolder}</span>.
             </div>
-
-            <div className="space-y-1">
-              <div className="text-[11px] uppercase tracking-wide text-muted-foreground">Local folder</div>
-              <div className="flex items-center justify-between gap-2">
-                <div className="min-w-0 space-y-1">
-                  <div className="min-w-0 break-all font-mono text-xs text-muted-foreground">
-                    {codebase.effectiveLocalFolder}
-                  </div>
-                  {codebase.origin === "managed_checkout" && (
-                    <div className="text-[11px] text-muted-foreground">Paperclip-managed folder.</div>
-                  )}
-                </div>
-                <div className="flex items-center gap-1">
-                  <Button
-                    variant="outline"
-                    size="xs"
-                    className="h-6 px-2"
-                    onClick={() => {
-                      setWorkspaceMode("local");
-                      setWorkspaceCwd(codebase.localFolder ?? "");
-                      setWorkspaceError(null);
-                    }}
-                  >
-                    {codebase.localFolder ? "Change local folder" : "Set local folder"}
-                  </Button>
-                  {codebase.localFolder ? (
-                    <Button
-                      variant="ghost"
-                      size="icon-xs"
-                      onClick={clearLocalWorkspace}
-                      aria-label="Clear local folder"
-                    >
-                      <Trash2 className="h-3 w-3" />
-                    </Button>
-                  ) : null}
-                </div>
-              </div>
-            </div>
-
-            {hasAdditionalLegacyWorkspaces && (
-              <div className="text-[11px] text-muted-foreground">
-                Additional legacy workspace records exist on this project. Paperclip is using the primary workspace as the codebase view.
-              </div>
-            )}
-
-            {primaryCodebaseWorkspace?.runtimeServices && primaryCodebaseWorkspace.runtimeServices.length > 0 ? (
-              <div className="space-y-1">
-                {primaryCodebaseWorkspace.runtimeServices.map((service) => (
-                  <div
-                    key={service.id}
-                    className="flex items-center justify-between gap-2 rounded-md border border-border/60 px-2 py-1"
-                  >
-                    <div className="min-w-0 space-y-0.5">
-                      <div className="flex items-center gap-2">
-                        <span className="text-[11px] font-medium">{service.serviceName}</span>
-                        <span
-                          className={cn(
-                            "rounded-full px-1.5 py-0.5 text-[10px] uppercase tracking-wide",
-                            service.status === "running"
-                              ? "bg-green-500/15 text-green-700 dark:text-green-300"
-                              : service.status === "failed"
-                                ? "bg-red-500/15 text-red-700 dark:text-red-300"
-                                : "bg-muted text-muted-foreground",
-                          )}
-                        >
-                          {service.status}
-                        </span>
+          ) : (
+            <div className="space-y-2">
+              {workspaces.map((workspace) => {
+                const repoUrl = workspace.repoUrl ?? "";
+                const isEditing = workspaceEditorMode?.kind === "edit" && workspaceEditorMode.workspaceId === workspace.id;
+                return (
+                  <div key={workspace.id} className="space-y-2 rounded-md border border-border/70 p-3">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0 space-y-1">
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          <span className="text-sm font-medium">{workspace.name}</span>
+                          {workspace.isPrimary ? (
+                            <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium text-primary">
+                              primary
+                            </span>
+                          ) : null}
+                          <span className="rounded-full border border-border px-1.5 py-0.5 text-[10px] text-muted-foreground">
+                            {workspace.sourceType.replace("_", " ")}
+                          </span>
+                        </div>
+                        {repoUrl ? (
+                          isSafeExternalUrl(repoUrl) ? (
+                            <a
+                              href={repoUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex min-w-0 items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground hover:underline"
+                            >
+                              <Github className="h-3 w-3 shrink-0" />
+                              <span className="break-all min-w-0">{formatRepoUrl(repoUrl)}</span>
+                              <ExternalLink className="h-3 w-3 shrink-0" />
+                            </a>
+                          ) : (
+                            <div className="inline-flex min-w-0 items-center gap-1.5 text-xs text-muted-foreground">
+                              <Github className="h-3 w-3 shrink-0" />
+                              <span className="break-all min-w-0">{formatRepoUrl(repoUrl)}</span>
+                            </div>
+                          )
+                        ) : null}
+                        {workspace.cwd ? (
+                          <div className="break-all font-mono text-xs text-muted-foreground">{workspace.cwd}</div>
+                        ) : null}
+                        {workspace.repoRef || workspace.defaultRef ? (
+                          <div className="text-[11px] text-muted-foreground">
+                            Ref: {workspace.repoRef ?? workspace.defaultRef}
+                          </div>
+                        ) : null}
                       </div>
-                      <div className="text-[11px] text-muted-foreground">
-                        {service.url ? (
-                          <a
-                            href={service.url}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="hover:text-foreground hover:underline"
+                      <div className="flex shrink-0 items-center gap-1">
+                        {!workspace.isPrimary ? (
+                          <Button
+                            variant="outline"
+                            size="xs"
+                            className="h-6 px-2"
+                            disabled={updateWorkspace.isPending}
+                            onClick={() => markWorkspacePrimary(workspace.id)}
                           >
-                            {service.url}
-                          </a>
-                        ) : (
-                          service.command ?? "No URL"
-                        )}
+                            Primary
+                          </Button>
+                        ) : null}
+                        <Button
+                          variant="outline"
+                          size="xs"
+                          className="h-6 px-2"
+                          onClick={() => openEditWorkspaceEditor(workspace)}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon-xs"
+                          disabled={removeWorkspace.isPending}
+                          onClick={() => deleteWorkspace(workspace)}
+                          aria-label={`Delete workspace ${workspace.name}`}
+                        >
+                          <Trash2 className="h-3 w-3" />
+                        </Button>
                       </div>
                     </div>
-                    <div className="text-[10px] text-muted-foreground whitespace-nowrap">
-                      {service.lifecycle}
-                    </div>
+
+                    {workspace.runtimeServices && workspace.runtimeServices.length > 0 ? (
+                      <div className="space-y-1">
+                        {workspace.runtimeServices.map((service) => (
+                          <div
+                            key={service.id}
+                            className="flex items-center justify-between gap-2 rounded-md border border-border/60 px-2 py-1"
+                          >
+                            <div className="min-w-0 space-y-0.5">
+                              <div className="flex items-center gap-2">
+                                <span className="text-[11px] font-medium">{service.serviceName}</span>
+                                <span
+                                  className={cn(
+                                    "rounded-full px-1.5 py-0.5 text-[10px] uppercase tracking-wide",
+                                    service.status === "running"
+                                      ? "bg-green-500/15 text-green-700 dark:text-green-300"
+                                      : service.status === "failed"
+                                        ? "bg-red-500/15 text-red-700 dark:text-red-300"
+                                        : "bg-muted text-muted-foreground",
+                                  )}
+                                >
+                                  {service.status}
+                                </span>
+                              </div>
+                              <div className="text-[11px] text-muted-foreground">
+                                {service.url ? (
+                                  <a
+                                    href={service.url}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="hover:text-foreground hover:underline"
+                                  >
+                                    {service.url}
+                                  </a>
+                                ) : (
+                                  service.command ?? "No URL"
+                                )}
+                              </div>
+                            </div>
+                            <div className="whitespace-nowrap text-[10px] text-muted-foreground">
+                              {service.lifecycle}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : null}
+
+                    {isEditing ? (
+                      <div className="space-y-2 rounded-md border border-border/70 p-2">
+                        <input
+                          className="w-full rounded border border-border bg-transparent px-2 py-1 text-xs outline-none"
+                          value={workspaceDraft.name}
+                          onChange={(event) => setWorkspaceDraft((draft) => ({ ...draft, name: event.target.value }))}
+                          placeholder="Workspace name"
+                        />
+                        <input
+                          className="w-full rounded border border-border bg-transparent px-2 py-1 text-xs outline-none"
+                          value={workspaceDraft.repoUrl}
+                          onChange={(event) => setWorkspaceDraft((draft) => ({ ...draft, repoUrl: event.target.value }))}
+                          placeholder="https://github.com/org/repo or git@github.com:org/repo.git"
+                        />
+                        <div className="flex items-center gap-2">
+                          <input
+                            className="w-full rounded border border-border bg-transparent px-2 py-1 font-mono text-xs outline-none"
+                            value={workspaceDraft.cwd}
+                            onChange={(event) => setWorkspaceDraft((draft) => ({ ...draft, cwd: event.target.value }))}
+                            placeholder="/absolute/path/to/workspace"
+                          />
+                          <ChoosePathButton />
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            variant="outline"
+                            size="xs"
+                            className="h-6 px-2"
+                            disabled={updateWorkspace.isPending}
+                            onClick={submitWorkspaceEditor}
+                          >
+                            Save
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="xs"
+                            className="h-6 px-2"
+                            onClick={closeWorkspaceEditor}
+                          >
+                            Cancel
+                          </Button>
+                        </div>
+                      </div>
+                    ) : null}
                   </div>
-                ))}
-              </div>
-            ) : null}
-          </div>
-          {workspaceMode === "local" && (
-            <div className="space-y-1.5 rounded-md border border-border p-2">
+                );
+              })}
+            </div>
+          )}
+
+          {workspaceEditorMode?.kind === "new" ? (
+            <div className="space-y-2 rounded-md border border-border/70 p-3">
+              <input
+                className="w-full rounded border border-border bg-transparent px-2 py-1 text-xs outline-none"
+                value={workspaceDraft.name}
+                onChange={(event) => setWorkspaceDraft((draft) => ({ ...draft, name: event.target.value }))}
+                placeholder="Workspace name"
+              />
+              <input
+                className="w-full rounded border border-border bg-transparent px-2 py-1 text-xs outline-none"
+                value={workspaceDraft.repoUrl}
+                onChange={(event) => setWorkspaceDraft((draft) => ({ ...draft, repoUrl: event.target.value }))}
+                placeholder="https://github.com/org/repo or git@github.com:org/repo.git"
+              />
               <div className="flex items-center gap-2">
                 <input
-                  className="w-full rounded border border-border bg-transparent px-2 py-1 text-xs font-mono outline-none"
-                  value={workspaceCwd}
-                  onChange={(e) => setWorkspaceCwd(e.target.value)}
+                  className="w-full rounded border border-border bg-transparent px-2 py-1 font-mono text-xs outline-none"
+                  value={workspaceDraft.cwd}
+                  onChange={(event) => setWorkspaceDraft((draft) => ({ ...draft, cwd: event.target.value }))}
                   placeholder="/absolute/path/to/workspace"
                 />
                 <ChoosePathButton />
@@ -840,8 +904,8 @@ export function ProjectProperties({ project, onUpdate, onFieldUpdate, getFieldSa
                   variant="outline"
                   size="xs"
                   className="h-6 px-2"
-                  disabled={(!workspaceCwd.trim() && !primaryCodebaseWorkspace) || createWorkspace.isPending || updateWorkspace.isPending}
-                  onClick={submitLocalWorkspace}
+                  disabled={createWorkspace.isPending}
+                  onClick={submitWorkspaceEditor}
                 >
                   Save
                 </Button>
@@ -849,50 +913,14 @@ export function ProjectProperties({ project, onUpdate, onFieldUpdate, getFieldSa
                   variant="ghost"
                   size="xs"
                   className="h-6 px-2"
-                  onClick={() => {
-                    setWorkspaceMode(null);
-                    setWorkspaceCwd("");
-                    setWorkspaceError(null);
-                  }}
+                  onClick={closeWorkspaceEditor}
                 >
                   Cancel
                 </Button>
               </div>
             </div>
-          )}
-          {workspaceMode === "repo" && (
-            <div className="space-y-1.5 rounded-md border border-border p-2">
-              <input
-                className="w-full rounded border border-border bg-transparent px-2 py-1 text-xs outline-none"
-                value={workspaceRepoUrl}
-                onChange={(e) => setWorkspaceRepoUrl(e.target.value)}
-                placeholder="https://github.com/org/repo"
-              />
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="xs"
-                  className="h-6 px-2"
-                  disabled={(!workspaceRepoUrl.trim() && !primaryCodebaseWorkspace) || createWorkspace.isPending || updateWorkspace.isPending}
-                  onClick={submitRepoWorkspace}
-                >
-                  Save
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="xs"
-                  className="h-6 px-2"
-                  onClick={() => {
-                    setWorkspaceMode(null);
-                    setWorkspaceRepoUrl("");
-                    setWorkspaceError(null);
-                  }}
-                >
-                  Cancel
-                </Button>
-              </div>
-            </div>
-          )}
+          ) : null}
+
           {workspaceError && (
             <p className="text-xs text-destructive">{workspaceError}</p>
           )}
@@ -1160,10 +1188,7 @@ export function ProjectProperties({ project, onUpdate, onFieldUpdate, getFieldSa
             </div>
           </>
         ) : null}
-
-      </div>
-
-      {onArchive && (
+        {onArchive && (
         <>
           <Separator className="my-4" />
           <div className="space-y-4 py-4">

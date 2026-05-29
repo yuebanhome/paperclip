@@ -16,6 +16,7 @@ const mockProjectService = vi.hoisted(() => ({
 }));
 const mockSecretService = vi.hoisted(() => ({
   normalizeEnvBindingsForPersistence: vi.fn(),
+  syncEnvBindingsForTarget: vi.fn(),
 }));
 const mockEnvironmentService = vi.hoisted(() => ({
   getById: vi.fn(),
@@ -152,6 +153,7 @@ describe("project env routes", () => {
     mockProjectService.listWorkspaces.mockResolvedValue([]);
     mockEnvironmentService.getById.mockReset();
     mockSecretService.normalizeEnvBindingsForPersistence.mockImplementation(async (_companyId, env) => env);
+    mockSecretService.syncEnvBindingsForTarget.mockResolvedValue(undefined);
   });
 
   it("normalizes env bindings on create and logs only env keys", async () => {
@@ -216,6 +218,63 @@ describe("project env routes", () => {
           changedKeys: ["env"],
           envKeys: ["PLAIN_KEY"],
         },
+      }),
+    );
+  });
+
+  it("creates multiple project workspaces from project create payload", async () => {
+    const createdProject = buildProject();
+    const hydratedProject = buildProject({
+      workspaces: [
+        { id: "workspace-1", name: "api" },
+        { id: "workspace-2", name: "web" },
+      ],
+    });
+    mockProjectService.create.mockResolvedValue(createdProject);
+    mockProjectService.createWorkspace
+      .mockResolvedValueOnce({ id: "workspace-1" })
+      .mockResolvedValueOnce({ id: "workspace-2" });
+    mockProjectService.getById.mockResolvedValue(hydratedProject);
+
+    const app = await createApp();
+    const res = await request(app)
+      .post("/api/companies/company-1/projects")
+      .send({
+        name: "Project",
+        workspaces: [
+          {
+            name: "api",
+            repoUrl: "git@github.com:example/api.git",
+            isPrimary: true,
+            sourceType: "git_repo",
+          },
+          {
+            name: "web",
+            repoUrl: "https://github.com/example/web",
+            sourceType: "git_repo",
+          },
+        ],
+      });
+
+    expect(res.status, JSON.stringify(res.body)).toBe(201);
+    expect(mockProjectService.createWorkspace).toHaveBeenNthCalledWith(
+      1,
+      "project-1",
+      expect.objectContaining({ repoUrl: "git@github.com:example/api.git", isPrimary: true }),
+    );
+    expect(mockProjectService.createWorkspace).toHaveBeenNthCalledWith(
+      2,
+      "project-1",
+      expect.objectContaining({ repoUrl: "https://github.com/example/web" }),
+    );
+    expect(mockProjectService.getById).toHaveBeenCalledWith("project-1");
+    expect(mockLogActivity).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        details: expect.objectContaining({
+          workspaceId: "workspace-1",
+          workspaceIds: ["workspace-1", "workspace-2"],
+        }),
       }),
     );
   });

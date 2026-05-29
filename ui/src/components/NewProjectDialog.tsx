@@ -47,6 +47,20 @@ const projectStatuses = [
   { value: "cancelled", label: "Cancelled" },
 ];
 
+type WorkspaceDraft = {
+  id: string;
+  repoUrl: string;
+  cwd: string;
+};
+
+function createWorkspaceDraft(): WorkspaceDraft {
+  return {
+    id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+    repoUrl: "",
+    cwd: "",
+  };
+}
+
 export function NewProjectDialog() {
   const { newProjectOpen, closeNewProject } = useDialog();
   const { selectedCompanyId, selectedCompany } = useCompany();
@@ -57,8 +71,7 @@ export function NewProjectDialog() {
   const [goalIds, setGoalIds] = useState<string[]>([]);
   const [targetDate, setTargetDate] = useState("");
   const [expanded, setExpanded] = useState(false);
-  const [workspaceLocalPath, setWorkspaceLocalPath] = useState("");
-  const [workspaceRepoUrl, setWorkspaceRepoUrl] = useState("");
+  const [workspaceDrafts, setWorkspaceDrafts] = useState<WorkspaceDraft[]>(() => [createWorkspaceDraft()]);
   const [workspaceError, setWorkspaceError] = useState<string | null>(null);
 
   const [statusOpen, setStatusOpen] = useState(false);
@@ -109,17 +122,19 @@ export function NewProjectDialog() {
     setGoalIds([]);
     setTargetDate("");
     setExpanded(false);
-    setWorkspaceLocalPath("");
-    setWorkspaceRepoUrl("");
+    setWorkspaceDrafts([createWorkspaceDraft()]);
     setWorkspaceError(null);
   }
 
   const isAbsolutePath = (value: string) => value.startsWith("/") || /^[A-Za-z]:[\\/]/.test(value);
 
   const looksLikeRepoUrl = (value: string) => {
+    const trimmed = value.trim();
+    if (/^git@[^:\s]+:[^:\s]+\/[^:\s]+(?:\.git)?$/i.test(trimmed)) return true;
+    if (/^ssh:\/\/git@[^/\s]+\/[^/\s]+\/[^/\s]+(?:\.git)?$/i.test(trimmed)) return true;
     try {
-      const parsed = new URL(value);
-      if (parsed.protocol !== "https:") return false;
+      const parsed = new URL(trimmed);
+      if (parsed.protocol !== "https:" && parsed.protocol !== "http:") return false;
       const segments = parsed.pathname.split("/").filter(Boolean);
       return segments.length >= 2;
     } catch {
@@ -134,6 +149,13 @@ export function NewProjectDialog() {
   };
 
   const deriveWorkspaceNameFromRepo = (value: string) => {
+    const sshPath = value.trim().match(/^git@[^:]+:(.+)$/i)?.[1]
+      ?? value.trim().match(/^ssh:\/\/git@[^/]+\/(.+)$/i)?.[1]
+      ?? null;
+    if (sshPath) {
+      const segments = sshPath.split("/").filter(Boolean);
+      return segments[segments.length - 1]?.replace(/\.git$/i, "") || "Git repo";
+    }
     try {
       const parsed = new URL(value);
       const segments = parsed.pathname.split("/").filter(Boolean);
@@ -144,21 +166,57 @@ export function NewProjectDialog() {
     }
   };
 
+  const updateWorkspaceDraft = (id: string, patch: Partial<WorkspaceDraft>) => {
+    setWorkspaceDrafts((drafts) =>
+      drafts.map((draft) => draft.id === id ? { ...draft, ...patch } : draft),
+    );
+    setWorkspaceError(null);
+  };
+
+  const removeWorkspaceDraft = (id: string) => {
+    setWorkspaceDrafts((drafts) => {
+      const next = drafts.filter((draft) => draft.id !== id);
+      return next.length > 0 ? next : [createWorkspaceDraft()];
+    });
+    setWorkspaceError(null);
+  };
+
+  const buildWorkspacePayloads = () => {
+    return workspaceDrafts
+      .map((draft) => ({
+        cwd: draft.cwd.trim(),
+        repoUrl: draft.repoUrl.trim(),
+      }))
+      .filter((draft) => draft.cwd || draft.repoUrl)
+      .map((draft, index) => ({
+        name: draft.cwd
+          ? deriveWorkspaceNameFromPath(draft.cwd)
+          : deriveWorkspaceNameFromRepo(draft.repoUrl),
+        ...(draft.cwd ? { cwd: draft.cwd } : {}),
+        ...(draft.repoUrl ? { repoUrl: draft.repoUrl } : {}),
+        sourceType: draft.repoUrl ? "git_repo" : "local_path",
+        isPrimary: index === 0,
+      }));
+  };
+
   async function handleSubmit() {
     if (!selectedCompanyId || !name.trim()) return;
-    const localPath = workspaceLocalPath.trim();
-    const repoUrl = workspaceRepoUrl.trim();
-
-    if (localPath && !isAbsolutePath(localPath)) {
-      setWorkspaceError("Local folder must be a full absolute path.");
-      return;
-    }
-    if (repoUrl && !looksLikeRepoUrl(repoUrl)) {
-      setWorkspaceError("Repo must use a valid GitHub or GitHub Enterprise repo URL.");
-      return;
+    for (let index = 0; index < workspaceDrafts.length; index += 1) {
+      const localPath = workspaceDrafts[index]?.cwd.trim() ?? "";
+      const repoUrl = workspaceDrafts[index]?.repoUrl.trim() ?? "";
+      if (!localPath && !repoUrl) continue;
+      if (localPath && !isAbsolutePath(localPath)) {
+        setWorkspaceError(`Workspace ${index + 1}: local folder must be a full absolute path.`);
+        return;
+      }
+      if (repoUrl && !looksLikeRepoUrl(repoUrl)) {
+        setWorkspaceError(`Workspace ${index + 1}: repo must be a valid HTTP(S) or SSH git URL.`);
+        return;
+      }
     }
 
     setWorkspaceError(null);
+    const workspacePayloads = buildWorkspacePayloads();
 
     try {
       const created = await createProject.mutateAsync({
@@ -168,18 +226,8 @@ export function NewProjectDialog() {
         color: PROJECT_COLORS[Math.floor(Math.random() * PROJECT_COLORS.length)],
         ...(goalIds.length > 0 ? { goalIds } : {}),
         ...(targetDate ? { targetDate } : {}),
+        ...(workspacePayloads.length > 0 ? { workspaces: workspacePayloads } : {}),
       });
-
-      if (localPath || repoUrl) {
-        const workspacePayload: Record<string, unknown> = {
-          name: localPath
-            ? deriveWorkspaceNameFromPath(localPath)
-            : deriveWorkspaceNameFromRepo(repoUrl),
-          ...(localPath ? { cwd: localPath } : {}),
-          ...(repoUrl ? { repoUrl } : {}),
-        };
-        await projectsApi.createWorkspace(created.id, workspacePayload);
-      }
 
       queryClient.invalidateQueries({ queryKey: queryKeys.projects.list(selectedCompanyId) });
       queryClient.invalidateQueries({ queryKey: queryKeys.projects.detail(created.id) });
@@ -280,54 +328,77 @@ export function NewProjectDialog() {
           />
         </div>
 
-        <div className="px-4 pt-3 pb-3 space-y-3 border-t border-border">
-          <div>
-            <div className="mb-1 flex items-center gap-1.5">
-              <label className="block text-xs text-muted-foreground">Repo URL</label>
+        <div className="px-4 pt-3 pb-3 space-y-2 border-t border-border">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-1.5">
+              <label className="block text-xs text-muted-foreground">Workspaces</label>
               <span className="text-xs text-muted-foreground/50">optional</span>
               <Tooltip delayDuration={300}>
                 <TooltipTrigger asChild>
                   <HelpCircle className="h-3 w-3 text-muted-foreground/50 cursor-help" />
                 </TooltipTrigger>
                 <TooltipContent side="top" className="max-w-[240px] text-xs">
-                  Link a GitHub repository so agents can clone, read, and push code for this project.
+                  Link one or more repos or local folders that issues in this project can target.
                 </TooltipContent>
               </Tooltip>
             </div>
-            <input
-              className="w-full rounded border border-border bg-transparent px-2 py-1 text-xs outline-none"
-              value={workspaceRepoUrl}
-              onChange={(e) => { setWorkspaceRepoUrl(e.target.value); setWorkspaceError(null); }}
-              placeholder="https://github.com/org/repo"
-            />
+            <Button
+              variant="outline"
+              size="xs"
+              className="h-6 px-2"
+              type="button"
+              onClick={() => setWorkspaceDrafts((drafts) => [...drafts, createWorkspaceDraft()])}
+            >
+              <Plus className="h-3 w-3" />
+              Workspace
+            </Button>
           </div>
 
-          <div>
-            <div className="mb-1 flex items-center gap-1.5">
-              <label className="block text-xs text-muted-foreground">Local folder</label>
-              <span className="text-xs text-muted-foreground/50">optional</span>
-              <Tooltip delayDuration={300}>
-                <TooltipTrigger asChild>
-                  <HelpCircle className="h-3 w-3 text-muted-foreground/50 cursor-help" />
-                </TooltipTrigger>
-                <TooltipContent side="top" className="max-w-[240px] text-xs">
-                  Set an absolute path on this machine where local agents will read and write files for this project.
-                </TooltipContent>
-              </Tooltip>
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                className="w-full rounded border border-border bg-transparent px-2 py-1 text-xs font-mono outline-none"
-                value={workspaceLocalPath}
-                onChange={(e) => { setWorkspaceLocalPath(e.target.value); setWorkspaceError(null); }}
-                placeholder="/absolute/path/to/workspace"
-              />
-              <ChoosePathButton />
-            </div>
+          <div className="space-y-2">
+            {workspaceDrafts.map((draft, index) => (
+              <div key={draft.id} className="space-y-2 rounded-md border border-border/70 p-2">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="text-[11px] text-muted-foreground">
+                    Workspace {index + 1}{index === 0 ? " · primary" : ""}
+                  </div>
+                  {workspaceDrafts.length > 1 ? (
+                    <Button
+                      variant="ghost"
+                      size="icon-xs"
+                      type="button"
+                      onClick={() => removeWorkspaceDraft(draft.id)}
+                      aria-label={`Remove workspace ${index + 1}`}
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
+                  ) : null}
+                </div>
+                <input
+                  className="w-full rounded border border-border bg-transparent px-2 py-1 text-xs outline-none"
+                  value={draft.repoUrl}
+                  onChange={(e) => updateWorkspaceDraft(draft.id, { repoUrl: e.target.value })}
+                  placeholder="https://github.com/org/repo or git@github.com:org/repo.git"
+                />
+                <div className="flex items-center gap-2">
+                  <input
+                    className="w-full rounded border border-border bg-transparent px-2 py-1 text-xs font-mono outline-none"
+                    value={draft.cwd}
+                    onChange={(e) => updateWorkspaceDraft(draft.id, { cwd: e.target.value })}
+                    placeholder="/absolute/path/to/workspace"
+                  />
+                  <ChoosePathButton />
+                </div>
+              </div>
+            ))}
           </div>
 
           {workspaceError && (
             <p className="text-xs text-destructive">{workspaceError}</p>
+          )}
+          {createProject.isError && (
+            <div className="text-xs text-destructive">
+              Failed to create project.
+            </div>
           )}
         </div>
 

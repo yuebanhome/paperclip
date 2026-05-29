@@ -2663,6 +2663,7 @@ describeEmbeddedPostgres("issueService.create workspace inheritance", () => {
     await db.delete(activityLog);
     await db.delete(issues);
     await db.delete(executionWorkspaces);
+    await db.delete(heartbeatRuns);
     await db.delete(projectWorkspaces);
     await db.delete(projects);
     await db.delete(agents);
@@ -3021,6 +3022,109 @@ describeEmbeddedPostgres("issueService.create workspace inheritance", () => {
         serviceStates: null,
       },
     });
+  });
+
+  it("clears stale execution workspace reuse when an issue moves to another project workspace", async () => {
+    const companyId = randomUUID();
+    const projectId = randomUUID();
+    const oldProjectWorkspaceId = randomUUID();
+    const nextProjectWorkspaceId = randomUUID();
+    const executionWorkspaceId = randomUUID();
+    const agentId = randomUUID();
+    const runId = randomUUID();
+    const issueId = randomUUID();
+
+    await db.insert(companies).values({
+      id: companyId,
+      name: "Paperclip",
+      issuePrefix: `T${companyId.replace(/-/g, "").slice(0, 6).toUpperCase()}`,
+      requireBoardApprovalForNewAgents: false,
+    });
+    await instanceSettingsService(db).updateExperimental({ enableIsolatedWorkspaces: true });
+
+    await db.insert(agents).values({
+      id: agentId,
+      companyId,
+      name: "Workspace agent",
+      role: "engineering",
+    });
+
+    await db.insert(heartbeatRuns).values({
+      id: runId,
+      companyId,
+      agentId,
+      status: "running",
+    });
+
+    await db.insert(projects).values({
+      id: projectId,
+      companyId,
+      name: "Workspace project",
+      status: "in_progress",
+    });
+
+    await db.insert(projectWorkspaces).values([
+      {
+        id: oldProjectWorkspaceId,
+        companyId,
+        projectId,
+        name: "Old workspace",
+      },
+      {
+        id: nextProjectWorkspaceId,
+        companyId,
+        projectId,
+        name: "Next workspace",
+      },
+    ]);
+
+    await db.insert(executionWorkspaces).values({
+      id: executionWorkspaceId,
+      companyId,
+      projectId,
+      projectWorkspaceId: oldProjectWorkspaceId,
+      mode: "isolated_workspace",
+      strategyType: "git_worktree",
+      name: "Issue worktree",
+      status: "active",
+      providerType: "git_worktree",
+    });
+
+    await db.insert(issues).values({
+      id: issueId,
+      companyId,
+      projectId,
+      projectWorkspaceId: oldProjectWorkspaceId,
+      title: "Move issue workspace",
+      status: "in_progress",
+      priority: "medium",
+      checkoutRunId: runId,
+      executionRunId: runId,
+      executionAgentNameKey: "agent-workspace-agent",
+      executionLockedAt: new Date("2026-05-29T08:00:00Z"),
+      executionWorkspaceId,
+      executionWorkspacePreference: "reuse_existing",
+      executionWorkspaceSettings: {
+        mode: "isolated_workspace",
+        workspaceRuntime: { profile: "agent" },
+      },
+    });
+
+    const updated = await svc.update(issueId, {
+      projectWorkspaceId: nextProjectWorkspaceId,
+    });
+
+    expect(updated?.projectWorkspaceId).toBe(nextProjectWorkspaceId);
+    expect(updated?.executionWorkspaceId).toBeNull();
+    expect(updated?.executionWorkspacePreference).toBeNull();
+    expect(updated?.executionWorkspaceSettings).toEqual({
+      mode: "isolated_workspace",
+      workspaceRuntime: { profile: "agent" },
+    });
+    expect(updated?.checkoutRunId).toBeNull();
+    expect(updated?.executionRunId).toBeNull();
+    expect(updated?.executionAgentNameKey).toBeNull();
+    expect(updated?.executionLockedAt).toBeNull();
   });
 });
 

@@ -520,10 +520,22 @@ describe("prioritizeProjectWorkspaceCandidatesForRun", () => {
     ).toEqual(["workspace-2", "workspace-1", "workspace-3"]);
   });
 
-  it("keeps the original order when no preferred workspace is selected", () => {
+  it("moves the primary workspace to the front when no preferred workspace is selected", () => {
     const rows = [
-      { id: "workspace-1" },
-      { id: "workspace-2" },
+      { id: "workspace-1", isPrimary: false },
+      { id: "workspace-2", isPrimary: true },
+      { id: "workspace-3", isPrimary: false },
+    ];
+
+    expect(
+      prioritizeProjectWorkspaceCandidatesForRun(rows, null).map((row) => row.id),
+    ).toEqual(["workspace-2", "workspace-1", "workspace-3"]);
+  });
+
+  it("keeps the original order when no preferred or primary workspace is selected", () => {
+    const rows = [
+      { id: "workspace-1", isPrimary: false },
+      { id: "workspace-2", isPrimary: false },
     ];
 
     expect(

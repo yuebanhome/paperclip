@@ -4380,6 +4380,21 @@ export function issueService(db: Db) {
       if (nextExecutionWorkspaceId) {
         await assertValidExecutionWorkspace(existing.companyId, nextProjectId, nextExecutionWorkspaceId);
       }
+      const projectWorkspaceChanged =
+        issueData.projectWorkspaceId !== undefined &&
+        issueData.projectWorkspaceId !== existing.projectWorkspaceId;
+      if (projectWorkspaceChanged) {
+        if (issueData.executionWorkspaceId === undefined) {
+          patch.executionWorkspaceId = null;
+        }
+        if (issueData.executionWorkspacePreference === undefined) {
+          patch.executionWorkspacePreference = null;
+        }
+        patch.checkoutRunId = null;
+        patch.executionRunId = null;
+        patch.executionAgentNameKey = null;
+        patch.executionLockedAt = null;
+      }
 
       applyStatusSideEffects(issueData.status, patch);
       if (issueData.status && issueData.status !== "done") {

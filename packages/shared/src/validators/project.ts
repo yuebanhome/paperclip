@@ -38,11 +38,29 @@ export const projectWorkspaceRuntimeConfigSchema = z.object({
 const projectWorkspaceSourceTypeSchema = z.enum(["local_path", "git_repo", "remote_managed", "non_git_path"]);
 const projectWorkspaceVisibilitySchema = z.enum(["default", "advanced"]);
 
+function isProjectWorkspaceRepoUrl(value: string) {
+  const trimmed = value.trim();
+  if (/^git@[^:\s]+:[^:\s]+\/[^:\s]+(?:\.git)?$/i.test(trimmed)) return true;
+  if (/^ssh:\/\/git@[^/\s]+\/[^/\s]+\/[^/\s]+(?:\.git)?$/i.test(trimmed)) return true;
+  try {
+    const parsed = new URL(trimmed);
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return false;
+    const segments = parsed.pathname.split("/").filter(Boolean);
+    return segments.length >= 2;
+  } catch {
+    return false;
+  }
+}
+
+const projectWorkspaceRepoUrlSchema = z.string().min(1).refine(isProjectWorkspaceRepoUrl, {
+  message: "Repo URL must be an HTTP(S) Git URL or SSH git URL.",
+});
+
 const projectWorkspaceFields = {
   name: z.string().min(1).optional(),
   sourceType: projectWorkspaceSourceTypeSchema.optional(),
   cwd: z.string().min(1).optional().nullable(),
-  repoUrl: z.string().url().optional().nullable(),
+  repoUrl: projectWorkspaceRepoUrlSchema.optional().nullable(),
   repoRef: z.string().optional().nullable(),
   defaultRef: z.string().optional().nullable(),
   visibility: projectWorkspaceVisibilitySchema.optional(),
@@ -113,6 +131,7 @@ const projectFields = {
 export const createProjectSchema = z.object({
   ...projectFields,
   workspace: createProjectWorkspaceSchema.optional(),
+  workspaces: z.array(createProjectWorkspaceSchema).optional(),
 });
 
 export type CreateProject = z.infer<typeof createProjectSchema>;

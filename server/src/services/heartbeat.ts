@@ -1095,13 +1095,18 @@ export type ResolvedWorkspaceForRun = {
 
 type ProjectWorkspaceCandidate = {
   id: string;
+  isPrimary?: boolean | null;
 };
 
 export function prioritizeProjectWorkspaceCandidatesForRun<T extends ProjectWorkspaceCandidate>(
   rows: T[],
   preferredWorkspaceId: string | null | undefined,
 ): T[] {
-  if (!preferredWorkspaceId) return rows;
+  if (!preferredWorkspaceId) {
+    const primaryIndex = rows.findIndex((row) => row.isPrimary === true);
+    if (primaryIndex <= 0) return rows;
+    return [rows[primaryIndex]!, ...rows.slice(0, primaryIndex), ...rows.slice(primaryIndex + 1)];
+  }
   const preferredIndex = rows.findIndex((row) => row.id === preferredWorkspaceId);
   if (preferredIndex <= 0) return rows;
   return [rows[preferredIndex]!, ...rows.slice(0, preferredIndex), ...rows.slice(preferredIndex + 1)];
