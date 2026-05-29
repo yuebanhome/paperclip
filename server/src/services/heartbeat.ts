@@ -1141,7 +1141,7 @@ function readAgentRuntimeModelProfile(
   const modelProfiles = parseObject(parseObject(runtimeConfig).modelProfiles);
   const profile = parseObject(modelProfiles[key]);
   if (Object.keys(profile).length === 0) {
-    return { enabled: true, adapterConfig: {}, configured: false };
+    return { enabled: false, adapterConfig: {}, configured: false };
   }
 
   return {

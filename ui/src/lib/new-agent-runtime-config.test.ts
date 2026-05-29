@@ -63,4 +63,17 @@ describe("buildNewAgentRuntimeConfig", () => {
     });
     expect(config.modelProfiles).toBeUndefined();
   });
+
+  it("enables the cheap profile without forcing a model when explicitly toggled on", () => {
+    const config = buildNewAgentRuntimeConfig({
+      cheapModelEnabled: true,
+    });
+
+    expect(config.modelProfiles).toEqual({
+      cheap: {
+        enabled: true,
+        adapterConfig: {},
+      },
+    });
+  });
 });

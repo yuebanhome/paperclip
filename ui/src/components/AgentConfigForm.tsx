@@ -584,10 +584,11 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
   // values come straight from CreateConfigValues (cheapModel + cheapModelEnabled).
   const cheapProfileFromAgent = useMemo(() => {
     const profiles = (runtimeConfig.modelProfiles ?? {}) as Record<string, unknown>;
+    const hasCheapProfile = Object.prototype.hasOwnProperty.call(profiles, "cheap");
     const cheap = (profiles.cheap ?? {}) as Record<string, unknown>;
     const cheapAdapterConfig = (cheap.adapterConfig ?? {}) as Record<string, unknown>;
     return {
-      enabled: cheap.enabled !== false,
+      enabled: hasCheapProfile && cheap.enabled !== false,
       model: typeof cheapAdapterConfig.model === "string" ? cheapAdapterConfig.model : "",
     };
   }, [runtimeConfig]);

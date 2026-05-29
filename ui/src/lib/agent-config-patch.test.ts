@@ -168,6 +168,26 @@ describe("buildAgentUpdatePatch", () => {
     });
   });
 
+  it("does not enable a missing cheap profile when only its model changes", () => {
+    const patch = buildAgentUpdatePatch(
+      makeAgent(),
+      makeOverlay({
+        modelProfiles: {
+          cheap: {
+            adapterConfig: { model: "claude-haiku-4-5" },
+          },
+        },
+      }),
+    );
+
+    expect((patch.runtimeConfig as Record<string, unknown>).modelProfiles).toEqual({
+      cheap: {
+        enabled: false,
+        adapterConfig: { model: "claude-haiku-4-5" },
+      },
+    });
+  });
+
   it("clears the cheap profile when the overlay marks it cleared", () => {
     const agent = makeAgent();
     agent.runtimeConfig = {
