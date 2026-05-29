@@ -36,6 +36,7 @@ import { useCompany } from "../context/CompanyContext";
 import { useToastActions } from "../context/ToastContext";
 import { collectLiveIssueIds } from "../lib/liveIssueIds";
 import { queryKeys } from "../lib/queryKeys";
+import { isGitRepoUrl, isSafeExternalUrl } from "../lib/repo-url";
 import { cn, formatDateTime, issueUrl, projectRouteRef, projectWorkspaceUrl } from "../lib/utils";
 import {
   getWorkspaceSpecificRoutineVariableNames,
@@ -111,16 +112,6 @@ function LegacyWorkspaceTabRedirect({ workspaceId }: { workspaceId: string }) {
   }, [workspaceId]);
 
   return <Navigate to={executionWorkspaceTabPath(workspaceId, "issues")} replace />;
-}
-
-function isSafeExternalUrl(value: string | null | undefined) {
-  if (!value) return false;
-  try {
-    const parsed = new URL(value);
-    return parsed.protocol === "http:" || parsed.protocol === "https:";
-  } catch {
-    return false;
-  }
 }
 
 function readText(value: string | null | undefined) {
@@ -221,11 +212,7 @@ function buildWorkspacePatch(initialState: WorkspaceFormState, nextState: Worksp
 function validateForm(form: WorkspaceFormState) {
   const repoUrl = normalizeText(form.repoUrl);
   if (repoUrl) {
-    try {
-      new URL(repoUrl);
-    } catch {
-      return "Repo URL must be a valid URL.";
-    }
+    if (!isGitRepoUrl(repoUrl)) return "Repo URL must be a valid HTTP(S) or SSH git URL.";
   }
 
   if (!form.inheritRuntime) {

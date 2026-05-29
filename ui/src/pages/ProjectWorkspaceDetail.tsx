@@ -19,6 +19,7 @@ import {
 import { useBreadcrumbs } from "../context/BreadcrumbContext";
 import { useCompany } from "../context/CompanyContext";
 import { queryKeys } from "../lib/queryKeys";
+import { isGitRepoUrl, isSafeExternalUrl } from "../lib/repo-url";
 import { projectRouteRef, projectWorkspaceUrl } from "../lib/utils";
 
 type WorkspaceFormState = {
@@ -81,16 +82,6 @@ const VISIBILITY_OPTIONS: Array<{ value: ProjectWorkspaceVisibility; label: stri
   { value: "default", label: "Default" },
   { value: "advanced", label: "Advanced" },
 ];
-
-function isSafeExternalUrl(value: string | null | undefined) {
-  if (!value) return false;
-  try {
-    const parsed = new URL(value);
-    return parsed.protocol === "http:" || parsed.protocol === "https:";
-  } catch {
-    return false;
-  }
-}
 
 function isAbsolutePath(value: string) {
   return value.startsWith("/") || /^[A-Za-z]:[\\/]/.test(value);
@@ -199,11 +190,7 @@ function validateWorkspaceForm(form: WorkspaceFormState) {
   }
 
   if (repoUrl) {
-    try {
-      new URL(repoUrl);
-    } catch {
-      return "Repo URL must be a valid URL.";
-    }
+    if (!isGitRepoUrl(repoUrl)) return "Repo URL must be a valid HTTP(S) or SSH git URL.";
   }
 
   const runtimeConfig = parseRuntimeConfigJson(form.runtimeConfig);

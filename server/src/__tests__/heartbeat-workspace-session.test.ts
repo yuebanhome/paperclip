@@ -6,6 +6,7 @@ import {
   applyPersistedExecutionWorkspaceConfig,
   buildRealizedExecutionWorkspaceFromPersisted,
   buildExplicitResumeSessionOverride,
+  deriveRepoNameFromRepoUrl,
   deriveTaskKeyWithHeartbeatFallback,
   extractWakeCommentIds,
   formatRuntimeWorkspaceWarningLog,
@@ -504,6 +505,20 @@ describe("formatRuntimeWorkspaceWarningLog", () => {
       stream: "stdout",
       chunk: "[paperclip] Using fallback workspace\n",
     });
+  });
+});
+
+describe("deriveRepoNameFromRepoUrl", () => {
+  it("derives names from HTTP(S), SCP-like SSH, and ssh:// repo URLs", () => {
+    expect(deriveRepoNameFromRepoUrl("https://github.com/deepLumendev/deeplumen-ai-service.git")).toBe(
+      "deeplumen-ai-service",
+    );
+    expect(deriveRepoNameFromRepoUrl("git@github.com:deepLumendev/deeplumen-ai-service.git")).toBe(
+      "deeplumen-ai-service",
+    );
+    expect(deriveRepoNameFromRepoUrl("ssh://git@github.com/deepLumendev/deeplumen-ai-service.git")).toBe(
+      "deeplumen-ai-service",
+    );
   });
 });
 

@@ -707,9 +707,15 @@ function buildExecutionWorkspaceConfigSnapshot(
   return hasSnapshot ? snapshot : null;
 }
 
-function deriveRepoNameFromRepoUrl(repoUrl: string | null): string | null {
+export function deriveRepoNameFromRepoUrl(repoUrl: string | null): string | null {
   const trimmed = repoUrl?.trim() ?? "";
   if (!trimmed) return null;
+  const sshPath = trimmed.match(/^git@[^:]+:(.+)$/i)?.[1]
+    ?? trimmed.match(/^ssh:\/\/git@[^/]+\/(.+)$/i)?.[1]
+    ?? null;
+  if (sshPath) {
+    return sshPath.split("/").filter(Boolean).pop()?.replace(/\.git$/i, "") || null;
+  }
   try {
     const parsed = new URL(trimmed);
     const cleanedPath = parsed.pathname.replace(/\/+$/, "");

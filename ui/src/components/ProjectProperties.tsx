@@ -11,6 +11,7 @@ import { projectsApi } from "../api/projects";
 import { secretsApi } from "../api/secrets";
 import { useCompany } from "../context/CompanyContext";
 import { queryKeys } from "../lib/queryKeys";
+import { formatRepoUrl, isGitRepoUrl, isSafeExternalUrl } from "../lib/repo-url";
 import { statusBadge, statusBadgeDefault } from "../lib/status-colors";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
@@ -397,56 +398,6 @@ export function ProjectProperties({ project, onUpdate, onFieldUpdate, getFieldSa
 
   const isAbsolutePath = (value: string) => value.startsWith("/") || /^[A-Za-z]:[\\/]/.test(value);
 
-    const looksLikeRepoUrl = (value: string) => {
-      const trimmed = value.trim();
-      if (/^git@[^:\s]+:[^:\s]+\/[^:\s]+(?:\.git)?$/i.test(trimmed)) return true;
-      if (/^ssh:\/\/git@[^/\s]+\/[^/\s]+\/[^/\s]+(?:\.git)?$/i.test(trimmed)) return true;
-      try {
-        const parsed = new URL(trimmed);
-        if (parsed.protocol !== "https:" && parsed.protocol !== "http:") return false;
-        const segments = parsed.pathname.split("/").filter(Boolean);
-        return segments.length >= 2;
-    } catch {
-      return false;
-    }
-  };
-
-  const isSafeExternalUrl = (value: string | null | undefined) => {
-    if (!value) return false;
-    try {
-      const parsed = new URL(value);
-      return parsed.protocol === "http:" || parsed.protocol === "https:";
-    } catch {
-      return false;
-    }
-  };
-
-    const formatRepoUrl = (value: string) => {
-      const sshPath = value.trim().match(/^git@([^:]+):(.+)$/i);
-      if (sshPath) {
-        const host = sshPath[1];
-        const path = sshPath[2]?.replace(/\.git$/i, "");
-        return path ? `${host}/${path}` : value;
-      }
-      const sshUrlPath = value.trim().match(/^ssh:\/\/git@([^/]+)\/(.+)$/i);
-      if (sshUrlPath) {
-        const host = sshUrlPath[1];
-        const path = sshUrlPath[2]?.replace(/\.git$/i, "");
-        return path ? `${host}/${path}` : value;
-      }
-      try {
-        const parsed = new URL(value);
-      const segments = parsed.pathname.split("/").filter(Boolean);
-      if (segments.length < 2) return parsed.host;
-      const owner = segments[0];
-      const repo = segments[1]?.replace(/\.git$/i, "");
-      if (!owner || !repo) return parsed.host;
-      return `${parsed.host}/${owner}/${repo}`;
-    } catch {
-      return value;
-    }
-  };
-
     const deriveSourceType = (cwd: string | null, repoUrl: string | null) => {
       if (repoUrl) return "git_repo";
       if (cwd) return "local_path";
@@ -483,7 +434,7 @@ export function ProjectProperties({ project, onUpdate, onFieldUpdate, getFieldSa
         setWorkspaceError("Local folder must be a full absolute path.");
         return;
       }
-      if (repoUrl && !looksLikeRepoUrl(repoUrl)) {
+      if (repoUrl && !isGitRepoUrl(repoUrl)) {
         setWorkspaceError("Repo must be a valid HTTP(S) or SSH git URL.");
         return;
       }

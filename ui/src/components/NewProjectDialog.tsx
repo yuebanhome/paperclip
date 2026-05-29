@@ -9,6 +9,7 @@ import { goalsApi } from "../api/goals";
 import { assetsApi } from "../api/assets";
 import { buildMarkdownMentionOptions } from "../lib/company-members";
 import { queryKeys } from "../lib/queryKeys";
+import { deriveRepoNameFromUrl, isGitRepoUrl } from "../lib/repo-url";
 import {
   Dialog,
   DialogContent,
@@ -128,42 +129,10 @@ export function NewProjectDialog() {
 
   const isAbsolutePath = (value: string) => value.startsWith("/") || /^[A-Za-z]:[\\/]/.test(value);
 
-  const looksLikeRepoUrl = (value: string) => {
-    const trimmed = value.trim();
-    if (/^git@[^:\s]+:[^:\s]+\/[^:\s]+(?:\.git)?$/i.test(trimmed)) return true;
-    if (/^ssh:\/\/git@[^/\s]+\/[^/\s]+\/[^/\s]+(?:\.git)?$/i.test(trimmed)) return true;
-    try {
-      const parsed = new URL(trimmed);
-      if (parsed.protocol !== "https:" && parsed.protocol !== "http:") return false;
-      const segments = parsed.pathname.split("/").filter(Boolean);
-      return segments.length >= 2;
-    } catch {
-      return false;
-    }
-  };
-
   const deriveWorkspaceNameFromPath = (value: string) => {
     const normalized = value.trim().replace(/[\\/]+$/, "");
     const segments = normalized.split(/[\\/]/).filter(Boolean);
     return segments[segments.length - 1] ?? "Local folder";
-  };
-
-  const deriveWorkspaceNameFromRepo = (value: string) => {
-    const sshPath = value.trim().match(/^git@[^:]+:(.+)$/i)?.[1]
-      ?? value.trim().match(/^ssh:\/\/git@[^/]+\/(.+)$/i)?.[1]
-      ?? null;
-    if (sshPath) {
-      const segments = sshPath.split("/").filter(Boolean);
-      return segments[segments.length - 1]?.replace(/\.git$/i, "") || "Git repo";
-    }
-    try {
-      const parsed = new URL(value);
-      const segments = parsed.pathname.split("/").filter(Boolean);
-      const repo = segments[segments.length - 1]?.replace(/\.git$/i, "") ?? "";
-      return repo || "GitHub repo";
-    } catch {
-      return "GitHub repo";
-    }
   };
 
   const updateWorkspaceDraft = (id: string, patch: Partial<WorkspaceDraft>) => {
@@ -191,7 +160,7 @@ export function NewProjectDialog() {
       .map((draft, index) => ({
         name: draft.cwd
           ? deriveWorkspaceNameFromPath(draft.cwd)
-          : deriveWorkspaceNameFromRepo(draft.repoUrl),
+          : deriveRepoNameFromUrl(draft.repoUrl, "Git repo"),
         ...(draft.cwd ? { cwd: draft.cwd } : {}),
         ...(draft.repoUrl ? { repoUrl: draft.repoUrl } : {}),
         sourceType: draft.repoUrl ? "git_repo" : "local_path",
@@ -209,7 +178,7 @@ export function NewProjectDialog() {
         setWorkspaceError(`Workspace ${index + 1}: local folder must be a full absolute path.`);
         return;
       }
-      if (repoUrl && !looksLikeRepoUrl(repoUrl)) {
+      if (repoUrl && !isGitRepoUrl(repoUrl)) {
         setWorkspaceError(`Workspace ${index + 1}: repo must be a valid HTTP(S) or SSH git URL.`);
         return;
       }
