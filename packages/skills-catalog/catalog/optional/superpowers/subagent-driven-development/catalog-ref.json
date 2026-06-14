@@ -1,0 +1,29 @@
+{
+  "source": {
+    "type": "github",
+    "hostname": "github.com",
+    "owner": "obra",
+    "repo": "superpowers",
+    "ref": "main",
+    "commit": "6fd4507659784c351abbd2bc264c7162cfd386dc",
+    "path": "skills/subagent-driven-development"
+  },
+  "files": [
+    "SKILL.md",
+    "code-quality-reviewer-prompt.md",
+    "implementer-prompt.md",
+    "spec-reviewer-prompt.md"
+  ],
+  "defaultInstall": false,
+  "recommendedForRoles": [
+    "engineer",
+    "manager"
+  ],
+  "requires": [],
+  "tags": [
+    "superpowers",
+    "implementation",
+    "subagents",
+    "code-review"
+  ]
+}

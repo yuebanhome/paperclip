@@ -1,0 +1,34 @@
+{
+  "source": {
+    "type": "github",
+    "hostname": "github.com",
+    "owner": "obra",
+    "repo": "superpowers",
+    "ref": "main",
+    "commit": "6fd4507659784c351abbd2bc264c7162cfd386dc",
+    "path": "skills/writing-skills"
+  },
+  "files": [
+    "SKILL.md",
+    "anthropic-best-practices.md",
+    "examples/**",
+    "graphviz-conventions.dot",
+    "persuasion-principles.md",
+    "render-graphs.js",
+    "testing-skills-with-subagents.md"
+  ],
+  "defaultInstall": false,
+  "recommendedForRoles": [
+    "engineer",
+    "manager"
+  ],
+  "requires": [
+    "node"
+  ],
+  "tags": [
+    "superpowers",
+    "skills",
+    "authoring",
+    "testing"
+  ]
+}

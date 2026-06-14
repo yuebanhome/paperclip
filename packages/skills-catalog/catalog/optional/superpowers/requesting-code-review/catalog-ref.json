@@ -1,0 +1,26 @@
+{
+  "source": {
+    "type": "github",
+    "hostname": "github.com",
+    "owner": "obra",
+    "repo": "superpowers",
+    "ref": "main",
+    "commit": "6fd4507659784c351abbd2bc264c7162cfd386dc",
+    "path": "skills/requesting-code-review"
+  },
+  "files": [
+    "SKILL.md",
+    "code-reviewer.md"
+  ],
+  "defaultInstall": false,
+  "recommendedForRoles": [
+    "engineer"
+  ],
+  "requires": [],
+  "tags": [
+    "superpowers",
+    "code-review",
+    "quality",
+    "agents"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "source": {
+    "type": "github",
+    "hostname": "github.com",
+    "owner": "obra",
+    "repo": "superpowers",
+    "ref": "main",
+    "commit": "6fd4507659784c351abbd2bc264c7162cfd386dc",
+    "path": "skills/brainstorming"
+  },
+  "files": [
+    "SKILL.md",
+    "scripts/**",
+    "spec-document-reviewer-prompt.md",
+    "visual-companion.md"
+  ],
+  "defaultInstall": false,
+  "recommendedForRoles": [
+    "product",
+    "engineer",
+    "designer"
+  ],
+  "requires": [
+    "node"
+  ],
+  "tags": [
+    "superpowers",
+    "planning",
+    "design",
+    "requirements"
+  ]
+}

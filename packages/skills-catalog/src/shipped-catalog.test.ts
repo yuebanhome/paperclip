@@ -15,6 +15,20 @@ const EXPECTED_OPTIONAL_KEYS = [
   "paperclipai/optional/content/release-announcement",
   "paperclipai/optional/product/design-critique",
   "paperclipai/optional/research/last30days",
+  "paperclipai/optional/superpowers/brainstorming",
+  "paperclipai/optional/superpowers/dispatching-parallel-agents",
+  "paperclipai/optional/superpowers/executing-plans",
+  "paperclipai/optional/superpowers/finishing-a-development-branch",
+  "paperclipai/optional/superpowers/receiving-code-review",
+  "paperclipai/optional/superpowers/requesting-code-review",
+  "paperclipai/optional/superpowers/subagent-driven-development",
+  "paperclipai/optional/superpowers/systematic-debugging",
+  "paperclipai/optional/superpowers/test-driven-development",
+  "paperclipai/optional/superpowers/using-git-worktrees",
+  "paperclipai/optional/superpowers/using-superpowers",
+  "paperclipai/optional/superpowers/verification-before-completion",
+  "paperclipai/optional/superpowers/writing-plans",
+  "paperclipai/optional/superpowers/writing-skills",
 ];
 
 describe("shipped skills catalog", () => {
@@ -39,6 +53,7 @@ describe("shipped skills catalog", () => {
     const scriptBearing = catalogSkills.filter((skill) => skill.trustLevel === "scripts_executables");
     expect(scriptBearing.map((skill) => skill.key)).toEqual([
       "paperclipai/optional/research/last30days",
+      "paperclipai/optional/superpowers/brainstorming",
     ]);
   });
 

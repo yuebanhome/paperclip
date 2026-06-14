@@ -1,0 +1,36 @@
+{
+  "source": {
+    "type": "github",
+    "hostname": "github.com",
+    "owner": "obra",
+    "repo": "superpowers",
+    "ref": "main",
+    "commit": "6fd4507659784c351abbd2bc264c7162cfd386dc",
+    "path": "skills/systematic-debugging"
+  },
+  "files": [
+    "SKILL.md",
+    "CREATION-LOG.md",
+    "condition-based-waiting-example.ts",
+    "condition-based-waiting.md",
+    "defense-in-depth.md",
+    "find-polluter.sh",
+    "root-cause-tracing.md",
+    "test-academic.md",
+    "test-pressure-1.md",
+    "test-pressure-2.md",
+    "test-pressure-3.md"
+  ],
+  "defaultInstall": false,
+  "recommendedForRoles": [
+    "engineer",
+    "qa"
+  ],
+  "requires": [],
+  "tags": [
+    "superpowers",
+    "debugging",
+    "root-cause",
+    "testing"
+  ]
+}
