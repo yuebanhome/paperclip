@@ -5,12 +5,18 @@
     "owner": "obra",
     "repo": "superpowers",
     "ref": "main",
-    "commit": "6fd4507659784c351abbd2bc264c7162cfd386dc",
-    "path": "skills/using-superpowers"
+    "commit": "896224c4b1879920ab573417e68fd51d2ccc9072",
+    "path": "skills/using-superpowers",
+    "localPath": "/Users/hewenyu/code/paperclip/packages/skills-catalog/catalog/.sources/obra-superpowers/using-superpowers"
   },
   "files": [
     "SKILL.md",
-    "references/**"
+    "references/antigravity-tools.md",
+    "references/claude-code-tools.md",
+    "references/codex-tools.md",
+    "references/copilot-tools.md",
+    "references/gemini-tools.md",
+    "references/pi-tools.md"
   ],
   "defaultInstall": false,
   "recommendedForRoles": [

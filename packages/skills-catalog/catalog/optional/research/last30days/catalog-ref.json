@@ -6,7 +6,8 @@
     "repo": "last30days-skill",
     "ref": "v3.3.0",
     "commit": "daca71f89eb71d0d56d01a43ed7627aa919dba4f",
-    "path": "skills/last30days"
+    "path": "skills/last30days",
+    "localPath": "/Users/hewenyu/code/share/last30days-skill/skills/last30days"
   },
   "files": [
     "SKILL.md",

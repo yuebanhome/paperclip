@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { CatalogTeam } from "@paperclipai/shared";
 
@@ -39,7 +41,10 @@ const {
 } = await import("../services/teams-catalog.js");
 
 const CORE_EXEC_TEAM_ID = "paperclipai:bundled:company-defaults:core-exec-team";
-const CORE_EXEC_TEAM_HASH = "sha256:0f20e9d56124c1dc90a1e4b128fabd863538bcc935117220f719d9620f7c89f1";
+const TEAMS_CATALOG_MANIFEST = JSON.parse(
+  fs.readFileSync(path.resolve(import.meta.dirname, "../../../packages/teams-catalog/generated/catalog.json"), "utf8"),
+) as { teams: Array<{ id: string; contentHash: string }> };
+const CORE_EXEC_TEAM_HASH = TEAMS_CATALOG_MANIFEST.teams.find((team) => team.id === CORE_EXEC_TEAM_ID)?.contentHash ?? "";
 
 function agentWithCatalogTeam(originHash: string | null, extra: Record<string, unknown> = {}) {
   return {
@@ -250,16 +255,18 @@ describe("teamsCatalogService", () => {
     );
   });
 
-  it("injects safe claude_local adapter defaults for every bundled agent when no overrides are supplied", async () => {
+  it("injects role-aware safe adapter defaults for bundled agents when no overrides are supplied", async () => {
     const svc = teamsCatalogService({} as any);
 
     await svc.installCatalogTeam("company-1", "core-exec-team");
 
     const [importInput] = mockCompanyPortabilityService.importBundle.mock.calls.at(-1)!;
     expect(importInput.adapterOverrides).toEqual({
-      ceo: { adapterType: "claude_local" },
-      cto: { adapterType: "claude_local" },
+      ceo: { adapterType: "codex_local" },
+      cto: { adapterType: "codex_local" },
+      "product-lead": { adapterType: "claude_local" },
       qa: { adapterType: "claude_local" },
+      "ux-designer": { adapterType: "codex_local" },
     });
   });
 
@@ -273,9 +280,11 @@ describe("teamsCatalogService", () => {
 
       const [importInput] = mockCompanyPortabilityService.importBundle.mock.calls.at(-1)!;
       expect(importInput.adapterOverrides).toEqual({
-        ceo: { adapterType: "opencode_local" },
-        cto: { adapterType: "opencode_local" },
-        qa: { adapterType: "opencode_local" },
+        ceo: { adapterType: "codex_local" },
+        cto: { adapterType: "codex_local" },
+        "product-lead": { adapterType: "claude_local" },
+        qa: { adapterType: "claude_local" },
+        "ux-designer": { adapterType: "codex_local" },
       });
     } finally {
       if (previousDefault === undefined) {
@@ -292,13 +301,13 @@ describe("teamsCatalogService", () => {
     await svc.installCatalogTeam("company-1", "product-design");
     const [designInput] = mockCompanyPortabilityService.importBundle.mock.calls.at(-1)!;
     expect(designInput.adapterOverrides).toEqual({
-      "ux-designer": { adapterType: "claude_local" },
+      "ux-designer": { adapterType: "codex_local" },
     });
 
     await svc.installCatalogTeam("company-1", "product-engineering");
     const [engineeringInput] = mockCompanyPortabilityService.importBundle.mock.calls.at(-1)!;
     expect(engineeringInput.adapterOverrides).toEqual({
-      cto: { adapterType: "claude_local" },
+      cto: { adapterType: "codex_local" },
       qa: { adapterType: "claude_local" },
       "senior-coder": { adapterType: "claude_local" },
     });
@@ -328,9 +337,11 @@ describe("teamsCatalogService", () => {
 
     const [importInput] = mockCompanyPortabilityService.importBundle.mock.calls.at(-1)!;
     expect(importInput.adapterOverrides).toEqual({
-      ceo: { adapterType: "claude_local" },
+      ceo: { adapterType: "codex_local" },
       cto: { adapterType: "opencode_local", adapterConfig: { model: "anthropic/claude-opus-4" } },
+      "product-lead": { adapterType: "claude_local" },
       qa: { adapterType: "claude_local" },
+      "ux-designer": { adapterType: "codex_local" },
     });
     // Caller-supplied object must not be mutated in place.
     expect(callerOverrides).toEqual({
@@ -345,7 +356,9 @@ describe("teamsCatalogService", () => {
       adapterOverrides: {
         ceo: { adapterType: "opencode_local" },
         cto: { adapterType: "opencode_local" },
+        "product-lead": { adapterType: "opencode_local" },
         qa: { adapterType: "opencode_local" },
+        "ux-designer": { adapterType: "opencode_local" },
       },
     });
 

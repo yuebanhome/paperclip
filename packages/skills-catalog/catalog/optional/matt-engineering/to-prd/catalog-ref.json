@@ -1,0 +1,25 @@
+{
+  "source": {
+    "type": "github",
+    "hostname": "github.com",
+    "owner": "mattpocock",
+    "repo": "skills",
+    "ref": "main",
+    "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+    "path": "skills/engineering/to-prd",
+    "localPath": "/Users/hewenyu/code/share/mattpocock-skills/skills/engineering/to-prd"
+  },
+  "files": [
+    "SKILL.md"
+  ],
+  "defaultInstall": false,
+  "recommendedForRoles": [
+    "engineer"
+  ],
+  "requires": [],
+  "tags": [
+    "matt-pocock",
+    "engineering",
+    "to-prd"
+  ]
+}

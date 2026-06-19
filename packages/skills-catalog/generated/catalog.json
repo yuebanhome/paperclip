@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "@paperclipai/skills-catalog",
   "packageVersion": "0.3.1",
-  "generatedAt": "2026-06-14T08:13:25.142Z",
+  "generatedAt": "2026-06-19T14:45:23.817Z",
   "skills": [
     {
       "id": "paperclipai:bundled:docs:doc-maintenance",
@@ -216,6 +216,42 @@
       "contentHash": "sha256:32372dacaf62e93454b9855968c4eec96456ba78b509f450b3dfaa48e31ef356"
     },
     {
+      "id": "paperclipai:bundled:software-development:codegraph-impact-analysis",
+      "key": "paperclipai/bundled/software-development/codegraph-impact-analysis",
+      "kind": "bundled",
+      "category": "software-development",
+      "slug": "codegraph-impact-analysis",
+      "name": "codegraph-impact-analysis",
+      "description": "Use CodeGraph for repository code exploration, dependency and symbol lookup, impact analysis, and review triage before broad manual scans or invasive edits. Trigger when a task mentions CodeGraph, asks for codebase exploration, asks what files/functions are affected, asks for architecture review, or requires reviewing changes in a repo with `.codegraph/`.",
+      "path": "catalog/bundled/software-development/codegraph-impact-analysis",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "engineer",
+        "engineering-manager",
+        "qa",
+        "product-manager"
+      ],
+      "requires": [],
+      "tags": [
+        "codegraph",
+        "code-review",
+        "impact-analysis",
+        "codebase-navigation"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 2144,
+          "sha256": "2e73839f1459c5d3727e1c8cdf7c16810ec8f36b28414d6179321ab4f1dbce1a"
+        }
+      ],
+      "contentHash": "sha256:21713fbb7425577d6acd4507f91254ba711f0c2f8aab92a1570d917a85606a99"
+    },
+    {
       "id": "paperclipai:bundled:software-development:github-pr-workflow",
       "key": "paperclipai/bundled/software-development/github-pr-workflow",
       "kind": "bundled",
@@ -247,6 +283,44 @@
         }
       ],
       "contentHash": "sha256:90f278c89aa0711be150c1cd2456ca25620d02f36995b113ca9837d756a37f6c"
+    },
+    {
+      "id": "paperclipai:bundled:software-development:trellis-development-workflow",
+      "key": "paperclipai/bundled/software-development/trellis-development-workflow",
+      "kind": "bundled",
+      "category": "software-development",
+      "slug": "trellis-development-workflow",
+      "name": "trellis-development-workflow",
+      "description": "Follow Trellis-managed development and review workflow in repositories with `.trellis/`: read workflow/spec context, create or continue Trellis tasks when appropriate, use package/layer specs before code, update specs with durable lessons, and finish work through Trellis lifecycle. Trigger when a task mentions Trellis, asks to obey project workflow, starts implementation/review in a Trellis repo, or needs structured planning before code.",
+      "path": "catalog/bundled/software-development/trellis-development-workflow",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "engineer",
+        "engineering-manager",
+        "qa",
+        "product-manager",
+        "designer"
+      ],
+      "requires": [],
+      "tags": [
+        "trellis",
+        "workflow",
+        "planning",
+        "review",
+        "verification"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 2930,
+          "sha256": "170f513fa44417466c12fc3f5945cef3540dd7fafc7fc0ab4568bbe8c2a25bdd"
+        }
+      ],
+      "contentHash": "sha256:7bfe31aa83a7a2c10ec7710ca2b2eb56909b0ed6aa412b1bb9de7e20f85fd5f8"
     },
     {
       "id": "paperclipai:optional:browser:agent-browser",
@@ -317,6 +391,1435 @@
         }
       ],
       "contentHash": "sha256:f22a9ed696e6614c6db2757a149f48b3295e81f78c27d065d9cb164cf4f8a9bd"
+    },
+    {
+      "id": "paperclipai:optional:matt-engineering:ask-matt",
+      "key": "paperclipai/optional/matt-engineering/ask-matt",
+      "kind": "optional",
+      "category": "matt-engineering",
+      "slug": "ask-matt",
+      "name": "ask-matt",
+      "description": "Ask which skill or flow fits your situation. A router over the user-invoked skills in this repo.",
+      "path": "catalog/optional/matt-engineering/ask-matt",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "engineering",
+        "ask-matt"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 4388,
+          "sha256": "fb534e029b0b4a27188f62e3839ab027c69e025915229c4524693eb1edcbb64d"
+        }
+      ],
+      "contentHash": "sha256:4f03a4d7c9e69ec036efbb9ff6f7990ec520d458ec5c4ce214ddaff69132f084",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/engineering/ask-matt",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/engineering/ask-matt"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-engineering:codebase-design",
+      "key": "paperclipai/optional/matt-engineering/codebase-design",
+      "kind": "optional",
+      "category": "matt-engineering",
+      "slug": "codebase-design",
+      "name": "codebase-design",
+      "description": "Shared vocabulary for designing deep modules. Use when the user wants to design or improve a module's interface, find deepening opportunities, decide where a seam goes, make code more testable or AI-navigable, or when another skill needs the deep-module vocabulary.",
+      "path": "catalog/optional/matt-engineering/codebase-design",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "engineering",
+        "codebase-design"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 6488,
+          "sha256": "a8d50abac5a4018f60e1d911d4b6f4e36454ca14d6c390c0695a578c7de65dad"
+        },
+        {
+          "path": "DEEPENING.md",
+          "kind": "markdown",
+          "sizeBytes": 2559,
+          "sha256": "125e6b77413ad2bc7cf7a772bc74336d580a50f9e797db2178ed133d62333d06"
+        },
+        {
+          "path": "DESIGN-IT-TWICE.md",
+          "kind": "markdown",
+          "sizeBytes": 2712,
+          "sha256": "21c3264953bd30ee87b181a3ccaf0e70649f461e5ffd7dc654acee4ba1788b31"
+        }
+      ],
+      "contentHash": "sha256:93d62bb7c7efc24d58d1ca014770d077b1546a128de6d8e47d63bd1b5e79ed79",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/engineering/codebase-design",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/engineering/codebase-design"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-engineering:diagnosing-bugs",
+      "key": "paperclipai/optional/matt-engineering/diagnosing-bugs",
+      "kind": "optional",
+      "category": "matt-engineering",
+      "slug": "diagnosing-bugs",
+      "name": "diagnosing-bugs",
+      "description": "Diagnosis loop for hard bugs and performance regressions. Use when the user says \"diagnose\"/\"debug this\", or reports something broken/throwing/failing/slow.",
+      "path": "catalog/optional/matt-engineering/diagnosing-bugs",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "scripts_executables",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "engineering",
+        "diagnosing-bugs"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 8536,
+          "sha256": "7a0779480f323a66d109404646bcc1a14bf0232b45b3e3ea93b652a035718acb"
+        },
+        {
+          "path": "scripts/hitl-loop.template.sh",
+          "kind": "script",
+          "sizeBytes": 1164,
+          "sha256": "b2932630950e5210075bcd6f850e5accf30c101c5367b29eac3a29b4dd8084c8"
+        }
+      ],
+      "contentHash": "sha256:5c0c92ed748b2bdcd8456b42da4d9102bde7891ba3a9ba5871ff4c483ba3c87a",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/engineering/diagnosing-bugs",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/engineering/diagnosing-bugs"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-engineering:domain-modeling",
+      "key": "paperclipai/optional/matt-engineering/domain-modeling",
+      "kind": "optional",
+      "category": "matt-engineering",
+      "slug": "domain-modeling",
+      "name": "domain-modeling",
+      "description": "Build and sharpen a project's domain model. Use when the user wants to pin down domain terminology or a ubiquitous language, record an architectural decision, or when another skill needs to maintain the domain model.",
+      "path": "catalog/optional/matt-engineering/domain-modeling",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "engineering",
+        "domain-modeling"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 3427,
+          "sha256": "152e2c97239affb12a60c5f4a7e74ab546a49ae169688c81f4e2ccc42dafa579"
+        },
+        {
+          "path": "ADR-FORMAT.md",
+          "kind": "markdown",
+          "sizeBytes": 2766,
+          "sha256": "f1f36cd3f8d3b6474ddd5855da4e233bfc4ae1a1c5024909ccf11871819a41b2"
+        },
+        {
+          "path": "CONTEXT-FORMAT.md",
+          "kind": "markdown",
+          "sizeBytes": 2299,
+          "sha256": "b8cc318f2a4285b530e908b6bc43901c3c5cd11100362636bbc4216639bef597"
+        }
+      ],
+      "contentHash": "sha256:36862dcb14140ba833d3d4d6276a491919c9a5b4fd6d9101dbc80087be4ac95c",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/engineering/domain-modeling",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/engineering/domain-modeling"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-engineering:grill-with-docs",
+      "key": "paperclipai/optional/matt-engineering/grill-with-docs",
+      "kind": "optional",
+      "category": "matt-engineering",
+      "slug": "grill-with-docs",
+      "name": "grill-with-docs",
+      "description": "A relentless interview to sharpen a plan or design, which also creates docs (ADR's and glossary) as we go.",
+      "path": "catalog/optional/matt-engineering/grill-with-docs",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "engineering",
+        "grill-with-docs"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 245,
+          "sha256": "610d091047bcfb9db0f75c057d15538481a721111579fc5ec7f83ad9131a2165"
+        }
+      ],
+      "contentHash": "sha256:f2201f61fbb38567e849f5cd78f9729cc5c02b7dfc10df09adf81713e2d6bc1a",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/engineering/grill-with-docs",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/engineering/grill-with-docs"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-engineering:implement",
+      "key": "paperclipai/optional/matt-engineering/implement",
+      "kind": "optional",
+      "category": "matt-engineering",
+      "slug": "implement",
+      "name": "implement",
+      "description": "Implement a piece of work based on a PRD or set of issues.",
+      "path": "catalog/optional/matt-engineering/implement",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "engineering",
+        "implement"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 424,
+          "sha256": "6e79ad337b162393ec5bd4334c37c468a7f18281856d8b15b1b9e6fb4246c252"
+        }
+      ],
+      "contentHash": "sha256:68aa2d06a23ca91de87c6c075060cb20d0e798355ad5c3d190b6cc06fde25f1e",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/engineering/implement",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/engineering/implement"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-engineering:improve-codebase-architecture",
+      "key": "paperclipai/optional/matt-engineering/improve-codebase-architecture",
+      "kind": "optional",
+      "category": "matt-engineering",
+      "slug": "improve-codebase-architecture",
+      "name": "improve-codebase-architecture",
+      "description": "Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick.",
+      "path": "catalog/optional/matt-engineering/improve-codebase-architecture",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "engineering",
+        "improve-codebase-architecture"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 5421,
+          "sha256": "0026900866ed2a542af0559cef11dd7ae707633b75cc6f668c2e7c0a33e35032"
+        },
+        {
+          "path": "HTML-REPORT.md",
+          "kind": "markdown",
+          "sizeBytes": 6685,
+          "sha256": "0b0936104158abeef7246ff6cbabefa4dc055f17589f2833f2d93001421910a1"
+        }
+      ],
+      "contentHash": "sha256:2966254d7fe668a85bdd7acd7ee1f98f281b48734b7028099eda3483f0265888",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/engineering/improve-codebase-architecture",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/engineering/improve-codebase-architecture"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-engineering:prototype",
+      "key": "paperclipai/optional/matt-engineering/prototype",
+      "kind": "optional",
+      "category": "matt-engineering",
+      "slug": "prototype",
+      "name": "prototype",
+      "description": "Build a throwaway prototype to flesh out a design — a runnable terminal app for state/business-logic questions, or several radically different UI variations toggleable from one route.",
+      "path": "catalog/optional/matt-engineering/prototype",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "engineering",
+        "prototype"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 3039,
+          "sha256": "863611f7fb65b78265188466cacdb365cbad129d36844ec57603c708d2026b50"
+        },
+        {
+          "path": "LOGIC.md",
+          "kind": "markdown",
+          "sizeBytes": 5594,
+          "sha256": "da91dc92195c00d5dc33863b8c1a030998025a0f8583ebf2babd770825b7f70c"
+        },
+        {
+          "path": "UI.md",
+          "kind": "markdown",
+          "sizeBytes": 6789,
+          "sha256": "d76d565149ee50456c5ddc5e29c27fec8737637874fe5c37d970db085a200b27"
+        }
+      ],
+      "contentHash": "sha256:0b3fd730e084374ebd7e1a462808669254c552293f41a5678daed0a503a55753",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/engineering/prototype",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/engineering/prototype"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-engineering:resolving-merge-conflicts",
+      "key": "paperclipai/optional/matt-engineering/resolving-merge-conflicts",
+      "kind": "optional",
+      "category": "matt-engineering",
+      "slug": "resolving-merge-conflicts",
+      "name": "resolving-merge-conflicts",
+      "description": "Use when you need to resolve an in-progress git merge/rebase conflict.",
+      "path": "catalog/optional/matt-engineering/resolving-merge-conflicts",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "engineering",
+        "resolving-merge-conflicts"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 921,
+          "sha256": "c7c9ba81362a786aac05d2223123bf1bd2f8a99c3243a72882ede9c68bedfb24"
+        }
+      ],
+      "contentHash": "sha256:e9289956083d2a911b3b3685637260ebf53fdb78f3243b3a95a2bd1a6b2ffc88",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/engineering/resolving-merge-conflicts",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/engineering/resolving-merge-conflicts"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-engineering:setup-matt-pocock-skills",
+      "key": "paperclipai/optional/matt-engineering/setup-matt-pocock-skills",
+      "kind": "optional",
+      "category": "matt-engineering",
+      "slug": "setup-matt-pocock-skills",
+      "name": "setup-matt-pocock-skills",
+      "description": "Configure this repo for the engineering skills — set up its issue tracker, triage label vocabulary, and domain doc layout. Run once before first use of the other engineering skills.",
+      "path": "catalog/optional/matt-engineering/setup-matt-pocock-skills",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "engineering",
+        "setup-matt-pocock-skills"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 7307,
+          "sha256": "a85441f31decd5705ade6b526206d60be129dbe926251c67213fe1649da5f197"
+        },
+        {
+          "path": "domain.md",
+          "kind": "markdown",
+          "sizeBytes": 2045,
+          "sha256": "25be404b58798b3cb2d51c93dba2ab052fc3a425632185726ac3f5fcff193b99"
+        },
+        {
+          "path": "issue-tracker-github.md",
+          "kind": "markdown",
+          "sizeBytes": 1950,
+          "sha256": "1e7ac76d3dd7f0ce41d6bf86912619a4bac164a70c6e246ae48f6825e222d56d"
+        },
+        {
+          "path": "issue-tracker-gitlab.md",
+          "kind": "markdown",
+          "sizeBytes": 2264,
+          "sha256": "6282954685bf55b7da7fad9f45dc4226d39e498ebaee1e06372708033fa40a09"
+        },
+        {
+          "path": "issue-tracker-local.md",
+          "kind": "markdown",
+          "sizeBytes": 838,
+          "sha256": "9a052f4599525e581721ec24cb2ae3e0296b79053e39f684b540d34d3a4f6528"
+        },
+        {
+          "path": "triage-labels.md",
+          "kind": "markdown",
+          "sizeBytes": 1045,
+          "sha256": "4f53c9b40ce2651e3611aa090eaedbd6dbc9b71ef8c5f7e65eac0d8263190d0d"
+        }
+      ],
+      "contentHash": "sha256:8ccfb1d89a2185988ccc1ab8f512093eb20c95142db0d98db147d7ccdce45531",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/engineering/setup-matt-pocock-skills",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/engineering/setup-matt-pocock-skills"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-engineering:tdd",
+      "key": "paperclipai/optional/matt-engineering/tdd",
+      "kind": "optional",
+      "category": "matt-engineering",
+      "slug": "tdd",
+      "name": "tdd",
+      "description": "Test-driven development. Use when the user wants to build features or fix bugs test-first, mentions \"red-green-refactor\", or wants integration tests.",
+      "path": "catalog/optional/matt-engineering/tdd",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "engineering",
+        "tdd"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 4345,
+          "sha256": "13722957277ed4960061a2d254a0ed7d86f95693e88b40d1c68307e7fdc98287"
+        },
+        {
+          "path": "mocking.md",
+          "kind": "markdown",
+          "sizeBytes": 1481,
+          "sha256": "3ceb807fdf4a47d6a93d4d9a891e5ba6d362a6247bd08adc451feebfc17361ef"
+        },
+        {
+          "path": "refactoring.md",
+          "kind": "markdown",
+          "sizeBytes": 387,
+          "sha256": "54fced22dd1911b7094c3fe7979b7c1a40d40be307482c4adf7dc0588f27d6cc"
+        },
+        {
+          "path": "tests.md",
+          "kind": "markdown",
+          "sizeBytes": 1640,
+          "sha256": "e12182f5c4c6a844b7c6ab4b8d2623b642aaaae5460fe58ed087efd4f3d5fb8a"
+        }
+      ],
+      "contentHash": "sha256:fb5aa56ad3c960e341bb1225b549001769ca73b0329cb612297aa4b8bc562a3f",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/engineering/tdd",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/engineering/tdd"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-engineering:to-issues",
+      "key": "paperclipai/optional/matt-engineering/to-issues",
+      "kind": "optional",
+      "category": "matt-engineering",
+      "slug": "to-issues",
+      "name": "to-issues",
+      "description": "Break a plan, spec, or PRD into independently-grabbable issues on the project issue tracker using tracer-bullet vertical slices.",
+      "path": "catalog/optional/matt-engineering/to-issues",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "engineering",
+        "to-issues"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 3319,
+          "sha256": "f8a72a5bc88aa830ae62b323a52b08934da52851b010984c55829a644c7f6ba6"
+        }
+      ],
+      "contentHash": "sha256:c2e4579b4090957fbe8d75232f9df802cab5bbb0e56a06a1a6b37205430f3dae",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/engineering/to-issues",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/engineering/to-issues"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-engineering:to-prd",
+      "key": "paperclipai/optional/matt-engineering/to-prd",
+      "kind": "optional",
+      "category": "matt-engineering",
+      "slug": "to-prd",
+      "name": "to-prd",
+      "description": "Turn the current conversation into a PRD and publish it to the project issue tracker — no interview, just synthesis of what you've already discussed.",
+      "path": "catalog/optional/matt-engineering/to-prd",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "engineering",
+        "to-prd"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 3027,
+          "sha256": "db7e7188ac4fd47f4925ae6550e0233365b3b05be40f45235ab3a0a6b0165156"
+        }
+      ],
+      "contentHash": "sha256:298331e5b41175624e72801a031250e87aa4981362724f6e16ab2efcf209c4b0",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/engineering/to-prd",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/engineering/to-prd"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-engineering:triage",
+      "key": "paperclipai/optional/matt-engineering/triage",
+      "kind": "optional",
+      "category": "matt-engineering",
+      "slug": "triage",
+      "name": "triage",
+      "description": "Move issues and external PRs through a state machine of triage roles — categorise, verify, grill if needed, and write agent-ready briefs.",
+      "path": "catalog/optional/matt-engineering/triage",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "engineering",
+        "triage"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 6574,
+          "sha256": "d45827c299c021f77b0f146fefa3ee679b13f99e9a2ffdf48e8de2347adeefe1"
+        },
+        {
+          "path": "AGENT-BRIEF.md",
+          "kind": "markdown",
+          "sizeBytes": 7972,
+          "sha256": "5b78d347cc53f6bcf7b875106005ccf5315055fa4cf75eb28d41e96ee426d27b"
+        },
+        {
+          "path": "OUT-OF-SCOPE.md",
+          "kind": "markdown",
+          "sizeBytes": 4712,
+          "sha256": "2526f998fd7ca5e956d3f6f234bcc2431a5971ee769f1148ddc60b92f04d5914"
+        }
+      ],
+      "contentHash": "sha256:3a556f3caf3b13f7d103b8d59fc49e102adf54b90cfd302a69370be434f8a746",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/engineering/triage",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/engineering/triage"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-in-progress:decision-mapping",
+      "key": "paperclipai/optional/matt-in-progress/decision-mapping",
+      "kind": "optional",
+      "category": "matt-in-progress",
+      "slug": "decision-mapping",
+      "name": "decision-mapping",
+      "description": "Turn a loose idea into a sequenced map of investigation tickets, then drive them to resolution one at a time.",
+      "path": "catalog/optional/matt-in-progress/decision-mapping",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "product",
+        "writer",
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "in-progress",
+        "decision-mapping"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 3655,
+          "sha256": "08a19e9bdc9e094b1653dc0862154dd096e40fc8015c1783024be63f9b26870a"
+        }
+      ],
+      "contentHash": "sha256:9062bceebb224483c15f48b4a5efa7e52d915f2f09c7ad1afc443a0d45275bd8",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/in-progress/decision-mapping",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/in-progress/decision-mapping"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-in-progress:review",
+      "key": "paperclipai/optional/matt-in-progress/review",
+      "kind": "optional",
+      "category": "matt-in-progress",
+      "slug": "review",
+      "name": "review",
+      "description": "Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes — Standards (does the code follow this repo's documented coding standards?) and Spec (does the code match what the originating issue/PRD asked for?). Runs both reviews in parallel sub-agents and reports them side by side. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to \"review since X\".",
+      "path": "catalog/optional/matt-in-progress/review",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "product",
+        "writer",
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "in-progress",
+        "review"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 4014,
+          "sha256": "0f1c3edf07b730ae7644c68d716faaa43be0fd81a27c06e13baf6b55712e7edb"
+        }
+      ],
+      "contentHash": "sha256:9370fdaec1ab527e44470f461c8e39c1d1dd4987e32fd75b30957ea11ffd3353",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/in-progress/review",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/in-progress/review"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-in-progress:writing-beats",
+      "key": "paperclipai/optional/matt-in-progress/writing-beats",
+      "kind": "optional",
+      "category": "matt-in-progress",
+      "slug": "writing-beats",
+      "name": "writing-beats",
+      "description": "Shape an article as a journey of beats, choose-your-own-adventure style. The user picks a starting beat from the raw material, you write only that beat, then offer options for where to pivot next, beat by beat, until the article reaches a natural end. Use when the user has raw material and wants to assemble it as a narrative rather than an argument.",
+      "path": "catalog/optional/matt-in-progress/writing-beats",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "product",
+        "writer",
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "in-progress",
+        "writing-beats"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 2836,
+          "sha256": "0843367d0a653bb17e61b3771d0ec08fa463663bc0ab6f3f421141b2687c4429"
+        }
+      ],
+      "contentHash": "sha256:a8321b41461f2d19b7b9e3880d7e31cfd19dffed0d6e94b64b539f70f70fce08",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/in-progress/writing-beats",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/in-progress/writing-beats"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-in-progress:writing-fragments",
+      "key": "paperclipai/optional/matt-in-progress/writing-fragments",
+      "kind": "optional",
+      "category": "matt-in-progress",
+      "slug": "writing-fragments",
+      "name": "writing-fragments",
+      "description": "Grilling session that mines the user for fragments — heterogeneous nuggets of writing (claims, vignettes, sharp sentences, half-thoughts) — and appends them to a single document as raw material for a future article. Use when the user wants to develop ideas before imposing structure, or mentions \"fragments\", \"ideate\", or \"raw material\" for writing.",
+      "path": "catalog/optional/matt-in-progress/writing-fragments",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "product",
+        "writer",
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "in-progress",
+        "writing-fragments"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 3325,
+          "sha256": "4ffa34a701caff27da54b9e073fef48471f0ccafee009d404c22ae542d0e8dea"
+        }
+      ],
+      "contentHash": "sha256:3a63bab8f592058d69c4674cacbe417d2429d95aa120bcef707c2fdd722d28c8",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/in-progress/writing-fragments",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/in-progress/writing-fragments"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-in-progress:writing-shape",
+      "key": "paperclipai/optional/matt-in-progress/writing-shape",
+      "kind": "optional",
+      "category": "matt-in-progress",
+      "slug": "writing-shape",
+      "name": "writing-shape",
+      "description": "Take a markdown file of raw material and shape it into an article through a conversational session — drafting candidate openings, growing the piece paragraph by paragraph, arguing about format (lists, tables, callouts, quotes) at each step. Use when the user has a pile of notes, fragments, or a rough draft and wants help turning it into something publishable.",
+      "path": "catalog/optional/matt-in-progress/writing-shape",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "product",
+        "writer",
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "in-progress",
+        "writing-shape"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 4593,
+          "sha256": "81a542b95fa865325835bf5ec7644a98e657c1e0f3374c56cb9f3b42b374660f"
+        }
+      ],
+      "contentHash": "sha256:08e1499097d0a7a9c3468df43f9c750687af378d754acae6d27066c3ba5e527c",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/in-progress/writing-shape",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/in-progress/writing-shape"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-misc:git-guardrails-claude-code",
+      "key": "paperclipai/optional/matt-misc/git-guardrails-claude-code",
+      "kind": "optional",
+      "category": "matt-misc",
+      "slug": "git-guardrails-claude-code",
+      "name": "git-guardrails-claude-code",
+      "description": "Set up Claude Code hooks to block dangerous git commands (push, reset --hard, clean, branch -D, etc.) before they execute. Use when user wants to prevent destructive git operations, add git safety hooks, or block git push/reset in Claude Code.",
+      "path": "catalog/optional/matt-misc/git-guardrails-claude-code",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "scripts_executables",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "engineer"
+      ],
+      "requires": [
+        "bash"
+      ],
+      "tags": [
+        "matt-pocock",
+        "misc",
+        "git-guardrails-claude-code"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 2312,
+          "sha256": "03c4de7613c712aea336d64c467ea3ed14be2cbd52345925fe949c75c01c29f7"
+        },
+        {
+          "path": "scripts/block-dangerous-git.sh",
+          "kind": "script",
+          "sizeBytes": 507,
+          "sha256": "234922b83c0a1737ee7300806c21ac0f389b07aaeb65c2d71ccedafbc5e1ea4b"
+        }
+      ],
+      "contentHash": "sha256:3cfe5821e07190dfddac8117d172f58f95b4eeeb300849b21d422cac7a4b4e6c",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/misc/git-guardrails-claude-code",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/misc/git-guardrails-claude-code"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-misc:migrate-to-shoehorn",
+      "key": "paperclipai/optional/matt-misc/migrate-to-shoehorn",
+      "kind": "optional",
+      "category": "matt-misc",
+      "slug": "migrate-to-shoehorn",
+      "name": "migrate-to-shoehorn",
+      "description": "Migrate test files from `as` type assertions to @total-typescript/shoehorn. Use when user mentions shoehorn, wants to replace `as` in tests, or needs partial test data.",
+      "path": "catalog/optional/matt-misc/migrate-to-shoehorn",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "engineer"
+      ],
+      "requires": [
+        "node"
+      ],
+      "tags": [
+        "matt-pocock",
+        "misc",
+        "migrate-to-shoehorn"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 2795,
+          "sha256": "de4da4c11d924fac79c924b2ee3d2db4a5cb98386eb490a599119463d036ae72"
+        }
+      ],
+      "contentHash": "sha256:35302933148e0b5964e4239e609d5dbd97ff6ef7455e7898c6dbd17bcf903c11",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/misc/migrate-to-shoehorn",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/misc/migrate-to-shoehorn"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-misc:scaffold-exercises",
+      "key": "paperclipai/optional/matt-misc/scaffold-exercises",
+      "kind": "optional",
+      "category": "matt-misc",
+      "slug": "scaffold-exercises",
+      "name": "scaffold-exercises",
+      "description": "Create exercise directory structures with sections, problems, solutions, and explainers that pass linting. Use when user wants to scaffold exercises, create exercise stubs, or set up a new course section.",
+      "path": "catalog/optional/matt-misc/scaffold-exercises",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "engineer"
+      ],
+      "requires": [
+        "node"
+      ],
+      "tags": [
+        "matt-pocock",
+        "misc",
+        "scaffold-exercises"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 3589,
+          "sha256": "75f5c9d771606fb9762f16522efc954df11c324f87148d8ff069bce166257de9"
+        }
+      ],
+      "contentHash": "sha256:845ce9981f9603809c46e3757fdecfc02dcf7c8ed0a89b2bae8e7b120e064ddb",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/misc/scaffold-exercises",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/misc/scaffold-exercises"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-misc:setup-pre-commit",
+      "key": "paperclipai/optional/matt-misc/setup-pre-commit",
+      "kind": "optional",
+      "category": "matt-misc",
+      "slug": "setup-pre-commit",
+      "name": "setup-pre-commit",
+      "description": "Set up Husky pre-commit hooks with lint-staged (Prettier), type checking, and tests in the current repo. Use when user wants to add pre-commit hooks, set up Husky, configure lint-staged, or add commit-time formatting/typechecking/testing.",
+      "path": "catalog/optional/matt-misc/setup-pre-commit",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "engineer"
+      ],
+      "requires": [
+        "node"
+      ],
+      "tags": [
+        "matt-pocock",
+        "misc",
+        "setup-pre-commit"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 2261,
+          "sha256": "872f4037cb7e6e0e340d4175c086550072959925dffc87b160d1a30dc9f63bbd"
+        }
+      ],
+      "contentHash": "sha256:72d38323ea0b19ea7145ee2e9782c7767442ecd99ffa729d6227c42ebf9ab395",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/misc/setup-pre-commit",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/misc/setup-pre-commit"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-personal:edit-article",
+      "key": "paperclipai/optional/matt-personal/edit-article",
+      "kind": "optional",
+      "category": "matt-personal",
+      "slug": "edit-article",
+      "name": "edit-article",
+      "description": "Edit and improve articles by restructuring sections, improving clarity, and tightening prose. Use when user wants to edit, revise, or improve an article draft.",
+      "path": "catalog/optional/matt-personal/edit-article",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "writer",
+        "operator"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "personal",
+        "edit-article"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 752,
+          "sha256": "e10fba546f45357fe0aaa7494b9e186910d4525818d19f9b2ad6f28cc506aa5e"
+        }
+      ],
+      "contentHash": "sha256:72e6d8fdc432804a9a3733a71cb1249ad27ab68407deb22823826cee66b99fae",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/personal/edit-article",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/personal/edit-article"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-personal:obsidian-vault",
+      "key": "paperclipai/optional/matt-personal/obsidian-vault",
+      "kind": "optional",
+      "category": "matt-personal",
+      "slug": "obsidian-vault",
+      "name": "obsidian-vault",
+      "description": "Search, create, and manage notes in the Obsidian vault with wikilinks and index notes. Use when user wants to find, create, or organize notes in Obsidian.",
+      "path": "catalog/optional/matt-personal/obsidian-vault",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "writer",
+        "operator"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "personal",
+        "obsidian-vault"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 1511,
+          "sha256": "7bed1d552aa5e9345e493cd62cb13e65c5d829d153c349afdb2cb91c809fa6c4"
+        }
+      ],
+      "contentHash": "sha256:150ff28321cde3a5981522414a2108f162dbcbcda9ea76b212d1d41748f7102a",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/personal/obsidian-vault",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/personal/obsidian-vault"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-productivity:grill-me",
+      "key": "paperclipai/optional/matt-productivity/grill-me",
+      "kind": "optional",
+      "category": "matt-productivity",
+      "slug": "grill-me",
+      "name": "grill-me",
+      "description": "A relentless interview to sharpen a plan or design.",
+      "path": "catalog/optional/matt-productivity/grill-me",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "manager",
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "productivity",
+        "grill-me"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 147,
+          "sha256": "6189dfceb7304a6e5558f75d87e68fa3bc7fcf7ba120e44f21f8a61fe01eba54"
+        }
+      ],
+      "contentHash": "sha256:8af2cf75a8764e414345b0e484b9a06acb73d152632c08a577c582dcb48fbbf4",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/productivity/grill-me",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/productivity/grill-me"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-productivity:grilling",
+      "key": "paperclipai/optional/matt-productivity/grilling",
+      "kind": "optional",
+      "category": "matt-productivity",
+      "slug": "grilling",
+      "name": "grilling",
+      "description": "Interview the user relentlessly about a plan or design. Use when the user wants to stress-test a plan before building, or uses any 'grill' trigger phrases.",
+      "path": "catalog/optional/matt-productivity/grilling",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "manager",
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "productivity",
+        "grilling"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 666,
+          "sha256": "fe00af3e1815f97c0a7644605479328a726b5cd95ba6ef56a4be2a92fae6c20f"
+        }
+      ],
+      "contentHash": "sha256:1ab36256b2d70d4fc14f98584647742ec6f47306a2f0cbcf5d12eacd63978293",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/productivity/grilling",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/productivity/grilling"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-productivity:handoff",
+      "key": "paperclipai/optional/matt-productivity/handoff",
+      "kind": "optional",
+      "category": "matt-productivity",
+      "slug": "handoff",
+      "name": "handoff",
+      "description": "Compact the current conversation into a handoff document for another agent to pick up.",
+      "path": "catalog/optional/matt-productivity/handoff",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "manager",
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "productivity",
+        "handoff"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 878,
+          "sha256": "94bee8c16cbfcf9f1e15187f7e5d0d5a93c4adb7c512feceecaab80c8ff7c059"
+        }
+      ],
+      "contentHash": "sha256:418fa1cd0fdecb92c4dd76aa5ba2ad1df46a4b454f683cc5f968dd9209b93d5c",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/productivity/handoff",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/productivity/handoff"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-productivity:teach",
+      "key": "paperclipai/optional/matt-productivity/teach",
+      "kind": "optional",
+      "category": "matt-productivity",
+      "slug": "teach",
+      "name": "teach",
+      "description": "Teach the user a new skill or concept, within this workspace.",
+      "path": "catalog/optional/matt-productivity/teach",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "manager",
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "productivity",
+        "teach"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 9507,
+          "sha256": "6d2dbe5e03084cf26fef66b535127b36cd1bcbe9478e26b0626029cd51dc2259"
+        },
+        {
+          "path": "GLOSSARY-FORMAT.md",
+          "kind": "markdown",
+          "sizeBytes": 2131,
+          "sha256": "d177def491519d97873291f2e860d8f1d60ead78feecb82eee022177958069c6"
+        },
+        {
+          "path": "LEARNING-RECORD-FORMAT.md",
+          "kind": "markdown",
+          "sizeBytes": 2777,
+          "sha256": "855f81017625256584bbf62bd5edb9b0c86605c4cc1139c56acc36b802595d17"
+        },
+        {
+          "path": "MISSION-FORMAT.md",
+          "kind": "markdown",
+          "sizeBytes": 1553,
+          "sha256": "8da6d3ac84eb2eb19f17c260b6acf01c560d3ac7a4501c415eea0e985602f4d7"
+        },
+        {
+          "path": "RESOURCES-FORMAT.md",
+          "kind": "markdown",
+          "sizeBytes": 1926,
+          "sha256": "2bc634a64b0d0daa10904f9222e7aa0d361420dfacabbf092fbe3a72222edc08"
+        }
+      ],
+      "contentHash": "sha256:df22aabba36bc347ec4c76327910d01343804315f24d540baf86cd969b40713c",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/productivity/teach",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/productivity/teach"
+      }
+    },
+    {
+      "id": "paperclipai:optional:matt-productivity:writing-great-skills",
+      "key": "paperclipai/optional/matt-productivity/writing-great-skills",
+      "kind": "optional",
+      "category": "matt-productivity",
+      "slug": "writing-great-skills",
+      "name": "writing-great-skills",
+      "description": "Reference for writing and editing skills well — the vocabulary and principles that make a skill predictable.",
+      "path": "catalog/optional/matt-productivity/writing-great-skills",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "manager",
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "matt-pocock",
+        "productivity",
+        "writing-great-skills"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 9063,
+          "sha256": "7c6ba7ec25bb2c0e173c52cdc2da878aef0b083ec19a9c1799934e480c8833cc"
+        },
+        {
+          "path": "GLOSSARY.md",
+          "kind": "markdown",
+          "sizeBytes": 16804,
+          "sha256": "df0d042f2b69b8a952bd4b0e6904e2eb316f0203c1a5f09169da7f75a5575a61"
+        }
+      ],
+      "contentHash": "sha256:0ee968f9bd9b1b5374f5a538e5e3a9e53991495eafc67e59af7cd295112cdeb2",
+      "source": {
+        "type": "github",
+        "hostname": "github.com",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "ref": "main",
+        "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "path": "skills/productivity/writing-great-skills",
+        "url": "https://github.com/mattpocock/skills/tree/main/skills/productivity/writing-great-skills"
+      }
     },
     {
       "id": "paperclipai:optional:product:design-critique",
@@ -905,60 +2408,60 @@
         {
           "path": "SKILL.md",
           "kind": "skill",
-          "sizeBytes": 10634,
-          "sha256": "bba47904a7f6bbee3bf8a107ebbe84e65d392be683bbb898ded736b29e415f90"
+          "sizeBytes": 10435,
+          "sha256": "e14914605f640e0841758e45d0ab2a53243b59b921f929e47921c99668f2e61d"
         },
         {
           "path": "scripts/frame-template.html",
           "kind": "script",
-          "sizeBytes": 7703,
-          "sha256": "fb22ba9d47f3b83b56e0a95d52a3c2727db03b0d4365078d92c850293a62457b"
+          "sizeBytes": 8094,
+          "sha256": "6a8a4e58bd6a44b904e2e3c57de774481d909204597e1498de53f1b2fecc4c4e"
         },
         {
           "path": "scripts/helper.js",
           "kind": "script",
-          "sizeBytes": 2707,
-          "sha256": "e763d82f32b4ebb320be2f0d08449d3e5a0585778edf5c407c1fdab3f39976a5"
+          "sizeBytes": 5615,
+          "sha256": "43c6d69954a46ec34a2a262bcc62a9a7e83e839c739f199cb72646d397c686e3"
         },
         {
           "path": "scripts/server.cjs",
           "kind": "script",
-          "sizeBytes": 11218,
-          "sha256": "ea81185f581897c67d4b417eeb9bc7a158c50e0932c73047054fe53efc2683ef"
+          "sizeBytes": 25693,
+          "sha256": "2d2961ea8d11f56c5f4c3a1a68d22709efa5d7601a2246d8c880774e7e9e8412"
         },
         {
           "path": "scripts/start-server.sh",
           "kind": "script",
-          "sizeBytes": 4606,
-          "sha256": "3442a54b5ee5511637d27bf696e092b72f94c2324f40b5ba4410da4dd0c23bc8"
+          "sizeBytes": 6908,
+          "sha256": "a4e5ae84275bcaacd2f84345afeabe59cf7b00ba080e123da7cc1fb226f12847"
         },
         {
           "path": "scripts/stop-server.sh",
           "kind": "script",
-          "sizeBytes": 1314,
-          "sha256": "f65b7634a27343eab2086bdb6c59ba78695685f471b5a577b08a8817f7c50600"
+          "sizeBytes": 3263,
+          "sha256": "0b5ccbbd57f62d3ed88993f7940b5ee0e5c0fc9b21c550c623da4f6292e47daf"
         },
         {
           "path": "spec-document-reviewer-prompt.md",
           "kind": "markdown",
-          "sizeBytes": 1748,
-          "sha256": "12cb5ed58aef41b8da6fbb505547c71ca3f5658c83b66ca6e556c936308b3189"
+          "sizeBytes": 1747,
+          "sha256": "95a0a195de9d984be2fffa95bab16fc8c563bc296a9cfc5e9c29cb3ece0d7457"
         },
         {
           "path": "visual-companion.md",
           "kind": "markdown",
-          "sizeBytes": 12047,
-          "sha256": "a2bc6fc47d0df1df981d02f707a16225b147f462e7059175ad2bc5e6dd29fcae"
+          "sizeBytes": 13298,
+          "sha256": "60cbad29b9dd7eaf08da020e301c498a72230b2e13c1813fa967a135ffcc1d71"
         }
       ],
-      "contentHash": "sha256:6cb3638f4b2836f1c601ca2b3f0c6bad1712e446cb9294361ce673a892ce7cc2",
+      "contentHash": "sha256:56d6f70c5a0128492defa4f52a95bb690fc1599e2d35b99ea14d7110776cd989",
       "source": {
         "type": "github",
         "hostname": "github.com",
         "owner": "obra",
         "repo": "superpowers",
         "ref": "main",
-        "commit": "6fd4507659784c351abbd2bc264c7162cfd386dc",
+        "commit": "896224c4b1879920ab573417e68fd51d2ccc9072",
         "path": "skills/brainstorming",
         "url": "https://github.com/obra/superpowers/tree/main/skills/brainstorming"
       }
@@ -991,18 +2494,18 @@
         {
           "path": "SKILL.md",
           "kind": "skill",
-          "sizeBytes": 6441,
-          "sha256": "76806091c7f923ba2596546b19cccd98a08e57a68745df77c3a7b998fe838e2b"
+          "sizeBytes": 6644,
+          "sha256": "f0df13f584049059cc5619f90061405b89dcc6e28ab3f2a8517d27d99c7a46a6"
         }
       ],
-      "contentHash": "sha256:72d3b7a175cd2ab95d7cc95b4326f88104c63f2cdc5665d90864d8af1573a08b",
+      "contentHash": "sha256:a49a390373a5bd33552fb724ddea72ac0bdf0fc8c15c422b505959277e0d9320",
       "source": {
         "type": "github",
         "hostname": "github.com",
         "owner": "obra",
         "repo": "superpowers",
         "ref": "main",
-        "commit": "6fd4507659784c351abbd2bc264c7162cfd386dc",
+        "commit": "896224c4b1879920ab573417e68fd51d2ccc9072",
         "path": "skills/dispatching-parallel-agents",
         "url": "https://github.com/obra/superpowers/tree/main/skills/dispatching-parallel-agents"
       }
@@ -1033,18 +2536,18 @@
         {
           "path": "SKILL.md",
           "kind": "skill",
-          "sizeBytes": 2469,
-          "sha256": "e2102f11631433939f162d383d769f8257d859d6639e0e14969cda3ef0a95eca"
+          "sizeBytes": 2600,
+          "sha256": "b357c2a2e5bf24adf237b5d4a83cacd828f07b886d0873ad91546aa3c99905c9"
         }
       ],
-      "contentHash": "sha256:48f5a2a8632887d9bc99ba106b6bf6729a942f9c8d6c14126d0c18e0680660e5",
+      "contentHash": "sha256:7c40c86bb1075275335d69e4ef36e61f3fb75af22b4d213a9bed897bb0c67b66",
       "source": {
         "type": "github",
         "hostname": "github.com",
         "owner": "obra",
         "repo": "superpowers",
         "ref": "main",
-        "commit": "6fd4507659784c351abbd2bc264c7162cfd386dc",
+        "commit": "896224c4b1879920ab573417e68fd51d2ccc9072",
         "path": "skills/executing-plans",
         "url": "https://github.com/obra/superpowers/tree/main/skills/executing-plans"
       }
@@ -1076,18 +2579,18 @@
         {
           "path": "SKILL.md",
           "kind": "skill",
-          "sizeBytes": 7061,
-          "sha256": "5c8d4b59aedb14c94e2f5d787a3265e858e8f53d4ceffe7ff1c15878a52b0e91"
+          "sizeBytes": 6832,
+          "sha256": "e6d4a812de900d33c6eacfb40747f99427f25c304a7b7099120f9373b115a47f"
         }
       ],
-      "contentHash": "sha256:c8151244d761bfcb099a08cb3aa7a7f5ceb9e6fdbd79692ed80fbbdf79157861",
+      "contentHash": "sha256:b58ba45d7013e0471e80382acd15d78ef1c6af6062fef05fc5f2f4a3e9cff3c3",
       "source": {
         "type": "github",
         "hostname": "github.com",
         "owner": "obra",
         "repo": "superpowers",
         "ref": "main",
-        "commit": "6fd4507659784c351abbd2bc264c7162cfd386dc",
+        "commit": "896224c4b1879920ab573417e68fd51d2ccc9072",
         "path": "skills/finishing-a-development-branch",
         "url": "https://github.com/obra/superpowers/tree/main/skills/finishing-a-development-branch"
       }
@@ -1118,18 +2621,18 @@
         {
           "path": "SKILL.md",
           "kind": "skill",
-          "sizeBytes": 6314,
-          "sha256": "c9382e92b8f32363566068ecfed19d3b2651eaf40d3942b24840f839dedfc406"
+          "sizeBytes": 6382,
+          "sha256": "647036bbdab7bf2317e14e079595e984c9030f64295e2b4c0fb57dbeb48f25dd"
         }
       ],
-      "contentHash": "sha256:ad3493eb6ba76b3b6dc677fc0d22bf9163c42c3b962cd64066cd6eb40f29bd9c",
+      "contentHash": "sha256:1b6629f632e5d26b49cabf3d00c9d3fd79f83a881daa95f50a0495e3b3c21219",
       "source": {
         "type": "github",
         "hostname": "github.com",
         "owner": "obra",
         "repo": "superpowers",
         "ref": "main",
-        "commit": "6fd4507659784c351abbd2bc264c7162cfd386dc",
+        "commit": "896224c4b1879920ab573417e68fd51d2ccc9072",
         "path": "skills/receiving-code-review",
         "url": "https://github.com/obra/superpowers/tree/main/skills/receiving-code-review"
       }
@@ -1161,24 +2664,24 @@
         {
           "path": "SKILL.md",
           "kind": "skill",
-          "sizeBytes": 2808,
-          "sha256": "5a3a44a3667800e2dc836829c6b92fada51e6dc58ac144ec05fe59f47d6bcd84"
+          "sizeBytes": 2826,
+          "sha256": "1017ccdd5bc61fab67c654cf118cbdb520464b313073a0a6b9a6b9aa647a3ad6"
         },
         {
           "path": "code-reviewer.md",
           "kind": "markdown",
-          "sizeBytes": 4802,
-          "sha256": "595d91d05d5ecba530bd52e1e53c5173d820ab5d4bc223eb7820d69a9ab1c403"
+          "sizeBytes": 5213,
+          "sha256": "b2f2ec7596925fe52dac158fdfbca19b3a7d779d619c481e6706a6c0001662d3"
         }
       ],
-      "contentHash": "sha256:314f5ed80d7bb252a7f9bac49d2bc2a421daf4667bdc331670d19dc32c8503f3",
+      "contentHash": "sha256:b817e228b79ffc8d55a36f22a96267ad636999301d2d33fd0014e8bde263b4ee",
       "source": {
         "type": "github",
         "hostname": "github.com",
         "owner": "obra",
         "repo": "superpowers",
         "ref": "main",
-        "commit": "6fd4507659784c351abbd2bc264c7162cfd386dc",
+        "commit": "896224c4b1879920ab573417e68fd51d2ccc9072",
         "path": "skills/requesting-code-review",
         "url": "https://github.com/obra/superpowers/tree/main/skills/requesting-code-review"
       }
@@ -1193,7 +2696,7 @@
       "description": "Use when executing implementation plans with independent tasks in the current session",
       "path": "catalog/optional/superpowers/subagent-driven-development",
       "entrypoint": "SKILL.md",
-      "trustLevel": "markdown_only",
+      "trustLevel": "scripts_executables",
       "compatibility": "compatible",
       "defaultInstall": false,
       "recommendedForRoles": [
@@ -1211,36 +2714,48 @@
         {
           "path": "SKILL.md",
           "kind": "skill",
-          "sizeBytes": 12546,
-          "sha256": "905a2b9be59b734dbe166525ad31dcaaf712a75926135adee1f554557aba5744"
-        },
-        {
-          "path": "code-quality-reviewer-prompt.md",
-          "kind": "markdown",
-          "sizeBytes": 1080,
-          "sha256": "2eeb3bf63fccfbee042812dc94e7032048603f0f8c3827b4b53af9e4cef19b30"
+          "sizeBytes": 21647,
+          "sha256": "41ab239a6ad1c487cd839fdac972a8c9cf0f5e90efa59a63f963767864f0df4c"
         },
         {
           "path": "implementer-prompt.md",
           "kind": "markdown",
-          "sizeBytes": 4258,
-          "sha256": "a416193f881e5a712c988fffabfe1d5a97bffcd091eb95577c84fe2136588617"
+          "sizeBytes": 5522,
+          "sha256": "49018b28dc11bc9f3d13a28959bb10ae1a96eabc5d8f19f4079d901f9ff2bf64"
         },
         {
-          "path": "spec-reviewer-prompt.md",
+          "path": "scripts/review-package",
+          "kind": "script",
+          "sizeBytes": 1350,
+          "sha256": "0c0629f6e2c46fc8bf68dcfb8a247ab24eb548b7004fe494035e6fcba9b5cdfb"
+        },
+        {
+          "path": "scripts/sdd-workspace",
+          "kind": "script",
+          "sizeBytes": 888,
+          "sha256": "9430befaff459ed862415b700c1a9efe45fd34838a684802a1d8320de0c3a007"
+        },
+        {
+          "path": "scripts/task-brief",
+          "kind": "script",
+          "sizeBytes": 1102,
+          "sha256": "5380283f00bffa99ab82ae78482b7d248abe10655129c72ca7050bdc0b6a85e1"
+        },
+        {
+          "path": "task-reviewer-prompt.md",
           "kind": "markdown",
-          "sizeBytes": 1999,
-          "sha256": "631980e472eec5394de8b89b69d432e54fd3f7f523ecf9afa7eb4cda0c9b2baf"
+          "sizeBytes": 7919,
+          "sha256": "2eb9d54373420de25bc0bd00635d3a3123a6c0eb30c881168e6f3348e2387331"
         }
       ],
-      "contentHash": "sha256:6a03a5021aa9b95f7926fa7311c093f9befa389dfa78ef008c101fef8c5d5279",
+      "contentHash": "sha256:9f3803b13a8b72a56c41f1ca5a27cf7e5ddd742ac2ab27105b76b61a03fab5b3",
       "source": {
         "type": "github",
         "hostname": "github.com",
         "owner": "obra",
         "repo": "superpowers",
         "ref": "main",
-        "commit": "6fd4507659784c351abbd2bc264c7162cfd386dc",
+        "commit": "896224c4b1879920ab573417e68fd51d2ccc9072",
         "path": "skills/subagent-driven-development",
         "url": "https://github.com/obra/superpowers/tree/main/skills/subagent-driven-development"
       }
@@ -1273,8 +2788,8 @@
         {
           "path": "SKILL.md",
           "kind": "skill",
-          "sizeBytes": 9884,
-          "sha256": "4999cb851360485eca5074e727bbdd62ef20549c5d5b01216fcbf5831badb473"
+          "sizeBytes": 9885,
+          "sha256": "3b20719eca4f0461cb51a195221320d775dcf03b6859271066a03a5132a6ce7a"
         },
         {
           "path": "condition-based-waiting-example.ts",
@@ -1337,14 +2852,14 @@
           "sha256": "96b50a52e2c7989c9cf20fb752c47c1e9a3a70dc362f8f7989f8f5b64dac7708"
         }
       ],
-      "contentHash": "sha256:9624024ea94e7f40b1d6df6a99979cdda8af6a9aec29d2baf3d3f8ccd72e5158",
+      "contentHash": "sha256:ad85e1e49030eb6f2d6b49c25d062d55c3126ab33a7f1e823750355ab0970f4f",
       "source": {
         "type": "github",
         "hostname": "github.com",
         "owner": "obra",
         "repo": "superpowers",
         "ref": "main",
-        "commit": "6fd4507659784c351abbd2bc264c7162cfd386dc",
+        "commit": "896224c4b1879920ab573417e68fd51d2ccc9072",
         "path": "skills/systematic-debugging",
         "url": "https://github.com/obra/superpowers/tree/main/skills/systematic-debugging"
       }
@@ -1377,8 +2892,8 @@
         {
           "path": "SKILL.md",
           "kind": "skill",
-          "sizeBytes": 9867,
-          "sha256": "7dee67b4af6bdccc7a914ca34533184d64592d0f5b23aeae631538168db14994"
+          "sizeBytes": 9894,
+          "sha256": "b5b4717b8b761cce15a6cfe9022e33fd959e0894c0c39d72c9cb49c23486c10e"
         },
         {
           "path": "testing-anti-patterns.md",
@@ -1387,14 +2902,14 @@
           "sha256": "bde453bc258f06543987477c837939afaa774ea2acbd9f308d702fc452bc4283"
         }
       ],
-      "contentHash": "sha256:543d81c96f14e308f070a1447f5b90c8f154191999d79f4f413039ef89c2cf86",
+      "contentHash": "sha256:96415d7b834115aeb8feb3d0f130104704fa1410b9b74e8877639e7ef3bc9baf",
       "source": {
         "type": "github",
         "hostname": "github.com",
         "owner": "obra",
         "repo": "superpowers",
         "ref": "main",
-        "commit": "6fd4507659784c351abbd2bc264c7162cfd386dc",
+        "commit": "896224c4b1879920ab573417e68fd51d2ccc9072",
         "path": "skills/test-driven-development",
         "url": "https://github.com/obra/superpowers/tree/main/skills/test-driven-development"
       }
@@ -1428,18 +2943,18 @@
         {
           "path": "SKILL.md",
           "kind": "skill",
-          "sizeBytes": 7983,
-          "sha256": "085a45ee3de432bdb2768011591d9a882cb6c759e2317f379226451c5618fe8e"
+          "sizeBytes": 7472,
+          "sha256": "e2c3ec142e52868a51af246c620cd76ab648dcf27d6900d47e6ffd07159a9794"
         }
       ],
-      "contentHash": "sha256:97f43989e3b796e829fb6e572e79e6084bd7ec9098d4b8c68bac0611f28da7e3",
+      "contentHash": "sha256:28f3c4ef510c2da7e83b0535c5c23e3b5586b8c91728d641144022d7c50849f4",
       "source": {
         "type": "github",
         "hostname": "github.com",
         "owner": "obra",
         "repo": "superpowers",
         "ref": "main",
-        "commit": "6fd4507659784c351abbd2bc264c7162cfd386dc",
+        "commit": "896224c4b1879920ab573417e68fd51d2ccc9072",
         "path": "skills/using-git-worktrees",
         "url": "https://github.com/obra/superpowers/tree/main/skills/using-git-worktrees"
       }
@@ -1451,7 +2966,7 @@
       "category": "superpowers",
       "slug": "using-superpowers",
       "name": "using-superpowers",
-      "description": "Use when starting any conversation - establishes how to find and use skills, requiring Skill tool invocation before ANY response including clarifying questions",
+      "description": "Use when starting any conversation - establishes how to find and use skills, requiring skill invocation before ANY response including clarifying questions",
       "path": "catalog/optional/superpowers/using-superpowers",
       "entrypoint": "SKILL.md",
       "trustLevel": "markdown_only",
@@ -1472,36 +2987,54 @@
         {
           "path": "SKILL.md",
           "kind": "skill",
-          "sizeBytes": 5421,
-          "sha256": "316e29381219adf0cac62190c67aeabf427d6e6e5f2735541d502b3d339be7aa"
+          "sizeBytes": 5899,
+          "sha256": "918562bbba1c73d1407c50de77a92eeaa6930508bdb57a64324d7d508a9069e1"
+        },
+        {
+          "path": "references/antigravity-tools.md",
+          "kind": "reference",
+          "sizeBytes": 5691,
+          "sha256": "00b16e8e8166d972766613c4244a7901d0413af37944741a8b8f40105f9f7f05"
+        },
+        {
+          "path": "references/claude-code-tools.md",
+          "kind": "reference",
+          "sizeBytes": 2952,
+          "sha256": "7d9244dd278db15caa8f9f86bda0546c91fc65163f94b2499999fc72b69c3666"
         },
         {
           "path": "references/codex-tools.md",
           "kind": "reference",
-          "sizeBytes": 2464,
-          "sha256": "37e06103a352516dcec2eb326f990d50c6728b571135cc7b54cbbb8902c451e0"
+          "sizeBytes": 3928,
+          "sha256": "cbce77a3a430688ef0cc3c8f03d17d2df1a2c78603e8b138cec522b74d75e4ab"
         },
         {
           "path": "references/copilot-tools.md",
           "kind": "reference",
-          "sizeBytes": 1859,
-          "sha256": "9fb400a432d31494c6d764506f04227c4b8d89e27a09f84da9cc2b75998f2db6"
+          "sizeBytes": 2560,
+          "sha256": "9627943f22c8db64ac7fbac3b6e399f73650a5cf3618f7966e802e7fa58d4595"
         },
         {
           "path": "references/gemini-tools.md",
           "kind": "reference",
-          "sizeBytes": 2934,
-          "sha256": "a66092fb2dd2c69b6b6d1098feaf456614521fd7b887cf7cb4160c8040ed1d62"
+          "sizeBytes": 4598,
+          "sha256": "62b9157bcb0ee3c6784e3d0da0798ddfa5872f9e0c34bea48f3079dabea71965"
+        },
+        {
+          "path": "references/pi-tools.md",
+          "kind": "reference",
+          "sizeBytes": 2035,
+          "sha256": "e89e2d5c7b89cdd2a511aa7ad3c191290baaaed8913006c30f283ac7c4b091fb"
         }
       ],
-      "contentHash": "sha256:5e46ca6170de15c3ba8b1b2bbef5d533fcc33e2ddeaf42249c5e3686f5387aee",
+      "contentHash": "sha256:ce61d24d26290377b0647aa4ed1845c131001497ff2e4111186daefbbeb2fe5a",
       "source": {
         "type": "github",
         "hostname": "github.com",
         "owner": "obra",
         "repo": "superpowers",
         "ref": "main",
-        "commit": "6fd4507659784c351abbd2bc264c7162cfd386dc",
+        "commit": "896224c4b1879920ab573417e68fd51d2ccc9072",
         "path": "skills/using-superpowers",
         "url": "https://github.com/obra/superpowers/tree/main/skills/using-superpowers"
       }
@@ -1545,7 +3078,7 @@
         "owner": "obra",
         "repo": "superpowers",
         "ref": "main",
-        "commit": "6fd4507659784c351abbd2bc264c7162cfd386dc",
+        "commit": "896224c4b1879920ab573417e68fd51d2ccc9072",
         "path": "skills/verification-before-completion",
         "url": "https://github.com/obra/superpowers/tree/main/skills/verification-before-completion"
       }
@@ -1579,24 +3112,24 @@
         {
           "path": "SKILL.md",
           "kind": "skill",
-          "sizeBytes": 6100,
-          "sha256": "4fd4627d2c02367879c0307d7249270bed633317ff9be82e926a6d57bf5d331b"
+          "sizeBytes": 7092,
+          "sha256": "272e1af349f5062c28dc282b3e21b220d58d683a7314a10c455b7432ec91d845"
         },
         {
           "path": "plan-document-reviewer-prompt.md",
           "kind": "markdown",
-          "sizeBytes": 1714,
-          "sha256": "6fce2aa83c63715697e9dd86050c820716100b91efbd9f12bab8477ecc060256"
+          "sizeBytes": 1713,
+          "sha256": "aa728b96aad603c8be28875a4305637f6c984aa81ffcadcb13e743202fa2a0c7"
         }
       ],
-      "contentHash": "sha256:4132cc3bcd994e2748882d69850638cf011377731b3e29d24ea9062e8ed9d599",
+      "contentHash": "sha256:88ef04d578319714d124dcd86485b5960e54307ca314d238736eacf37a1e0d2e",
       "source": {
         "type": "github",
         "hostname": "github.com",
         "owner": "obra",
         "repo": "superpowers",
         "ref": "main",
-        "commit": "6fd4507659784c351abbd2bc264c7162cfd386dc",
+        "commit": "896224c4b1879920ab573417e68fd51d2ccc9072",
         "path": "skills/writing-plans",
         "url": "https://github.com/obra/superpowers/tree/main/skills/writing-plans"
       }
@@ -1631,14 +3164,14 @@
         {
           "path": "SKILL.md",
           "kind": "skill",
-          "sizeBytes": 22624,
-          "sha256": "38ba648975ae6ba512d6695676f146163db61a496b867f716f4bdfb0ee3aca3e"
+          "sizeBytes": 26852,
+          "sha256": "f01f666a4426ce800d40649704104c252e6607c196656e5ce6a28e9f51650f3a"
         },
         {
           "path": "anthropic-best-practices.md",
           "kind": "markdown",
-          "sizeBytes": 45820,
-          "sha256": "20914c2fda31670c75fe91710e18a53d413ce0d00b5102acfa251d75c9226e3f"
+          "sizeBytes": 46197,
+          "sha256": "217629b356c09c9bd11017c9788e8fc654ca1b32c92d4a51cd490e16dd65e59a"
         },
         {
           "path": "examples/CLAUDE_MD_TESTING.md",
@@ -1655,8 +3188,8 @@
         {
           "path": "persuasion-principles.md",
           "kind": "markdown",
-          "sizeBytes": 5908,
-          "sha256": "c3c84f572a51dd8b6d4fc6e5cbdc2bc3b9e07ba381a45bdabfce7ad2894dd828"
+          "sizeBytes": 5901,
+          "sha256": "a51bc9bf75189ea73a27b3fb504a2fdfdb966fb1f7f1cdf03203230a216ccc03"
         },
         {
           "path": "render-graphs.js",
@@ -1671,14 +3204,14 @@
           "sha256": "c711346852c911b24a84aa161e0cff06a4cd7f4e2fa9e9c0a266cead5afcbade"
         }
       ],
-      "contentHash": "sha256:c28f74d55307389e63d31eaa546567c0cc300b9d2cb962013667ea32966366bc",
+      "contentHash": "sha256:2b37c316b86945db40197a755b7180da6bd8c9ce970cd81305a753c2d923d713",
       "source": {
         "type": "github",
         "hostname": "github.com",
         "owner": "obra",
         "repo": "superpowers",
         "ref": "main",
-        "commit": "6fd4507659784c351abbd2bc264c7162cfd386dc",
+        "commit": "896224c4b1879920ab573417e68fd51d2ccc9072",
         "path": "skills/writing-skills",
         "url": "https://github.com/obra/superpowers/tree/main/skills/writing-skills"
       }

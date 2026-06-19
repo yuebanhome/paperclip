@@ -1,0 +1,27 @@
+{
+  "source": {
+    "type": "github",
+    "hostname": "github.com",
+    "owner": "mattpocock",
+    "repo": "skills",
+    "ref": "main",
+    "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+    "path": "skills/productivity/writing-great-skills",
+    "localPath": "/Users/hewenyu/code/share/mattpocock-skills/skills/productivity/writing-great-skills"
+  },
+  "files": [
+    "SKILL.md",
+    "GLOSSARY.md"
+  ],
+  "defaultInstall": false,
+  "recommendedForRoles": [
+    "manager",
+    "engineer"
+  ],
+  "requires": [],
+  "tags": [
+    "matt-pocock",
+    "productivity",
+    "writing-great-skills"
+  ]
+}

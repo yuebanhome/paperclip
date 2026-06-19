@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "@paperclipai/teams-catalog",
   "packageVersion": "0.1.0",
-  "generatedAt": "2026-06-04T18:03:41.262Z",
+  "generatedAt": "2026-06-19T14:45:24.759Z",
   "teams": [
     {
       "id": "paperclipai:bundled:company-defaults:core-exec-team",
@@ -11,7 +11,7 @@
       "category": "company-defaults",
       "slug": "core-exec-team",
       "name": "Core Exec Team",
-      "description": "Default leadership and engineering team for bootstrapping a Paperclip company with a CEO, CTO, QA Engineer, starter project, and a recurring CEO heartbeat review task.",
+      "description": "Default leadership and execution team for bootstrapping a Paperclip company with CEO, CTO, Product Lead, UX Designer, QA, starter project, and a recurring CEO heartbeat review task.",
       "path": "catalog/bundled/company-defaults/core-exec-team",
       "entrypoint": "TEAM.md",
       "schema": "agentcompanies/v1",
@@ -28,12 +28,12 @@
         "qa"
       ],
       "counts": {
-        "agents": 3,
+        "agents": 5,
         "projects": 1,
         "tasks": 0,
         "routines": 1,
         "localSkills": 0,
-        "catalogSkills": 4,
+        "catalogSkills": 28,
         "externalSkillSources": 0
       },
       "rootAgentSlugs": [
@@ -42,12 +42,99 @@
       "agentSlugs": [
         "ceo",
         "cto",
-        "qa"
+        "product-lead",
+        "qa",
+        "ux-designer"
       ],
       "projectSlugs": [
         "first-project"
       ],
       "requiredSkills": [
+        {
+          "type": "catalog",
+          "ref": "ask-matt",
+          "agentSlugs": [
+            "cto"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:matt-engineering:ask-matt",
+          "catalogSkillKey": "paperclipai/optional/matt-engineering/ask-matt"
+        },
+        {
+          "type": "catalog",
+          "ref": "brainstorming",
+          "agentSlugs": [
+            "product-lead",
+            "ux-designer"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:brainstorming",
+          "catalogSkillKey": "paperclipai/optional/superpowers/brainstorming"
+        },
+        {
+          "type": "catalog",
+          "ref": "codebase-design",
+          "agentSlugs": [
+            "cto"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:matt-engineering:codebase-design",
+          "catalogSkillKey": "paperclipai/optional/matt-engineering/codebase-design"
+        },
+        {
+          "type": "catalog",
+          "ref": "codegraph-impact-analysis",
+          "agentSlugs": [
+            "cto",
+            "product-lead",
+            "qa",
+            "ux-designer"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:bundled:software-development:codegraph-impact-analysis",
+          "catalogSkillKey": "paperclipai/bundled/software-development/codegraph-impact-analysis"
+        },
+        {
+          "type": "catalog",
+          "ref": "decision-mapping",
+          "agentSlugs": [
+            "product-lead"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:matt-in-progress:decision-mapping",
+          "catalogSkillKey": "paperclipai/optional/matt-in-progress/decision-mapping"
+        },
+        {
+          "type": "catalog",
+          "ref": "design-critique",
+          "agentSlugs": [
+            "ux-designer"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:product:design-critique",
+          "catalogSkillKey": "paperclipai/optional/product/design-critique"
+        },
+        {
+          "type": "catalog",
+          "ref": "dispatching-parallel-agents",
+          "agentSlugs": [
+            "ceo",
+            "cto"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:dispatching-parallel-agents",
+          "catalogSkillKey": "paperclipai/optional/superpowers/dispatching-parallel-agents"
+        },
+        {
+          "type": "catalog",
+          "ref": "domain-modeling",
+          "agentSlugs": [
+            "cto"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:matt-engineering:domain-modeling",
+          "catalogSkillKey": "paperclipai/optional/matt-engineering/domain-modeling"
+        },
         {
           "type": "catalog",
           "ref": "github-pr-workflow",
@@ -57,6 +144,26 @@
           "resolved": true,
           "catalogSkillId": "paperclipai:bundled:software-development:github-pr-workflow",
           "catalogSkillKey": "paperclipai/bundled/software-development/github-pr-workflow"
+        },
+        {
+          "type": "catalog",
+          "ref": "handoff",
+          "agentSlugs": [
+            "product-lead"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:matt-productivity:handoff",
+          "catalogSkillKey": "paperclipai/optional/matt-productivity/handoff"
+        },
+        {
+          "type": "catalog",
+          "ref": "improve-codebase-architecture",
+          "agentSlugs": [
+            "cto"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:matt-engineering:improve-codebase-architecture",
+          "catalogSkillKey": "paperclipai/optional/matt-engineering/improve-codebase-architecture"
         },
         {
           "type": "catalog",
@@ -80,14 +187,169 @@
         },
         {
           "type": "catalog",
+          "ref": "receiving-code-review",
+          "agentSlugs": [
+            "cto",
+            "qa"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:receiving-code-review",
+          "catalogSkillKey": "paperclipai/optional/superpowers/receiving-code-review"
+        },
+        {
+          "type": "catalog",
+          "ref": "requesting-code-review",
+          "agentSlugs": [
+            "cto"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:requesting-code-review",
+          "catalogSkillKey": "paperclipai/optional/superpowers/requesting-code-review"
+        },
+        {
+          "type": "catalog",
+          "ref": "review",
+          "agentSlugs": [
+            "cto"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:matt-in-progress:review",
+          "catalogSkillKey": "paperclipai/optional/matt-in-progress/review"
+        },
+        {
+          "type": "catalog",
+          "ref": "subagent-driven-development",
+          "agentSlugs": [
+            "cto"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:subagent-driven-development",
+          "catalogSkillKey": "paperclipai/optional/superpowers/subagent-driven-development"
+        },
+        {
+          "type": "catalog",
+          "ref": "systematic-debugging",
+          "agentSlugs": [
+            "qa"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:systematic-debugging",
+          "catalogSkillKey": "paperclipai/optional/superpowers/systematic-debugging"
+        },
+        {
+          "type": "catalog",
           "ref": "task-planning",
           "agentSlugs": [
             "ceo",
-            "cto"
+            "cto",
+            "product-lead",
+            "ux-designer"
           ],
           "resolved": true,
           "catalogSkillId": "paperclipai:bundled:paperclip-operations:task-planning",
           "catalogSkillKey": "paperclipai/bundled/paperclip-operations/task-planning"
+        },
+        {
+          "type": "catalog",
+          "ref": "test-driven-development",
+          "agentSlugs": [
+            "qa"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:test-driven-development",
+          "catalogSkillKey": "paperclipai/optional/superpowers/test-driven-development"
+        },
+        {
+          "type": "catalog",
+          "ref": "to-issues",
+          "agentSlugs": [
+            "cto",
+            "product-lead"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:matt-engineering:to-issues",
+          "catalogSkillKey": "paperclipai/optional/matt-engineering/to-issues"
+        },
+        {
+          "type": "catalog",
+          "ref": "to-prd",
+          "agentSlugs": [
+            "product-lead"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:matt-engineering:to-prd",
+          "catalogSkillKey": "paperclipai/optional/matt-engineering/to-prd"
+        },
+        {
+          "type": "catalog",
+          "ref": "trellis-development-workflow",
+          "agentSlugs": [
+            "cto",
+            "product-lead",
+            "qa",
+            "ux-designer"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:bundled:software-development:trellis-development-workflow",
+          "catalogSkillKey": "paperclipai/bundled/software-development/trellis-development-workflow"
+        },
+        {
+          "type": "catalog",
+          "ref": "using-git-worktrees",
+          "agentSlugs": [
+            "cto"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:using-git-worktrees",
+          "catalogSkillKey": "paperclipai/optional/superpowers/using-git-worktrees"
+        },
+        {
+          "type": "catalog",
+          "ref": "using-superpowers",
+          "agentSlugs": [
+            "ceo",
+            "cto",
+            "product-lead",
+            "qa",
+            "ux-designer"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:using-superpowers",
+          "catalogSkillKey": "paperclipai/optional/superpowers/using-superpowers"
+        },
+        {
+          "type": "catalog",
+          "ref": "verification-before-completion",
+          "agentSlugs": [
+            "cto",
+            "qa"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:verification-before-completion",
+          "catalogSkillKey": "paperclipai/optional/superpowers/verification-before-completion"
+        },
+        {
+          "type": "catalog",
+          "ref": "wireframe",
+          "agentSlugs": [
+            "ux-designer"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:bundled:product:wireframe",
+          "catalogSkillKey": "paperclipai/bundled/product/wireframe"
+        },
+        {
+          "type": "catalog",
+          "ref": "writing-plans",
+          "agentSlugs": [
+            "ceo",
+            "cto",
+            "product-lead",
+            "ux-designer"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:writing-plans",
+          "catalogSkillKey": "paperclipai/optional/superpowers/writing-plans"
         }
       ],
       "envInputs": [],
@@ -96,26 +358,38 @@
         {
           "path": "TEAM.md",
           "kind": "team",
-          "sizeBytes": 2144,
-          "sha256": "4ab4f57f147e89a56a6753755d7ef142d91741b3c0159f2e53fb333cd2779eaf"
+          "sizeBytes": 3614,
+          "sha256": "c321e7d99a0600f5999c619b78915e4c0279ffe437daba6f783be51407686f7e"
         },
         {
           "path": "agents/ceo/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 2492,
-          "sha256": "50f580c51807762265f09c6fe7bf32d7701d64caeb30595bfd577b2f5087c21b"
+          "sizeBytes": 3369,
+          "sha256": "1d7b840642b9befb9d4b3e045ef83a3f98ea71968a26491a1db49edf261947c8"
         },
         {
           "path": "agents/cto/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 1449,
-          "sha256": "596e2e9fe08d7368b3b0cfe72c2635ea80444d92a2c0414157bfb0a17773fcaf"
+          "sizeBytes": 2679,
+          "sha256": "d0cb1f45c5b478eeff1c8b7b09012be6d97f45320f98ac433dd5844107bb1ac7"
+        },
+        {
+          "path": "agents/product-lead/AGENTS.md",
+          "kind": "agent",
+          "sizeBytes": 2524,
+          "sha256": "e38694f30b66fe9b608599401ba09de5d671936d15d7d4b69d3de569c5d3e513"
         },
         {
           "path": "agents/qa/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 1307,
-          "sha256": "2a139b88b4b98516048395c569c1bc74fd31cdc2da65db410e9779b8d92c0343"
+          "sizeBytes": 1506,
+          "sha256": "0b98e7b7dfe3660e79be16f3683c77c2efa68a96e13e5f413bce855ed3e1d1c3"
+        },
+        {
+          "path": "agents/ux-designer/AGENTS.md",
+          "kind": "agent",
+          "sizeBytes": 1810,
+          "sha256": "8054382eda564b3923b621ca2646d65edd5cc848d8120d549447f7993d74296b"
         },
         {
           "path": "projects/first-project/PROJECT.md",
@@ -132,7 +406,7 @@
       ],
       "trustLevel": "markdown_only",
       "compatibility": "compatible",
-      "contentHash": "sha256:0f20e9d56124c1dc90a1e4b128fabd863538bcc935117220f719d9620f7c89f1"
+      "contentHash": "sha256:ce4376816edb5762c1cfc1292006eb9d262dc56c147f0c3df1aafee2571fc784"
     },
     {
       "id": "paperclipai:bundled:product:product-design",
@@ -267,7 +541,7 @@
         "tasks": 0,
         "routines": 1,
         "localSkills": 0,
-        "catalogSkills": 4,
+        "catalogSkills": 26,
         "externalSkillSources": 0
       },
       "rootAgentSlugs": [
@@ -284,6 +558,48 @@
       "requiredSkills": [
         {
           "type": "catalog",
+          "ref": "codebase-design",
+          "agentSlugs": [
+            "cto"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:matt-engineering:codebase-design",
+          "catalogSkillKey": "paperclipai/optional/matt-engineering/codebase-design"
+        },
+        {
+          "type": "catalog",
+          "ref": "codegraph-impact-analysis",
+          "agentSlugs": [
+            "cto",
+            "qa",
+            "senior-coder"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:bundled:software-development:codegraph-impact-analysis",
+          "catalogSkillKey": "paperclipai/bundled/software-development/codegraph-impact-analysis"
+        },
+        {
+          "type": "catalog",
+          "ref": "diagnosing-bugs",
+          "agentSlugs": [
+            "senior-coder"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:matt-engineering:diagnosing-bugs",
+          "catalogSkillKey": "paperclipai/optional/matt-engineering/diagnosing-bugs"
+        },
+        {
+          "type": "catalog",
+          "ref": "dispatching-parallel-agents",
+          "agentSlugs": [
+            "cto"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:dispatching-parallel-agents",
+          "catalogSkillKey": "paperclipai/optional/superpowers/dispatching-parallel-agents"
+        },
+        {
+          "type": "catalog",
           "ref": "doc-maintenance",
           "agentSlugs": [
             "cto",
@@ -292,6 +608,36 @@
           "resolved": true,
           "catalogSkillId": "paperclipai:bundled:docs:doc-maintenance",
           "catalogSkillKey": "paperclipai/bundled/docs/doc-maintenance"
+        },
+        {
+          "type": "catalog",
+          "ref": "domain-modeling",
+          "agentSlugs": [
+            "cto"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:matt-engineering:domain-modeling",
+          "catalogSkillKey": "paperclipai/optional/matt-engineering/domain-modeling"
+        },
+        {
+          "type": "catalog",
+          "ref": "executing-plans",
+          "agentSlugs": [
+            "senior-coder"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:executing-plans",
+          "catalogSkillKey": "paperclipai/optional/superpowers/executing-plans"
+        },
+        {
+          "type": "catalog",
+          "ref": "finishing-a-development-branch",
+          "agentSlugs": [
+            "senior-coder"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:finishing-a-development-branch",
+          "catalogSkillKey": "paperclipai/optional/superpowers/finishing-a-development-branch"
         },
         {
           "type": "catalog",
@@ -306,6 +652,26 @@
         },
         {
           "type": "catalog",
+          "ref": "handoff",
+          "agentSlugs": [
+            "senior-coder"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:matt-productivity:handoff",
+          "catalogSkillKey": "paperclipai/optional/matt-productivity/handoff"
+        },
+        {
+          "type": "catalog",
+          "ref": "improve-codebase-architecture",
+          "agentSlugs": [
+            "cto"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:matt-engineering:improve-codebase-architecture",
+          "catalogSkillKey": "paperclipai/optional/matt-engineering/improve-codebase-architecture"
+        },
+        {
+          "type": "catalog",
           "ref": "qa-acceptance",
           "agentSlugs": [
             "qa"
@@ -316,6 +682,59 @@
         },
         {
           "type": "catalog",
+          "ref": "receiving-code-review",
+          "agentSlugs": [
+            "cto",
+            "qa",
+            "senior-coder"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:receiving-code-review",
+          "catalogSkillKey": "paperclipai/optional/superpowers/receiving-code-review"
+        },
+        {
+          "type": "catalog",
+          "ref": "requesting-code-review",
+          "agentSlugs": [
+            "cto"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:requesting-code-review",
+          "catalogSkillKey": "paperclipai/optional/superpowers/requesting-code-review"
+        },
+        {
+          "type": "catalog",
+          "ref": "review",
+          "agentSlugs": [
+            "cto"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:matt-in-progress:review",
+          "catalogSkillKey": "paperclipai/optional/matt-in-progress/review"
+        },
+        {
+          "type": "catalog",
+          "ref": "subagent-driven-development",
+          "agentSlugs": [
+            "cto"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:subagent-driven-development",
+          "catalogSkillKey": "paperclipai/optional/superpowers/subagent-driven-development"
+        },
+        {
+          "type": "catalog",
+          "ref": "systematic-debugging",
+          "agentSlugs": [
+            "qa",
+            "senior-coder"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:systematic-debugging",
+          "catalogSkillKey": "paperclipai/optional/superpowers/systematic-debugging"
+        },
+        {
+          "type": "catalog",
           "ref": "task-planning",
           "agentSlugs": [
             "cto"
@@ -323,6 +742,94 @@
           "resolved": true,
           "catalogSkillId": "paperclipai:bundled:paperclip-operations:task-planning",
           "catalogSkillKey": "paperclipai/bundled/paperclip-operations/task-planning"
+        },
+        {
+          "type": "catalog",
+          "ref": "tdd",
+          "agentSlugs": [
+            "senior-coder"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:matt-engineering:tdd",
+          "catalogSkillKey": "paperclipai/optional/matt-engineering/tdd"
+        },
+        {
+          "type": "catalog",
+          "ref": "test-driven-development",
+          "agentSlugs": [
+            "qa",
+            "senior-coder"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:test-driven-development",
+          "catalogSkillKey": "paperclipai/optional/superpowers/test-driven-development"
+        },
+        {
+          "type": "catalog",
+          "ref": "to-issues",
+          "agentSlugs": [
+            "cto"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:matt-engineering:to-issues",
+          "catalogSkillKey": "paperclipai/optional/matt-engineering/to-issues"
+        },
+        {
+          "type": "catalog",
+          "ref": "trellis-development-workflow",
+          "agentSlugs": [
+            "cto",
+            "qa",
+            "senior-coder"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:bundled:software-development:trellis-development-workflow",
+          "catalogSkillKey": "paperclipai/bundled/software-development/trellis-development-workflow"
+        },
+        {
+          "type": "catalog",
+          "ref": "using-git-worktrees",
+          "agentSlugs": [
+            "cto",
+            "senior-coder"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:using-git-worktrees",
+          "catalogSkillKey": "paperclipai/optional/superpowers/using-git-worktrees"
+        },
+        {
+          "type": "catalog",
+          "ref": "using-superpowers",
+          "agentSlugs": [
+            "cto",
+            "qa",
+            "senior-coder"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:using-superpowers",
+          "catalogSkillKey": "paperclipai/optional/superpowers/using-superpowers"
+        },
+        {
+          "type": "catalog",
+          "ref": "verification-before-completion",
+          "agentSlugs": [
+            "cto",
+            "qa",
+            "senior-coder"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:verification-before-completion",
+          "catalogSkillKey": "paperclipai/optional/superpowers/verification-before-completion"
+        },
+        {
+          "type": "catalog",
+          "ref": "writing-plans",
+          "agentSlugs": [
+            "cto"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:superpowers:writing-plans",
+          "catalogSkillKey": "paperclipai/optional/superpowers/writing-plans"
         }
       ],
       "envInputs": [],
@@ -331,8 +838,8 @@
         {
           "path": "TEAM.md",
           "kind": "team",
-          "sizeBytes": 2583,
-          "sha256": "7204eeef78a48714dd3f82b82e171a4039adc6325e91a6bdf51a442105ee33b0"
+          "sizeBytes": 3644,
+          "sha256": "c49b76fe7518e5583add58165d812c964117887f03ba4d26768bf8ed0fed2e56"
         },
         {
           "path": ".paperclip.yaml",
@@ -343,20 +850,20 @@
         {
           "path": "agents/cto/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 1499,
-          "sha256": "0a1a73ec9e5008056bca0a26325131ded2fcf4c4680a5014ba1e13400b32c173"
+          "sizeBytes": 2607,
+          "sha256": "4d78e7ecfa059c0e1f3241951a56daf48e7d21fa717b893e9c1604841c79cf85"
         },
         {
           "path": "agents/qa/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 1223,
-          "sha256": "2d5738f831aa772befa3471c844a0c9e611584be668e3ec82580ca9e92dc13fc"
+          "sizeBytes": 1859,
+          "sha256": "654df7de63add3027164980470277a984d49a128d8caa7f704e7ff1f4c01d30a"
         },
         {
           "path": "agents/senior-coder/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 1413,
-          "sha256": "b61071518755d9e584c099ae2082c7a78448d09586093ee91393082fe10872b5"
+          "sizeBytes": 2158,
+          "sha256": "725f5362f3a34ab39f7c456c95ac2b88579108b6603cc738b05ae51530614826"
         },
         {
           "path": "projects/product-engineering/PROJECT.md",
@@ -373,7 +880,7 @@
       ],
       "trustLevel": "assets",
       "compatibility": "compatible",
-      "contentHash": "sha256:74ddeaeb11805835a4a67fc4530b048ab7f8aa1dc7d2b80acea139a933d158d3"
+      "contentHash": "sha256:a35ccebf763e9011bd42d99909ce8b6474f005b243baf5be4237e0561578b64b"
     },
     {
       "id": "paperclipai:optional:content:content-machine",

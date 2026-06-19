@@ -1527,6 +1527,16 @@ export function resolveModelProfileApplication(input: {
   }
 
   const runtimeProfile = readAgentRuntimeModelProfile(input.agentRuntimeConfig, requested);
+  if (!runtimeProfile.configured) {
+    return {
+      requested,
+      requestedBy,
+      applied: null,
+      configSource: null,
+      fallbackReason: "agent_runtime_profile_not_configured",
+      adapterConfig: null,
+    };
+  }
   if (!runtimeProfile.enabled) {
     return {
       requested,

@@ -1,0 +1,158 @@
+# Trellis Configuration
+# Project-level settings for the Trellis workflow system
+#
+# All values have sensible defaults. Only override what you need.
+
+#-------------------------------------------------------------------------------
+# Session Recording
+#-------------------------------------------------------------------------------
+
+# Commit message used when auto-committing journal/index changes
+# after running add_session.py
+session_commit_message: "chore: record journal"
+
+# Maximum lines per journal file before rotating to a new one
+max_journal_lines: 2000
+
+#-------------------------------------------------------------------------------
+# Session Auto-Commit
+#-------------------------------------------------------------------------------
+
+# Auto-commit behavior for session journal + task archive operations.
+# - true (default): scripts auto-stage and auto-commit journal / task changes
+#   after add_session.py / task.py archive runs.
+# - false: scripts do not touch git. Files (journal-*.md, task archive moves)
+#   are still written to disk; you decide whether to git add / commit.
+#
+# Use `false` if your project's .gitignore intentionally excludes `.trellis/`
+# and you want session data kept local-only, or if you prefer to review
+# staged changes manually before each commit.
+#
+# Accepts: true / false / yes / no / 1 / 0 / on / off (case-insensitive).
+#
+# session_auto_commit: true
+
+#-------------------------------------------------------------------------------
+# Task Lifecycle Hooks
+#-------------------------------------------------------------------------------
+
+# Shell commands to run after task lifecycle events.
+# Each hook receives TASK_JSON_PATH environment variable pointing to task.json.
+# Hook failures print a warning but do not block the main operation.
+#
+# hooks:
+#   after_create:
+#     - "echo 'Task created'"
+#   after_start:
+#     - "echo 'Task started'"
+#   after_finish:
+#     - "echo 'Task finished'"
+#   after_archive:
+#     - "echo 'Task archived'"
+
+#-------------------------------------------------------------------------------
+# Monorepo / Packages
+#-------------------------------------------------------------------------------
+
+# Declare packages for monorepo projects.
+# Trellis auto-detects workspaces during `trellis init`, but you can also
+# configure them manually here.
+#
+# packages:
+#   frontend:
+#     path: packages/frontend
+#   backend:
+#     path: packages/backend
+#   docs:
+#     path: docs-site
+#     type: submodule
+#   # For polyrepo / meta-repo layouts (independent .git in each subdir),
+#   # mark the package with `git: true`. The runtime treats it as an
+#   # independent repository for things like git-context display.
+#   webapp:
+#     path: ./webapp
+#     git: true
+
+# Default package used when --package is not specified.
+# default_package: frontend
+
+#-------------------------------------------------------------------------------
+# Codex (dispatch behavior)
+#-------------------------------------------------------------------------------
+# Codex-only knob; other platforms ignore it. Default ("inline") makes the
+# main Codex agent edit code directly because Codex sub-agents run with
+# `fork_turns="none"` isolation and can't inherit the parent session's
+# task context. Set to "sub-agent" to opt into the legacy dispatch model
+# (main agent spawns trellis-implement / trellis-check / trellis-research
+# sub-agents).
+#
+# codex:
+#   dispatch_mode: inline  # or "sub-agent" to dispatch trellis-* sub-agents
+
+# Auto-detected monorepo packages
+packages:
+  adapter-utils:
+    path: packages/adapter-utils
+  adapters:
+    path: packages/adapters
+  db:
+    path: packages/db
+  mcp-server:
+    path: packages/mcp-server
+  plugins:
+    path: packages/plugins
+  shared:
+    path: packages/shared
+  skills-catalog:
+    path: packages/skills-catalog
+  teams-catalog:
+    path: packages/teams-catalog
+  adapter-acpx-local:
+    path: packages/adapters/acpx-local
+  adapter-claude-local:
+    path: packages/adapters/claude-local
+  adapter-codex-local:
+    path: packages/adapters/codex-local
+  adapter-cursor-cloud:
+    path: packages/adapters/cursor-cloud
+  adapter-cursor-local:
+    path: packages/adapters/cursor-local
+  adapter-gemini-local:
+    path: packages/adapters/gemini-local
+  adapter-grok-local:
+    path: packages/adapters/grok-local
+  adapter-openclaw-gateway:
+    path: packages/adapters/openclaw-gateway
+  adapter-opencode-local:
+    path: packages/adapters/opencode-local
+  adapter-pi-local:
+    path: packages/adapters/pi-local
+  create-paperclip-plugin:
+    path: packages/plugins/create-paperclip-plugin
+  examples:
+    path: packages/plugins/examples
+  plugin-fake-sandbox:
+    path: packages/plugins/paperclip-plugin-fake-sandbox
+  plugin-llm-wiki:
+    path: packages/plugins/plugin-llm-wiki
+  plugin-workspace-diff:
+    path: packages/plugins/plugin-workspace-diff
+  sandbox-providers:
+    path: packages/plugins/sandbox-providers
+  plugin-sdk:
+    path: packages/plugins/sdk
+  plugin-authoring-smoke-example:
+    path: packages/plugins/examples/plugin-authoring-smoke-example
+  plugin-file-browser-example:
+    path: packages/plugins/examples/plugin-file-browser-example
+  plugin-hello-world-example:
+    path: packages/plugins/examples/plugin-hello-world-example
+  plugin-kitchen-sink-example:
+    path: packages/plugins/examples/plugin-kitchen-sink-example
+  server:
+    path: server
+  ui:
+    path: ui
+  paperclipai:
+    path: cli
+default_package: @paperclipai/adapter-utils

@@ -5,13 +5,14 @@
     "owner": "obra",
     "repo": "superpowers",
     "ref": "main",
-    "commit": "6fd4507659784c351abbd2bc264c7162cfd386dc",
-    "path": "skills/writing-skills"
+    "commit": "896224c4b1879920ab573417e68fd51d2ccc9072",
+    "path": "skills/writing-skills",
+    "localPath": "/Users/hewenyu/code/paperclip/packages/skills-catalog/catalog/.sources/obra-superpowers/writing-skills"
   },
   "files": [
     "SKILL.md",
     "anthropic-best-practices.md",
-    "examples/**",
+    "examples/CLAUDE_MD_TESTING.md",
     "graphviz-conventions.dot",
     "persuasion-principles.md",
     "render-graphs.js",

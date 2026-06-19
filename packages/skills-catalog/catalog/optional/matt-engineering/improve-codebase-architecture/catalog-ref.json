@@ -1,0 +1,26 @@
+{
+  "source": {
+    "type": "github",
+    "hostname": "github.com",
+    "owner": "mattpocock",
+    "repo": "skills",
+    "ref": "main",
+    "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+    "path": "skills/engineering/improve-codebase-architecture",
+    "localPath": "/Users/hewenyu/code/share/mattpocock-skills/skills/engineering/improve-codebase-architecture"
+  },
+  "files": [
+    "SKILL.md",
+    "HTML-REPORT.md"
+  ],
+  "defaultInstall": false,
+  "recommendedForRoles": [
+    "engineer"
+  ],
+  "requires": [],
+  "tags": [
+    "matt-pocock",
+    "engineering",
+    "improve-codebase-architecture"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "source": {
+    "type": "github",
+    "hostname": "github.com",
+    "owner": "mattpocock",
+    "repo": "skills",
+    "ref": "main",
+    "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+    "path": "skills/misc/setup-pre-commit",
+    "localPath": "/Users/hewenyu/code/share/mattpocock-skills/skills/misc/setup-pre-commit"
+  },
+  "files": [
+    "SKILL.md"
+  ],
+  "defaultInstall": false,
+  "recommendedForRoles": [
+    "engineer"
+  ],
+  "requires": [
+    "node"
+  ],
+  "tags": [
+    "matt-pocock",
+    "misc",
+    "setup-pre-commit"
+  ]
+}

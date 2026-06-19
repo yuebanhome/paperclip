@@ -1,0 +1,27 @@
+{
+  "source": {
+    "type": "github",
+    "hostname": "github.com",
+    "owner": "mattpocock",
+    "repo": "skills",
+    "ref": "main",
+    "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+    "path": "skills/in-progress/review",
+    "localPath": "/Users/hewenyu/code/share/mattpocock-skills/skills/in-progress/review"
+  },
+  "files": [
+    "SKILL.md"
+  ],
+  "defaultInstall": false,
+  "recommendedForRoles": [
+    "product",
+    "writer",
+    "engineer"
+  ],
+  "requires": [],
+  "tags": [
+    "matt-pocock",
+    "in-progress",
+    "review"
+  ]
+}

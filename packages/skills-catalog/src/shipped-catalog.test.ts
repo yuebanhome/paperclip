@@ -7,12 +7,44 @@ const EXPECTED_BUNDLED_KEYS = [
   "paperclipai/bundled/paperclip-operations/task-planning",
   "paperclipai/bundled/product/wireframe",
   "paperclipai/bundled/quality/qa-acceptance",
+  "paperclipai/bundled/software-development/codegraph-impact-analysis",
   "paperclipai/bundled/software-development/github-pr-workflow",
+  "paperclipai/bundled/software-development/trellis-development-workflow",
 ];
 
 const EXPECTED_OPTIONAL_KEYS = [
   "paperclipai/optional/browser/agent-browser",
   "paperclipai/optional/content/release-announcement",
+  "paperclipai/optional/matt-engineering/ask-matt",
+  "paperclipai/optional/matt-engineering/codebase-design",
+  "paperclipai/optional/matt-engineering/diagnosing-bugs",
+  "paperclipai/optional/matt-engineering/domain-modeling",
+  "paperclipai/optional/matt-engineering/grill-with-docs",
+  "paperclipai/optional/matt-engineering/implement",
+  "paperclipai/optional/matt-engineering/improve-codebase-architecture",
+  "paperclipai/optional/matt-engineering/prototype",
+  "paperclipai/optional/matt-engineering/resolving-merge-conflicts",
+  "paperclipai/optional/matt-engineering/setup-matt-pocock-skills",
+  "paperclipai/optional/matt-engineering/tdd",
+  "paperclipai/optional/matt-engineering/to-issues",
+  "paperclipai/optional/matt-engineering/to-prd",
+  "paperclipai/optional/matt-engineering/triage",
+  "paperclipai/optional/matt-in-progress/decision-mapping",
+  "paperclipai/optional/matt-in-progress/review",
+  "paperclipai/optional/matt-in-progress/writing-beats",
+  "paperclipai/optional/matt-in-progress/writing-fragments",
+  "paperclipai/optional/matt-in-progress/writing-shape",
+  "paperclipai/optional/matt-misc/git-guardrails-claude-code",
+  "paperclipai/optional/matt-misc/migrate-to-shoehorn",
+  "paperclipai/optional/matt-misc/scaffold-exercises",
+  "paperclipai/optional/matt-misc/setup-pre-commit",
+  "paperclipai/optional/matt-personal/edit-article",
+  "paperclipai/optional/matt-personal/obsidian-vault",
+  "paperclipai/optional/matt-productivity/grill-me",
+  "paperclipai/optional/matt-productivity/grilling",
+  "paperclipai/optional/matt-productivity/handoff",
+  "paperclipai/optional/matt-productivity/teach",
+  "paperclipai/optional/matt-productivity/writing-great-skills",
   "paperclipai/optional/product/design-critique",
   "paperclipai/optional/research/last30days",
   "paperclipai/optional/superpowers/brainstorming",
@@ -52,8 +84,11 @@ describe("shipped skills catalog", () => {
     // carry the "assets" trust level and are installable.
     const scriptBearing = catalogSkills.filter((skill) => skill.trustLevel === "scripts_executables");
     expect(scriptBearing.map((skill) => skill.key)).toEqual([
+      "paperclipai/optional/matt-engineering/diagnosing-bugs",
+      "paperclipai/optional/matt-misc/git-guardrails-claude-code",
       "paperclipai/optional/research/last30days",
       "paperclipai/optional/superpowers/brainstorming",
+      "paperclipai/optional/superpowers/subagent-driven-development",
     ]);
   });
 

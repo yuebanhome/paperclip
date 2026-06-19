@@ -1,0 +1,28 @@
+{
+  "source": {
+    "type": "github",
+    "hostname": "github.com",
+    "owner": "mattpocock",
+    "repo": "skills",
+    "ref": "main",
+    "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+    "path": "skills/misc/git-guardrails-claude-code",
+    "localPath": "/Users/hewenyu/code/share/mattpocock-skills/skills/misc/git-guardrails-claude-code"
+  },
+  "files": [
+    "SKILL.md",
+    "scripts/block-dangerous-git.sh"
+  ],
+  "defaultInstall": false,
+  "recommendedForRoles": [
+    "engineer"
+  ],
+  "requires": [
+    "bash"
+  ],
+  "tags": [
+    "matt-pocock",
+    "misc",
+    "git-guardrails-claude-code"
+  ]
+}

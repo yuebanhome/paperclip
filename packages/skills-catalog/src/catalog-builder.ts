@@ -46,6 +46,7 @@ interface ReferencedGitHubSourceDescriptor {
   ref: string;
   commit: string;
   path: string;
+  localPath?: string;
 }
 
 interface ReferencedSkillDescriptor {
@@ -195,14 +196,15 @@ async function discoverSkillCandidates(packageDir: string, errors: string[]) {
     if (!existsSync(kindDir)) continue;
 
     for (const categoryEntry of await sortedDirEntries(kindDir)) {
-      if (!categoryEntry.isDirectory()) continue;
       const category = categoryEntry.name;
       const categoryDir = path.join(kindDir, category);
+      if (!(await entryResolvesToDirectory(categoryDir))) continue;
 
       for (const slugEntry of await sortedDirEntries(categoryDir)) {
-        if (!slugEntry.isDirectory()) continue;
+        const skillDir = path.join(categoryDir, slugEntry.name);
+        const slugStat = await fs.stat(skillDir).catch(() => null);
+        if (!slugStat?.isDirectory()) continue;
         const slug = slugEntry.name;
-        const skillDir = path.join(categoryDir, slug);
         const hasLocalSkill = existsSync(path.join(skillDir, SKILL_ENTRYPOINT));
         const descriptorPath = path.join(skillDir, CATALOG_REFERENCE_FILE);
         const hasReference = existsSync(descriptorPath);
@@ -230,8 +232,10 @@ async function discoverSkillCandidates(packageDir: string, errors: string[]) {
 async function collectMisplacedSkillFiles(catalogDir: string, errors: string[]) {
   async function visit(dir: string) {
     for (const entry of await sortedDirEntries(dir)) {
+      if (entry.name === ".sources") continue;
       const absolutePath = path.join(dir, entry.name);
-      if (entry.isDirectory()) {
+      const stat = await fs.stat(absolutePath).catch(() => null);
+      if (stat?.isDirectory()) {
         await visit(absolutePath);
         continue;
       }
@@ -333,8 +337,8 @@ async function buildReferencedCatalogSkill(
   const source = buildCatalogSkillSource(descriptor.source, errors, `${prefix}/${CATALOG_REFERENCE_FILE}`);
   if (!source) return null;
 
-  const files = await collectReferencedSkillFiles(source, descriptor.files ?? [SKILL_ENTRYPOINT], prefix, errors);
-  const skillMarkdown = await readReferencedFileText(source, SKILL_ENTRYPOINT, prefix, errors);
+  const files = await collectReferencedSkillFiles(source, descriptor.files ?? [SKILL_ENTRYPOINT], prefix, errors, descriptor.source.localPath);
+  const skillMarkdown = await readReferencedFileText(source, SKILL_ENTRYPOINT, prefix, errors, descriptor.source.localPath);
   if (!skillMarkdown) return null;
 
   const parsed = parseFrontmatterMarkdown(skillMarkdown);
@@ -418,6 +422,7 @@ async function readReferencedSkillDescriptor(
   const ref = asString(sourceRaw.ref);
   const commit = asString(sourceRaw.commit);
   const sourcePath = asString(sourceRaw.path);
+  const localPath = asString(sourceRaw.localPath);
   if (!owner || !repo || !ref || !commit || sourcePath === null) {
     errors.push(`${prefix}/${CATALOG_REFERENCE_FILE} GitHub source must include owner, repo, ref, commit, and path.`);
     return null;
@@ -432,6 +437,7 @@ async function readReferencedSkillDescriptor(
       ref,
       commit,
       path: sourcePath,
+      localPath: localPath ?? undefined,
     },
     defaultInstall: asBoolean(raw.defaultInstall) ?? false,
     files: asStringArray(raw.files ?? undefined) ?? undefined,
@@ -480,9 +486,8 @@ async function collectReferencedSkillFiles(
   includePatterns: string[],
   prefix: string,
   errors: string[],
+  localPath?: string,
 ): Promise<CatalogSkillFile[]> {
-  const tree = await fetchGitHubTree(source, prefix, errors);
-  const sourceRoot = source.path ? `${source.path}/` : "";
   const normalizedPatterns: string[] = [];
   for (const pattern of includePatterns) {
     const normalizedPattern = normalizeReferencedPath(pattern);
@@ -492,6 +497,14 @@ async function collectReferencedSkillFiles(
     }
     if (normalizedPattern) normalizedPatterns.push(normalizedPattern);
   }
+
+  if (localPath) {
+    const localFiles = await collectLocalReferencedSkillFiles(localPath, normalizedPatterns, prefix, errors);
+    if (localFiles) return localFiles;
+  }
+
+  const tree = await fetchGitHubTree(source, prefix, errors);
+  const sourceRoot = source.path ? `${source.path}/` : "";
   const files: CatalogSkillFile[] = [];
 
   for (const entry of tree) {
@@ -514,6 +527,60 @@ async function collectReferencedSkillFiles(
     });
   }
 
+  files.sort((a, b) => {
+    if (a.path === SKILL_ENTRYPOINT) return -1;
+    if (b.path === SKILL_ENTRYPOINT) return 1;
+    return a.path.localeCompare(b.path);
+  });
+  return files;
+}
+
+async function collectLocalReferencedSkillFiles(
+  localPath: string,
+  normalizedPatterns: string[],
+  prefix: string,
+  errors: string[],
+): Promise<CatalogSkillFile[] | null> {
+  const files: CatalogSkillFile[] = [];
+  let localRoot: string;
+  try {
+    localRoot = await fs.realpath(localPath);
+  } catch (error) {
+    return null;
+  }
+
+  async function visit(dir: string) {
+    for (const entry of await sortedDirEntries(dir)) {
+      const absolutePath = path.join(dir, entry.name);
+      const stat = await fs.stat(absolutePath);
+      if (stat.isDirectory()) {
+        await visit(absolutePath);
+        continue;
+      }
+      if (!stat.isFile()) continue;
+
+      const relativePath = toPosixPath(path.relative(localRoot, absolutePath));
+      if (path.isAbsolute(relativePath) || relativePath.split("/").includes("..")) {
+        errors.push(`${prefix}/${relativePath} has an invalid inventory path.`);
+        continue;
+      }
+      if (!normalizedPatterns.some((pattern) => referencedPathMatches(relativePath, pattern))) continue;
+      if (stat.size > MAX_CATALOG_FILE_BYTES) {
+        errors.push(`${prefix}/${relativePath} exceeds ${MAX_CATALOG_FILE_BYTES} bytes.`);
+        continue;
+      }
+
+      const bytes = await fs.readFile(absolutePath);
+      files.push({
+        path: relativePath,
+        kind: classifyCatalogFile(relativePath),
+        sizeBytes: bytes.byteLength,
+        sha256: sha256(bytes),
+      });
+    }
+  }
+
+  await visit(localRoot);
   files.sort((a, b) => {
     if (a.path === SKILL_ENTRYPOINT) return -1;
     if (b.path === SKILL_ENTRYPOINT) return 1;
@@ -548,9 +615,47 @@ async function readReferencedFileText(
   relativePath: string,
   prefix: string,
   errors: string[],
+  localPath?: string,
 ) {
+  if (localPath) {
+    const localText = await readLocalReferencedFileText(localPath, relativePath, prefix, errors);
+    if (localText !== null) return localText;
+  }
   const bytes = await fetchReferencedFileBytes(source, relativePath, prefix, errors);
   return bytes ? bytes.toString("utf8") : null;
+}
+
+async function readLocalReferencedFileText(
+  localPath: string,
+  relativePath: string,
+  prefix: string,
+  errors: string[],
+) {
+  const normalizedPath = normalizeReferencedPath(relativePath);
+  if (!normalizedPath) {
+    errors.push(`${prefix} referenced file path is invalid: ${relativePath}`);
+    return null;
+  }
+
+  let localRoot: string;
+  try {
+    localRoot = await fs.realpath(localPath);
+  } catch (error) {
+    return null;
+  }
+
+  const filePath = path.resolve(localRoot, normalizedPath);
+  if (!isPathInside(localRoot, filePath)) {
+    errors.push(`${prefix}/${normalizedPath} escapes source.localPath.`);
+    return null;
+  }
+
+  try {
+    return await fs.readFile(filePath, "utf8");
+  } catch (error) {
+    errors.push(`${prefix}/${normalizedPath} failed to read source.localPath file: ${errorMessage(error)}.`);
+    return null;
+  }
 }
 
 async function fetchReferencedFileBytes(
@@ -588,29 +693,12 @@ async function collectSkillFiles(
   const skillRoot = await fs.realpath(skillDir);
 
   async function visit(dir: string) {
-    for (const entry of await sortedDirEntries(dir)) {
-      const absolutePath = path.join(dir, entry.name);
-      const lstat = await fs.lstat(absolutePath);
-      let stat = lstat;
-      let realPath = absolutePath;
-
-      if (lstat.isSymbolicLink()) {
-        try {
-          realPath = await fs.realpath(absolutePath);
-          stat = await fs.stat(absolutePath);
-        } catch {
-          errors.push(`${relativePackagePath(packageDir, absolutePath)} is a broken symlink.`);
-          continue;
-        }
-        if (!isPathInside(skillRoot, realPath)) {
-          errors.push(`${relativePackagePath(packageDir, absolutePath)} points outside its skill directory.`);
-          continue;
-        }
-        if (stat.isDirectory()) {
-          errors.push(`${relativePackagePath(packageDir, absolutePath)} is a directory symlink; copy files into the skill directory instead.`);
-          continue;
-        }
-      }
+    const realDir = await fs.realpath(dir);
+    for (const entry of await sortedDirEntries(realDir)) {
+      const realPath = path.join(realDir, entry.name);
+      const stat = await fs.stat(realPath);
+      const relativeToRoot = path.relative(skillRoot, realPath);
+      const absolutePath = path.join(skillDir, relativeToRoot);
 
       if (stat.isDirectory()) {
         await visit(absolutePath);
@@ -627,7 +715,7 @@ async function collectSkillFiles(
         errors.push(`${prefix}/${relativePath} exceeds ${MAX_CATALOG_FILE_BYTES} bytes.`);
       }
 
-      const contents = await fs.readFile(absolutePath);
+      const contents = await fs.readFile(realPath);
       files.push({
         path: relativePath,
         kind: classifyCatalogFile(relativePath),
@@ -725,6 +813,11 @@ function validateSlug(label: string, value: string, prefix: string, errors: stri
 
 async function sortedDirEntries(dir: string) {
   return (await fs.readdir(dir, { withFileTypes: true })).sort((a, b) => a.name.localeCompare(b.name));
+}
+
+async function entryResolvesToDirectory(entryPath: string) {
+  const stat = await fs.stat(entryPath).catch(() => null);
+  return stat?.isDirectory() ?? false;
 }
 
 function sameManifestExceptGeneratedAt(a: CatalogManifest, b: CatalogManifest) {

@@ -620,10 +620,11 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
   // values come straight from CreateConfigValues (cheapModel + cheapModelEnabled).
   const cheapProfileFromAgent = useMemo(() => {
     const profiles = (runtimeConfig.modelProfiles ?? {}) as Record<string, unknown>;
+    const hasCheapProfile = Object.prototype.hasOwnProperty.call(profiles, "cheap");
     const cheap = (profiles.cheap ?? {}) as Record<string, unknown>;
     const cheapAdapterConfig = (cheap.adapterConfig ?? {}) as Record<string, unknown>;
     return {
-      enabled: cheap.enabled !== false,
+      enabled: hasCheapProfile && cheap.enabled !== false,
       model: typeof cheapAdapterConfig.model === "string" ? cheapAdapterConfig.model : "",
     };
   }, [runtimeConfig]);
@@ -1808,8 +1809,8 @@ function CheapModelSection({
   onOpenChange: (open: boolean) => void;
 }) {
   const placeholderHint = adapterDefaultModel
-    ? `Adapter default · ${adapterDefaultModel}`
-    : "No adapter default — choose a cheaper model";
+    ? `Suggested · ${adapterDefaultModel}`
+    : "Choose a cheaper model";
   return (
     <div className="rounded-md border border-border/70 bg-muted/20 p-3 space-y-3">
       <div className="flex items-center justify-between gap-3">
@@ -1840,12 +1841,12 @@ function CheapModelSection({
       ) : null}
       {enabled && !model && adapterDefaultModel ? (
         <p className="text-[11px] text-muted-foreground">
-          No explicit cheap model selected — runtime falls back to <code>{adapterDefaultModel}</code>.
+          No explicit cheap model selected. Pick <code>{adapterDefaultModel}</code> to use the adapter's suggested cheap lane.
         </p>
       ) : null}
       {enabled && !model && !adapterDefaultModel ? (
         <p className="text-[11px] text-amber-500">
-          No cheap model selected and the adapter has no default. Cheap-lane runs will continue on the primary model with a fallback note.
+          No cheap model selected. Cheap-lane runs will continue on the primary model with a fallback note.
         </p>
       ) : null}
     </div>

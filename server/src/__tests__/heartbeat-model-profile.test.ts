@@ -20,7 +20,7 @@ const cheapProfile: AdapterModelProfileDefinition = {
 };
 
 describe("heartbeat model profile application", () => {
-  it("uses the Codex local adapter cheap default when the agent has no runtime override", async () => {
+  it("falls back to the primary config when the agent has no cheap runtime profile configured", async () => {
     const modelProfile = resolveModelProfileApplication({
       adapterModelProfiles: await listAdapterModelProfiles("codex_local"),
       agentRuntimeConfig: {},
@@ -31,20 +31,24 @@ describe("heartbeat model profile application", () => {
     expect(modelProfile).toMatchObject({
       requested: "cheap",
       requestedBy: "issue_override",
-      applied: "cheap",
-      configSource: "adapter_default",
-      fallbackReason: null,
-      adapterConfig: {
-        model: "gpt-5.3-codex-spark",
-        modelReasoningEffort: "high",
-      },
+      applied: null,
+      configSource: null,
+      fallbackReason: "agent_runtime_profile_not_configured",
+      adapterConfig: null,
     });
   });
 
   it("applies cheap profile patches before explicit issue adapter config overrides", () => {
     const modelProfile = resolveModelProfileApplication({
       adapterModelProfiles: [cheapProfile],
-      agentRuntimeConfig: {},
+      agentRuntimeConfig: {
+        modelProfiles: {
+          cheap: {
+            enabled: true,
+            adapterConfig: {},
+          },
+        },
+      },
       issueModelProfile: "cheap",
       contextSnapshot: {},
     });
@@ -65,7 +69,7 @@ describe("heartbeat model profile application", () => {
       requested: "cheap",
       requestedBy: "issue_override",
       applied: "cheap",
-      configSource: "adapter_default",
+      configSource: "agent_runtime",
       fallbackReason: null,
     });
     expect(merged).toEqual({

@@ -21,10 +21,20 @@ tags:
   - qa
   - code-review
 requiredSkills:
+  - paperclipai/bundled/software-development/codegraph-impact-analysis
   - paperclipai/bundled/software-development/github-pr-workflow
+  - paperclipai/bundled/software-development/trellis-development-workflow
   - paperclipai/bundled/quality/qa-acceptance
   - paperclipai/bundled/paperclip-operations/task-planning
   - paperclipai/bundled/docs/doc-maintenance
+  - paperclipai/optional/matt-engineering/codebase-design
+  - paperclipai/optional/matt-engineering/diagnosing-bugs
+  - paperclipai/optional/matt-engineering/domain-modeling
+  - paperclipai/optional/matt-engineering/improve-codebase-architecture
+  - paperclipai/optional/matt-engineering/tdd
+  - paperclipai/optional/matt-engineering/to-issues
+  - paperclipai/optional/matt-in-progress/review
+  - paperclipai/optional/matt-productivity/handoff
 ---
 
 # Product Engineering
@@ -33,7 +43,7 @@ An optional drop-in engineering pod for companies that want a working software-d
 
 ## Contents
 
-- `CTO` — engineering manager and team root. Reviews PRs, owns code-quality standards, and breaks product priorities into engineering tasks.
+- `CTO` — engineering manager and team root. Reviews PRs, owns code-quality standards, critiques ProductLead plans, and breaks approved priorities into engineering tasks.
 - `senior-coder` — primary implementer. Picks up engineering tasks, ships PRs, and asks QA for verification.
 - `QA` — verifies fixes and captures acceptance evidence.
 - `product-engineering` project — the rolling backlog this pod works against.
@@ -42,8 +52,11 @@ An optional drop-in engineering pod for companies that want a working software-d
 ## Skill rationale
 
 - `github-pr-workflow` keeps logical commits, branch hygiene, and merge discipline consistent across the pod.
+- `trellis-development-workflow` keeps planning, implementation, review, and durable spec updates aligned with Trellis-managed repositories.
+- `codegraph-impact-analysis` gives engineering and QA a common graph-backed first pass for exploration, dependency impact, and review triage.
 - `qa-acceptance` gives QA a structured pass/fail format coders can act on.
-- `task-planning` lets the CTO turn larger asks into well-scoped child issues.
+- `task-planning` and `to-issues` let the CTO turn approved plans into well-scoped child issues.
+- Matt engineering skills give the CTO and senior coder practical prompts for codebase design, domain modeling, debugging, TDD, and review.
 - `doc-maintenance` keeps docs aligned with shipped changes — install if the company has any user-facing docs surface.
 
 ## Migration notes

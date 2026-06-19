@@ -135,6 +135,122 @@ describe("skills catalog manifest", () => {
     expect(result.manifest.skills[0]!.contentHash).toMatch(/^sha256:[a-f0-9]{64}$/);
   });
 
+  it("builds pinned GitHub references from a local checkout when localPath is configured", async () => {
+    const packageDir = await createCatalogPackage();
+    const checkoutDir = await fs.mkdtemp(path.join(os.tmpdir(), "skills-catalog-checkout-"));
+    tempDirs.push(checkoutDir);
+    await fs.mkdir(path.join(checkoutDir, "skills", "remote-research", "references"), { recursive: true });
+    await fs.writeFile(
+      path.join(checkoutDir, "skills", "remote-research", "SKILL.md"),
+      [
+        "---",
+        "name: Remote Research",
+        "description: Research recent discussion from a pinned local checkout.",
+        "---",
+        "",
+        "Use this skill.",
+        "",
+      ].join("\n"),
+      "utf8",
+    );
+    await fs.writeFile(
+      path.join(checkoutDir, "skills", "remote-research", "references", "guide.md"),
+      "# Guide\n",
+      "utf8",
+    );
+    await writeReference(packageDir, "optional", "research", "remote-research", {
+      source: {
+        type: "github",
+        hostname: "github.com",
+        owner: "example",
+        repo: "remote-skill",
+        ref: "main",
+        commit: "0123456789abcdef0123456789abcdef01234567",
+        path: "skills/remote-research",
+        localPath: path.join(checkoutDir, "skills", "remote-research"),
+      },
+      files: ["SKILL.md", "references/**"],
+      recommendedForRoles: ["researcher"],
+      tags: ["research"],
+    });
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+
+    const result = await buildCatalogManifest({
+      packageDir,
+      generatedAt: "2026-05-26T00:00:00.000Z",
+    });
+
+    expect(result.errors).toEqual([]);
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(result.manifest.skills[0]).toMatchObject({
+      key: "paperclipai/optional/research/remote-research",
+      source: {
+        owner: "example",
+        repo: "remote-skill",
+        commit: "0123456789abcdef0123456789abcdef01234567",
+      },
+    });
+    expect(result.manifest.skills[0]!.files.map((file) => file.path)).toEqual([
+      "SKILL.md",
+      "references/guide.md",
+    ]);
+  });
+
+  it("allows symlinked local source directories under catalog/.sources", async () => {
+    const packageDir = await createCatalogPackage();
+    const checkoutDir = await fs.mkdtemp(path.join(os.tmpdir(), "skills-catalog-source-"));
+    tempDirs.push(checkoutDir);
+    await fs.mkdir(path.join(checkoutDir, "skills", "source-skill"), { recursive: true });
+    await fs.writeFile(
+      path.join(checkoutDir, "skills", "source-skill", "SKILL.md"),
+      [
+        "---",
+        "name: Source Skill",
+        "description: Skill material loaded through a symlinked local source.",
+        "---",
+        "",
+        "Use this skill.",
+        "",
+      ].join("\n"),
+      "utf8",
+    );
+
+    const sourcesDir = path.join(packageDir, "catalog", ".sources");
+    await fs.mkdir(sourcesDir, { recursive: true });
+    await fs.symlink(path.join(checkoutDir, "skills"), path.join(sourcesDir, "upstream-skills"), "dir");
+    await writeReference(packageDir, "optional", "source", "source-skill", {
+      source: {
+        type: "github",
+        hostname: "github.com",
+        owner: "example",
+        repo: "source-skills",
+        ref: "main",
+        commit: "0123456789abcdef0123456789abcdef01234567",
+        path: "skills/source-skill",
+        localPath: path.join(sourcesDir, "upstream-skills", "source-skill"),
+      },
+      files: ["SKILL.md"],
+      recommendedForRoles: ["engineer"],
+      tags: ["workflow"],
+    });
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+
+    const result = await buildCatalogManifest({
+      packageDir,
+      generatedAt: "2026-05-26T00:00:00.000Z",
+    });
+
+    expect(result.errors).toEqual([]);
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(result.manifest.skills[0]).toMatchObject({
+      key: "paperclipai/optional/source/source-skill",
+      name: "Source Skill",
+      trustLevel: "markdown_only",
+    });
+  });
+
   it("reports frontmatter, directory, uniqueness, and inventory errors together", async () => {
     const packageDir = await createCatalogPackage();
     await writeSkill(packageDir, "bundled", "Bad_Category", "duplicate", {

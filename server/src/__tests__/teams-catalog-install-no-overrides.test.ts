@@ -65,7 +65,7 @@ describeEmbeddedPostgres("teams catalog install with no caller adapter overrides
     return new Map(rows.map((row) => [row.name, row]));
   }
 
-  it("installs core-exec-team end-to-end with no caller overrides and creates 3 claude_local agents", async () => {
+  it("installs core-exec-team end-to-end with no caller overrides and creates role-aware local agents", async () => {
     const companyId = await seedEmptyCompany();
     const svc = teamsCatalogService(db);
 
@@ -75,15 +75,19 @@ describeEmbeddedPostgres("teams catalog install with no caller adapter overrides
     });
 
     const byName = await listAdapterTypesByName(companyId);
-    expect(byName.size).toBe(3);
+    expect(byName.size).toBe(5);
 
+    expect(byName.get("CEO")?.adapterType).toBe("codex_local");
+    expect(byName.get("CTO")?.adapterType).toBe("codex_local");
+    expect(byName.get("ProductLead")?.adapterType).toBe("claude_local");
+    expect(byName.get("UXDesigner")?.adapterType).toBe("codex_local");
+    expect(byName.get("QA")?.adapterType).toBe("claude_local");
     const adapterTypes = Array.from(byName.values()).map((row) => row.adapterType);
-    expect(adapterTypes).toEqual(["claude_local", "claude_local", "claude_local"]);
     expect(adapterTypes).not.toContain("process");
     expect(adapterTypes).not.toContain("http");
-  });
+  }, 15_000);
 
-  it("installs product-design end-to-end with no caller overrides and uses claude_local", async () => {
+  it("installs product-design end-to-end with no caller overrides and uses codex_local", async () => {
     const companyId = await seedEmptyCompany();
     const svc = teamsCatalogService(db);
 
@@ -95,11 +99,11 @@ describeEmbeddedPostgres("teams catalog install with no caller adapter overrides
     const byName = await listAdapterTypesByName(companyId);
     expect(byName.size).toBe(1);
     const adapterTypes = Array.from(byName.values()).map((row) => row.adapterType);
-    expect(adapterTypes).toEqual(["claude_local"]);
+    expect(adapterTypes).toEqual(["codex_local"]);
     expect(adapterTypes).not.toContain("process");
-  });
+  }, 15_000);
 
-  it("installs product-engineering end-to-end with no caller overrides and uses claude_local for every agent", async () => {
+  it("installs product-engineering end-to-end with no caller overrides and uses Codex for CTO and Claude for execution agents", async () => {
     const companyId = await seedEmptyCompany();
     const svc = teamsCatalogService(db);
 
@@ -110,13 +114,15 @@ describeEmbeddedPostgres("teams catalog install with no caller adapter overrides
 
     const byName = await listAdapterTypesByName(companyId);
     expect(byName.size).toBe(3);
+    expect(byName.get("CTO")?.adapterType).toBe("codex_local");
+    expect(byName.get("Senior Coder")?.adapterType).toBe("claude_local");
+    expect(byName.get("QA")?.adapterType).toBe("claude_local");
     const adapterTypes = Array.from(byName.values()).map((row) => row.adapterType);
-    expect(adapterTypes).toEqual(["claude_local", "claude_local", "claude_local"]);
     expect(adapterTypes).not.toContain("process");
     expect(byName.get("CTO")?.permissions).toMatchObject({ canCreateAgents: true });
-  });
+  }, 15_000);
 
-  it("honors an explicit caller adapter override for a single slug while defaulting the rest to claude_local", async () => {
+  it("honors an explicit caller adapter override for a single slug while defaulting the rest by role", async () => {
     const companyId = await seedEmptyCompany();
     const svc = teamsCatalogService(db);
 
@@ -129,12 +135,12 @@ describeEmbeddedPostgres("teams catalog install with no caller adapter overrides
     });
 
     const byName = await listAdapterTypesByName(companyId);
-    expect(byName.size).toBe(3);
+    expect(byName.size).toBe(5);
     const ctoRow = Array.from(byName.values()).find((row) => row.role === "engineering-manager" || row.name === "CTO");
     expect(ctoRow?.adapterType).toBe("opencode_local");
-    const otherAdapters = Array.from(byName.values())
-      .filter((row) => row !== ctoRow)
-      .map((row) => row.adapterType);
-    expect(otherAdapters).toEqual(["claude_local", "claude_local"]);
-  });
+    expect(byName.get("CEO")?.adapterType).toBe("codex_local");
+    expect(byName.get("ProductLead")?.adapterType).toBe("claude_local");
+    expect(byName.get("UXDesigner")?.adapterType).toBe("codex_local");
+    expect(byName.get("QA")?.adapterType).toBe("claude_local");
+  }, 15_000);
 });

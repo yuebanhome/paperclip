@@ -682,6 +682,15 @@ async function readCatalogTeamSourceFiles(team: CatalogTeam): Promise<Record<str
  * Default safe adapter for catalog agents imported through the agent-safe path.
  */
 const FALLBACK_SAFE_CATALOG_ADAPTER_TYPE = "claude_local";
+const CATALOG_AGENT_DEFAULT_ADAPTER_TYPES: Record<string, string> = {
+  ceo: "codex_local",
+  cto: "codex_local",
+  "ux-designer": "codex_local",
+  productlead: "claude_local",
+  "product-lead": "claude_local",
+  "senior-coder": "claude_local",
+  qa: "claude_local",
+};
 
 function defaultSafeCatalogAdapterType() {
   return process.env.PAPERCLIP_TEAMS_CATALOG_DEFAULT_ADAPTER_TYPE?.trim() || FALLBACK_SAFE_CATALOG_ADAPTER_TYPE;
@@ -705,7 +714,7 @@ function withSafeCatalogAdapterDefaults(
   const merged: Record<string, CompanyPortabilityAdapterOverride> = { ...(callerOverrides ?? {}) };
   for (const slug of agentSlugs) {
     if (merged[slug]) continue;
-    merged[slug] = { adapterType: defaultAdapterType };
+    merged[slug] = { adapterType: CATALOG_AGENT_DEFAULT_ADAPTER_TYPES[slug] ?? defaultAdapterType };
   }
   return merged;
 }
