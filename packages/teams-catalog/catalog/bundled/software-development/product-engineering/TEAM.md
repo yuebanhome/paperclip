@@ -1,6 +1,6 @@
 ---
 name: Product Engineering
-description: Bundled engineering team that pairs a CTO with a senior coder and a QA engineer to deliver, review, and verify product changes.
+description: Bundled engineering team that pairs a CTO with a senior coder, infrastructure engineer, technical researcher, and QA engineer to deliver, review, verify, and support product changes.
 schema: agentcompanies/v1
 slug: product-engineering
 category: software-development
@@ -8,6 +8,8 @@ key: paperclipai/bundled/software-development/product-engineering
 manager: agents/cto/AGENTS.md
 includes:
   - agents/senior-coder/AGENTS.md
+  - agents/infra-engineer/AGENTS.md
+  - agents/researcher/AGENTS.md
   - agents/qa/AGENTS.md
   - projects/product-engineering/PROJECT.md
 defaultInstall: false
@@ -22,11 +24,13 @@ tags:
   - code-review
 requiredSkills:
   - paperclipai/bundled/software-development/codegraph-impact-analysis
+  - paperclipai/bundled/software-development/development-infrastructure
   - paperclipai/bundled/software-development/github-pr-workflow
   - paperclipai/bundled/software-development/trellis-development-workflow
   - paperclipai/bundled/quality/qa-acceptance
   - paperclipai/bundled/paperclip-operations/task-planning
   - paperclipai/bundled/docs/doc-maintenance
+  - paperclipai/bundled/research/technical-research
   - paperclipai/optional/matt-engineering/codebase-design
   - paperclipai/optional/matt-engineering/diagnosing-bugs
   - paperclipai/optional/matt-engineering/domain-modeling
@@ -45,6 +49,8 @@ An optional drop-in engineering pod for companies that want a working software-d
 
 - `CTO` — engineering manager and team root. Reviews PRs, owns code-quality standards, critiques ProductLead plans, and breaks approved priorities into engineering tasks.
 - `senior-coder` — primary implementer. Picks up engineering tasks, ships PRs, and asks QA for verification.
+- `InfraEngineer` — prepares shared Docker-backed PostgreSQL/Redis and other reusable local services so implementation and QA can run.
+- `Researcher` — researches current authoritative technical approaches and comparable app patterns before the CTO commits to a plan.
 - `QA` — verifies fixes and captures acceptance evidence.
 - `product-engineering` project — the rolling backlog this pod works against.
 - `weekly-engineering-sync` routine — recurring CTO-owned check-in to surface blockers and confirm the next deliverable.
@@ -55,6 +61,8 @@ An optional drop-in engineering pod for companies that want a working software-d
 - `trellis-development-workflow` keeps planning, implementation, review, and durable spec updates aligned with Trellis-managed repositories.
 - `codegraph-impact-analysis` gives engineering and QA a common graph-backed first pass for exploration, dependency impact, and review triage.
 - `qa-acceptance` gives QA a structured pass/fail format coders can act on.
+- `development-infrastructure` gives the pod a repeatable local service owner for Docker PostgreSQL, Redis, and project-isolated databases/schemas.
+- `technical-research` gives the pod a source-backed research lane for industry patterns, vendor docs, and competitor/app comparisons.
 - `task-planning` and `to-issues` let the CTO turn approved plans into well-scoped child issues.
 - Matt engineering skills give the CTO and senior coder practical prompts for codebase design, domain modeling, debugging, TDD, and review.
 - `doc-maintenance` keeps docs aligned with shipped changes — install if the company has any user-facing docs surface.

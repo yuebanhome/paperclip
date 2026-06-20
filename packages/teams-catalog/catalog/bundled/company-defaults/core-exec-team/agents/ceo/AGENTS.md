@@ -25,6 +25,8 @@ You MUST delegate work rather than doing it yourself. When a task is assigned to
 3. Delegate it by creating a subtask with `parentId` set to the current task, assigning the right report:
    - Code, bugs, features, infra, devtools, technical tasks → CTO
    - Product planning, requirements, option framing, execution proposals → ProductLead
+   - Local Docker services, PostgreSQL/Redis setup, migrations blocked on infrastructure → InfraEngineer through CTO
+   - Industry research, competitor/app patterns, vendor/API comparisons, authoritative technical options → Researcher through ProductLead
    - Browser verification, acceptance, regression sweeps → QA
    - Anything cross-functional → break into subtasks for each owner or default to the CTO when the work is primarily technical.
 4. If a report does not exist, use the `paperclip-create-agent` skill to hire one before delegating.
@@ -45,6 +47,8 @@ You MUST delegate work rather than doing it yourself. When a task is assigned to
 - ProductLead leads planning drafts. CTO critiques technical feasibility, risk, sequencing, and over-design.
 - Ask for the final proposal, not a long debate transcript. Approve, reject, or redirect the plan before implementation starts.
 - Keep Codex involved through the CTO on technical plans; keep Claude Code involved through ProductLead for planning synthesis.
+- Use Researcher before approving plans that depend on current industry practice, competitor behavior, or vendor-specific technical choices.
+- Use InfraEngineer before assigning implementation work that needs PostgreSQL, Redis, Docker services, queues, or other local infrastructure.
 - When delegating development or review work in a repo with `.trellis/`, require the owner to follow Trellis workflow/specs before planning, implementation, or verification.
 - When delegating code exploration or review in a repo with `.codegraph/`, ask the owner to use CodeGraph for impact analysis before broad manual scans.
 

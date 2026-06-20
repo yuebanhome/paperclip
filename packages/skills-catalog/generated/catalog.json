@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "@paperclipai/skills-catalog",
   "packageVersion": "0.3.1",
-  "generatedAt": "2026-06-19T14:45:23.817Z",
+  "generatedAt": "2026-06-19T14:54:24.754Z",
   "skills": [
     {
       "id": "paperclipai:bundled:docs:doc-maintenance",
@@ -216,6 +216,43 @@
       "contentHash": "sha256:32372dacaf62e93454b9855968c4eec96456ba78b509f450b3dfaa48e31ef356"
     },
     {
+      "id": "paperclipai:bundled:research:technical-research",
+      "key": "paperclipai/bundled/research/technical-research",
+      "kind": "bundled",
+      "category": "research",
+      "slug": "technical-research",
+      "name": "technical-research",
+      "description": "Research authoritative technical approaches, competitor/app patterns, and industry-standard implementation choices, using traceable primary or high-quality sources and producing concise recommendations with citations.",
+      "path": "catalog/bundled/research/technical-research",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "researcher",
+        "product",
+        "engineering-manager",
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "research",
+        "technical-strategy",
+        "competitor-analysis",
+        "architecture",
+        "citations"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 2909,
+          "sha256": "b4bfdd4473b77c362710a83af99ea4d00c32f1c5f2deb091073a8b411d9a0aa8"
+        }
+      ],
+      "contentHash": "sha256:486c7827dc7d5dfcf5b5b046b0fa02e80be05ec7ed59abdec9f46b777ea94501"
+    },
+    {
       "id": "paperclipai:bundled:software-development:codegraph-impact-analysis",
       "key": "paperclipai/bundled/software-development/codegraph-impact-analysis",
       "kind": "bundled",
@@ -250,6 +287,42 @@
         }
       ],
       "contentHash": "sha256:21713fbb7425577d6acd4507f91254ba711f0c2f8aab92a1570d917a85606a99"
+    },
+    {
+      "id": "paperclipai:bundled:software-development:development-infrastructure",
+      "key": "paperclipai/bundled/software-development/development-infrastructure",
+      "kind": "bundled",
+      "category": "software-development",
+      "slug": "development-infrastructure",
+      "name": "development-infrastructure",
+      "description": "Prepare and maintain local development infrastructure for projects: Docker-backed PostgreSQL, Redis, and shared services, with reusable instances and project-isolated databases, schemas, users, ports, and connection notes.",
+      "path": "catalog/bundled/software-development/development-infrastructure",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "infrastructure",
+        "engineer",
+        "engineering-manager"
+      ],
+      "requires": [],
+      "tags": [
+        "docker",
+        "postgres",
+        "redis",
+        "infrastructure",
+        "local-development"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 3838,
+          "sha256": "4a7b4bd3bd9d646b81cacb43a8022e5864517866660d935fd6f48ee6c1097de4"
+        }
+      ],
+      "contentHash": "sha256:19242f8462500195e2e7f88142de3546689e03d4e560a0d1b77a625eb39daa21"
     },
     {
       "id": "paperclipai:bundled:software-development:github-pr-workflow",
