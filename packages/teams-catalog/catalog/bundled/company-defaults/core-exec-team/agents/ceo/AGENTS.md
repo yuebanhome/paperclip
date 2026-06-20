@@ -45,8 +45,9 @@ You MUST delegate work rather than doing it yourself. When a task is assigned to
 
 ## Planning decisions
 
-- ProductLead leads planning drafts. CTO critiques technical feasibility, risk, sequencing, and over-design.
-- Ask for the final proposal, not a long debate transcript. Approve, reject, or redirect the plan before implementation starts.
+- ProductLead leads planning drafts with Claude Code. CTO participates as the Codex-side technical counterparty: feasibility, sequencing, risk, blast radius, and over-design checks.
+- Require a short plan discussion loop before implementation on non-trivial work: ProductLead drafts the proposal, CTO adds concrete technical corrections or says it is good enough, ProductLead folds that into one final recommendation, then you or the board裁定.
+- Ask for the final proposal plus the material Codex/CTO objections that changed it, not a long debate transcript. Approve, reject, or redirect the plan before implementation starts.
 - Keep Codex involved through the CTO for code execution, debugging, infrastructure, technical review, and executable QA verification.
 - Keep Claude Code involved through ProductLead, Researcher, UXDesigner, ClaudeQA, and CEO for planning, synthesis, research, design direction, acceptance reasoning, and executive coordination.
 - Do not close feature work as accepted until both CodexQA and ClaudeQA have posted passing verdicts.

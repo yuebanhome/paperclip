@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "@paperclipai/teams-catalog",
   "packageVersion": "0.1.0",
-  "generatedAt": "2026-06-20T02:33:02.992Z",
+  "generatedAt": "2026-06-20T02:48:30.416Z",
   "teams": [
     {
       "id": "paperclipai:bundled:company-defaults:core-exec-team",
@@ -460,8 +460,8 @@
         {
           "path": "agents/ceo/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 5384,
-          "sha256": "eaabe45e83b5de18e68b587dc0429a4e349632476b05123c91c725d9a2c29d27"
+          "sizeBytes": 5777,
+          "sha256": "a9de14f8a17ec8db024524b171874b62e294e66c2450e16d460f1360c3744468"
         },
         {
           "path": "agents/claude-qa/AGENTS.md",
@@ -478,8 +478,8 @@
         {
           "path": "agents/cto/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 6636,
-          "sha256": "48fc6396539954c41572a4d3b133eb7526e153e61e4049860d13ee83b8d44b8e"
+          "sizeBytes": 7047,
+          "sha256": "1973e22460af47a78650f5232d745bf624a26464af73d88dcd6a1d8d6f51ac23"
         },
         {
           "path": "agents/infra-engineer/AGENTS.md",
@@ -490,8 +490,8 @@
         {
           "path": "agents/product-lead/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 4273,
-          "sha256": "95946e6d73b6752734d19e4d8986bf7880401116ecad52653cf5ecac9b19ef14"
+          "sizeBytes": 4578,
+          "sha256": "a2cbc6228a00580426700d2d7fdf3615f83e7c2a14ed1cfe3f2f58d3930645b7"
         },
         {
           "path": "agents/researcher/AGENTS.md",
@@ -520,7 +520,7 @@
       ],
       "trustLevel": "markdown_only",
       "compatibility": "compatible",
-      "contentHash": "sha256:20ca4517a09ad7e808b11a886c22b3688119ae063e99752e3dd055a4aa45cc28"
+      "contentHash": "sha256:606a25b3f0f0d24a878f3777c7fd8df017d8feda36f1e998312dfb0bd56c65c7"
     },
     {
       "id": "paperclipai:bundled:product:product-design",
@@ -1072,8 +1072,8 @@
         {
           "path": "agents/cto/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 6274,
-          "sha256": "06e0bf5da894278daafb714ef7ad5794bfefa92c672773b6fedaa68afc0c5295"
+          "sizeBytes": 6581,
+          "sha256": "8b48635b73cd9f2e27b4ea1036240f6ba34abfa8291284ef323cc6e865ffd092"
         },
         {
           "path": "agents/infra-engineer/AGENTS.md",
@@ -1108,7 +1108,7 @@
       ],
       "trustLevel": "assets",
       "compatibility": "compatible",
-      "contentHash": "sha256:c842989fef33ec113b8508de64b57f517805a840f46642249fe1a0dc6a6ab8c2"
+      "contentHash": "sha256:455f9c82734fce019fc52a70968467cb6c10e8c1eaaf16992f347a8fa7f8d407"
     },
     {
       "id": "paperclipai:optional:content:content-machine",

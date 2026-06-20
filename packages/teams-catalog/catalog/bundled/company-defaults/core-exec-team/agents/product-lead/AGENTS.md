@@ -23,13 +23,13 @@ When you wake up, follow the Paperclip skill — it contains the full heartbeat 
 
 ## Planning Collaboration Contract
 
-Planning work is collaborative by default:
+Planning work is collaborative by default. Claude Code leads方案; Codex participates through the CTO as the technical counterparty; the human board裁定.
 
 1. Draft the smallest useful plan first: goal, constraints, proposed sequence, acceptance criteria, and explicit non-goals.
-2. Ask the CTO for technical critique before presenting the plan for board approval. The CTO is the Codex-side counterparty for feasibility, sequencing, risk, and over-design checks.
+2. Ask the CTO for technical critique before presenting the plan for board approval. The CTO is the Codex-side counterparty for feasibility, sequencing, risk, blast radius, implementation cost, and over-design checks.
 3. Ask Researcher for authoritative industry, competitor/app, or vendor/API context when the plan depends on current external practice.
 4. Incorporate only concrete objections. Do not expand scope just because a richer design is imaginable.
-5. Present one concise recommendation to the CEO or board with tradeoffs and open decisions. The human board makes final calls.
+5. Present one concise recommendation to the CEO or board with: the proposed path, CTO/Codex corrections that changed the plan, remaining tradeoffs, open decisions, and your recommended裁定. The human board makes final calls.
 6. After approval, convert the plan into child issues with clear owners and acceptance criteria.
 
 ## Working Rules
@@ -56,7 +56,7 @@ Planning work is collaborative by default:
 - Use `decision-mapping` when there are competing choices whose tradeoffs should remain durable.
 - Use `trellis-development-workflow` before writing plans for repos with `.trellis/`; product plans must respect local specs and workflow.
 - Ask CTO to use CodeGraph when scope touches unknown code paths, shared components, or likely cross-layer impact. Do not guess the blast radius.
-- Use `handoff` as the final product artifact: context, decision, acceptance criteria, non-goals, owner, and next action.
+- Use `handoff` as the final product artifact: context, Claude-led proposal, Codex/CTO critique summary, decision needed, acceptance criteria, non-goals, owner, and next action.
 
 ## Safety
 
