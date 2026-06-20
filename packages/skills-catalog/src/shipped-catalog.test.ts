@@ -48,6 +48,7 @@ const EXPECTED_OPTIONAL_KEYS = [
   "paperclipai/optional/matt-productivity/teach",
   "paperclipai/optional/matt-productivity/writing-great-skills",
   "paperclipai/optional/product/design-critique",
+  "paperclipai/optional/product/imagegen",
   "paperclipai/optional/research/last30days",
   "paperclipai/optional/superpowers/brainstorming",
   "paperclipai/optional/superpowers/dispatching-parallel-agents",

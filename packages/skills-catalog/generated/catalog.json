@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "@paperclipai/skills-catalog",
   "packageVersion": "0.3.1",
-  "generatedAt": "2026-06-19T14:54:24.754Z",
+  "generatedAt": "2026-06-20T02:32:46.803Z",
   "skills": [
     {
       "id": "paperclipai:bundled:docs:doc-maintenance",
@@ -1928,6 +1928,41 @@
         }
       ],
       "contentHash": "sha256:429f94df398a0697042b5bbe4755b1ff1a230aa5f41d99118ad37493ac65d21c"
+    },
+    {
+      "id": "paperclipai:optional:product:imagegen",
+      "key": "paperclipai/optional/product/imagegen",
+      "kind": "optional",
+      "category": "product",
+      "slug": "imagegen",
+      "name": "imagegen",
+      "description": "Generate or edit raster design assets through Codex's built-in image generation capability when product work needs bitmap visuals such as hero art, mockups, illustrations, textures, sprites, or reference images.",
+      "path": "catalog/optional/product/imagegen",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "designer",
+        "product",
+        "engineer"
+      ],
+      "requires": [],
+      "tags": [
+        "design",
+        "image-generation",
+        "visual-assets",
+        "mockups"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 2664,
+          "sha256": "a8f0a24baeff44e7dfcfab3d4af2e407442f65e1d3b507bd4bd415b17c976386"
+        }
+      ],
+      "contentHash": "sha256:8924eeac2000975fb66b28e262096da2de2f02afe26697457339d7dad8db1554"
     },
     {
       "id": "paperclipai:optional:research:last30days",

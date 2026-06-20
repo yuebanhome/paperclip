@@ -20,6 +20,7 @@ tags:
 requiredSkills:
   - paperclipai/bundled/product/wireframe
   - paperclipai/optional/product/design-critique
+  - paperclipai/optional/product/imagegen
   - paperclipai/bundled/paperclip-operations/task-planning
 ---
 
@@ -37,6 +38,7 @@ A minimal design team built around a single Principal Product Designer. Install 
 
 - `wireframe` (bundled) — structured low-fidelity wireframing for new flows.
 - `design-critique` (optional skill catalog) — structured visual/UX critique format. Installs from the skill catalog as a prerequisite at team install time.
+- `imagegen` (optional skill catalog) — generated bitmap assets for hero imagery, product mockups, raster illustrations, textures, sprites, and visual references.
 - `task-planning` — breaks larger design asks into reviewable child issues.
 
 ## Migration notes

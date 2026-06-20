@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "@paperclipai/teams-catalog",
   "packageVersion": "0.1.0",
-  "generatedAt": "2026-06-20T02:17:23.708Z",
+  "generatedAt": "2026-06-20T02:33:02.992Z",
   "teams": [
     {
       "id": "paperclipai:bundled:company-defaults:core-exec-team",
@@ -33,7 +33,7 @@
         "tasks": 0,
         "routines": 1,
         "localSkills": 0,
-        "catalogSkills": 34,
+        "catalogSkills": 35,
         "externalSkillSources": 0
       },
       "rootAgentSlugs": [
@@ -207,6 +207,16 @@
           "resolved": true,
           "catalogSkillId": "paperclipai:optional:matt-productivity:handoff",
           "catalogSkillKey": "paperclipai/optional/matt-productivity/handoff"
+        },
+        {
+          "type": "catalog",
+          "ref": "imagegen",
+          "agentSlugs": [
+            "ux-designer"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:product:imagegen",
+          "catalogSkillKey": "paperclipai/optional/product/imagegen"
         },
         {
           "type": "catalog",
@@ -444,8 +454,8 @@
         {
           "path": "TEAM.md",
           "kind": "team",
-          "sizeBytes": 5508,
-          "sha256": "014864fae449bed3f0cd9d7f64755b73ec782036b8d62662af9f46e0304222d5"
+          "sizeBytes": 5747,
+          "sha256": "dda1288ec64935b1193de5bdf3eae46a9deb2316eaabfd3f91cb5edc757c8bc0"
         },
         {
           "path": "agents/ceo/AGENTS.md",
@@ -492,8 +502,8 @@
         {
           "path": "agents/ux-designer/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 3737,
-          "sha256": "90c68ec15fe5570874baec5781a2c58b9235a8258e28a37748d336bd72ad8e8b"
+          "sizeBytes": 4788,
+          "sha256": "d2868251a4975fcf8f0ce8368bd63a71e689f7f2065a146f6152b4ce3ce7c96f"
         },
         {
           "path": "projects/first-project/PROJECT.md",
@@ -510,7 +520,7 @@
       ],
       "trustLevel": "markdown_only",
       "compatibility": "compatible",
-      "contentHash": "sha256:f36a942a6a1ba445ec4c142fd52dacceaf02be76a2e7d875f6baf29770de4157"
+      "contentHash": "sha256:20ca4517a09ad7e808b11a886c22b3688119ae063e99752e3dd055a4aa45cc28"
     },
     {
       "id": "paperclipai:bundled:product:product-design",
@@ -540,7 +550,7 @@
         "tasks": 0,
         "routines": 1,
         "localSkills": 0,
-        "catalogSkills": 3,
+        "catalogSkills": 4,
         "externalSkillSources": 0
       },
       "rootAgentSlugs": [
@@ -562,6 +572,16 @@
           "resolved": true,
           "catalogSkillId": "paperclipai:optional:product:design-critique",
           "catalogSkillKey": "paperclipai/optional/product/design-critique"
+        },
+        {
+          "type": "catalog",
+          "ref": "imagegen",
+          "agentSlugs": [
+            "ux-designer"
+          ],
+          "resolved": true,
+          "catalogSkillId": "paperclipai:optional:product:imagegen",
+          "catalogSkillKey": "paperclipai/optional/product/imagegen"
         },
         {
           "type": "catalog",
@@ -590,14 +610,14 @@
         {
           "path": "TEAM.md",
           "kind": "team",
-          "sizeBytes": 2074,
-          "sha256": "205be8d3ef6c1f5e73729207913c387eee4cc9379191c3ce6d943fcf9ca2545d"
+          "sizeBytes": 2281,
+          "sha256": "3bf64b6cccf3f197406494bead3da1a55ddc9efbc313bd58a0e2fe0560a2405c"
         },
         {
           "path": "agents/ux-designer/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 2136,
-          "sha256": "f5a4b5696d8249e9f9d808a4373c2a1e6b07faa463e72f83fd9d5bed98d2022f"
+          "sizeBytes": 3156,
+          "sha256": "8bcbd0ea2109f6c3044feb1d1973eb1cd87c045dcea0ba293d96952d1dc2f019"
         },
         {
           "path": "projects/product-design/PROJECT.md",
@@ -614,7 +634,7 @@
       ],
       "trustLevel": "markdown_only",
       "compatibility": "compatible",
-      "contentHash": "sha256:15a04b36f31d4c9a391bb499c92e91fedfcc237cfa6c3d41ea3ddb441bc85c5b"
+      "contentHash": "sha256:f3c60fe6661098ee10c7637dd6e5021547c841d7f8c0e8cb39262ac25d18977c"
     },
     {
       "id": "paperclipai:bundled:software-development:product-engineering",

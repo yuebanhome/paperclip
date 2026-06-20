@@ -34,6 +34,7 @@ requiredSkills:
   - paperclipai/bundled/software-development/trellis-development-workflow
   - paperclipai/bundled/quality/qa-acceptance
   - paperclipai/optional/browser/agent-browser
+  - paperclipai/optional/product/imagegen
   - paperclipai/bundled/research/technical-research
   - paperclipai/optional/matt-engineering/ask-matt
   - paperclipai/optional/matt-engineering/codebase-design
@@ -72,6 +73,7 @@ The Core Exec Team is the bundled default install for a new Paperclip company. I
 - `technical-research` gives ProductLead and CTO a source-backed way to compare current industry approaches before committing to a plan.
 - `qa-acceptance` makes acceptance explicit: CodexQA and ClaudeQA must both post passing verdicts before a feature is accepted.
 - `agent-browser` gives UXDesigner, CodexQA, ClaudeQA, and engineering a real browser path for web/client acceptance: screenshots, console errors, network failures, and viewport evidence.
+- `imagegen` gives UXDesigner a bitmap asset path for hero art, product mockups, raster illustrations, textures, and other visual assets that should not be drawn as wireframes or SVG placeholders.
 
 ## Adapter defaults
 
