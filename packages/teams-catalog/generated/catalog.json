@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "@paperclipai/teams-catalog",
   "packageVersion": "0.1.0",
-  "generatedAt": "2026-06-19T14:54:25.400Z",
+  "generatedAt": "2026-06-20T01:51:36.847Z",
   "teams": [
     {
       "id": "paperclipai:bundled:company-defaults:core-exec-team",
@@ -11,7 +11,7 @@
       "category": "company-defaults",
       "slug": "core-exec-team",
       "name": "Core Exec Team",
-      "description": "Default leadership and execution team for bootstrapping a Paperclip company with CEO, CTO, Product Lead, UX Designer, Infrastructure Engineer, Technical Researcher, QA, starter project, and a recurring CEO heartbeat review task.",
+      "description": "Default leadership and execution team for bootstrapping a Paperclip company with CEO, CTO, Product Lead, UX Designer, Infrastructure Engineer, Technical Researcher, dual QA, starter project, and a recurring CEO heartbeat review task.",
       "path": "catalog/bundled/company-defaults/core-exec-team",
       "entrypoint": "TEAM.md",
       "schema": "agentcompanies/v1",
@@ -28,7 +28,7 @@
         "qa"
       ],
       "counts": {
-        "agents": 7,
+        "agents": 8,
         "projects": 1,
         "tasks": 0,
         "routines": 1,
@@ -41,10 +41,11 @@
       ],
       "agentSlugs": [
         "ceo",
+        "claude-qa",
+        "codex-qa",
         "cto",
         "infra-engineer",
         "product-lead",
-        "qa",
         "researcher",
         "ux-designer"
       ],
@@ -66,6 +67,7 @@
           "type": "catalog",
           "ref": "brainstorming",
           "agentSlugs": [
+            "claude-qa",
             "product-lead",
             "researcher",
             "ux-designer"
@@ -88,10 +90,11 @@
           "type": "catalog",
           "ref": "codegraph-impact-analysis",
           "agentSlugs": [
+            "claude-qa",
+            "codex-qa",
             "cto",
             "infra-engineer",
             "product-lead",
-            "qa",
             "researcher",
             "ux-designer"
           ],
@@ -226,7 +229,8 @@
           "type": "catalog",
           "ref": "qa-acceptance",
           "agentSlugs": [
-            "qa"
+            "claude-qa",
+            "codex-qa"
           ],
           "resolved": true,
           "catalogSkillId": "paperclipai:bundled:quality:qa-acceptance",
@@ -236,8 +240,9 @@
           "type": "catalog",
           "ref": "receiving-code-review",
           "agentSlugs": [
-            "cto",
-            "qa"
+            "claude-qa",
+            "codex-qa",
+            "cto"
           ],
           "resolved": true,
           "catalogSkillId": "paperclipai:optional:superpowers:receiving-code-review",
@@ -277,7 +282,7 @@
           "type": "catalog",
           "ref": "systematic-debugging",
           "agentSlugs": [
-            "qa"
+            "codex-qa"
           ],
           "resolved": true,
           "catalogSkillId": "paperclipai:optional:superpowers:systematic-debugging",
@@ -311,7 +316,7 @@
           "type": "catalog",
           "ref": "test-driven-development",
           "agentSlugs": [
-            "qa"
+            "codex-qa"
           ],
           "resolved": true,
           "catalogSkillId": "paperclipai:optional:superpowers:test-driven-development",
@@ -342,10 +347,11 @@
           "type": "catalog",
           "ref": "trellis-development-workflow",
           "agentSlugs": [
+            "claude-qa",
+            "codex-qa",
             "cto",
             "infra-engineer",
             "product-lead",
-            "qa",
             "researcher",
             "ux-designer"
           ],
@@ -369,10 +375,11 @@
           "ref": "using-superpowers",
           "agentSlugs": [
             "ceo",
+            "claude-qa",
+            "codex-qa",
             "cto",
             "infra-engineer",
             "product-lead",
-            "qa",
             "researcher",
             "ux-designer"
           ],
@@ -384,9 +391,9 @@
           "type": "catalog",
           "ref": "verification-before-completion",
           "agentSlugs": [
+            "codex-qa",
             "cto",
-            "infra-engineer",
-            "qa"
+            "infra-engineer"
           ],
           "resolved": true,
           "catalogSkillId": "paperclipai:optional:superpowers:verification-before-completion",
@@ -407,6 +414,7 @@
           "ref": "writing-plans",
           "agentSlugs": [
             "ceo",
+            "claude-qa",
             "cto",
             "product-lead",
             "researcher",
@@ -423,56 +431,62 @@
         {
           "path": "TEAM.md",
           "kind": "team",
-          "sizeBytes": 4495,
-          "sha256": "d36926ff3fe6f0544df766d8bf31ea89d0960f80f1520162e506935613baab02"
+          "sizeBytes": 5273,
+          "sha256": "f952028ef870a1f0c482de1197f6ab37c3f5c2ae8743fe585ffb1f69f93fb605"
         },
         {
           "path": "agents/ceo/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 3912,
-          "sha256": "19a371607d54bcb74f7621353423a8a9e8d261cc7e72c5217e38fb3a52ae0f5f"
+          "sizeBytes": 4351,
+          "sha256": "47b9be118c5f8815caa6a97bf6a7514bb8803c0eae123cbbcd0e1c6c92b93c92"
+        },
+        {
+          "path": "agents/claude-qa/AGENTS.md",
+          "kind": "agent",
+          "sizeBytes": 1820,
+          "sha256": "ade4079b0266a3c32298199d16fd5722f09c31b39a8127981fa11005628c3c26"
+        },
+        {
+          "path": "agents/codex-qa/AGENTS.md",
+          "kind": "agent",
+          "sizeBytes": 1897,
+          "sha256": "142f565c564f94ac9d723e1355892a7cf62795cb63fbe692cae9b6e33d94ba1a"
         },
         {
           "path": "agents/cto/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 3133,
-          "sha256": "d227add0b5ce1736c41fa2b908a02dba5199e3e91e99d64818ff04aca6cec9ef"
+          "sizeBytes": 3604,
+          "sha256": "68824d8e2dc1902257b91899e9b18fd69359bfbe68747cd5049b99d3b0b3f773"
         },
         {
           "path": "agents/infra-engineer/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 1696,
-          "sha256": "1080e4a47a2f882db7d135de9d9a043f01424a2272209a81479f7253ffc4bb93"
+          "sizeBytes": 1819,
+          "sha256": "d08fc755afcfc5528a6859d0323d8a092901e270e204eba2bbee4f0dd6eaec28"
         },
         {
           "path": "agents/product-lead/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 2775,
-          "sha256": "259a27602c6b84a0f3dee9272c0c642a41d1e59c77f96695c809057be081a0ee"
-        },
-        {
-          "path": "agents/qa/AGENTS.md",
-          "kind": "agent",
-          "sizeBytes": 1506,
-          "sha256": "0b98e7b7dfe3660e79be16f3683c77c2efa68a96e13e5f413bce855ed3e1d1c3"
+          "sizeBytes": 3220,
+          "sha256": "ff72a4930cef395c1e7ee9faff87bac0dc94168d87947631dc3a2029ec6be389"
         },
         {
           "path": "agents/researcher/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 1615,
-          "sha256": "4890c49a16926146e2083fe984cb4de4e1915d8e7e8b044f122f7a9c89cedb79"
+          "sizeBytes": 1748,
+          "sha256": "a618fbeebf36bc709fd019dd780e2bbcd52bf82618bda52893c5f2a8858928b1"
         },
         {
           "path": "agents/ux-designer/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 1810,
-          "sha256": "8054382eda564b3923b621ca2646d65edd5cc848d8120d549447f7993d74296b"
+          "sizeBytes": 2016,
+          "sha256": "3d0fe2fa0589ce697b5ea6c963e6ad1411c579acc71a5f1929c67dc4670eb98e"
         },
         {
           "path": "projects/first-project/PROJECT.md",
           "kind": "project",
-          "sizeBytes": 364,
-          "sha256": "1f457ae956da52ff83adc1cf63a3fb84337a4afb25bd43f0d123902d75e871cc"
+          "sizeBytes": 408,
+          "sha256": "09e49f4d4d82179d299c2e0261319ad3ee5a70096a4d00a239090f2d91a08caf"
         },
         {
           "path": "projects/first-project/tasks/first-heartbeat/TASK.md",
@@ -483,7 +497,7 @@
       ],
       "trustLevel": "markdown_only",
       "compatibility": "compatible",
-      "contentHash": "sha256:9e0f9d03ab4e76045730bf8ac2b1409909d8bfaea6666a24d601c6a286ad355e"
+      "contentHash": "sha256:dbc55437a3f48fccca81fdaa467788f1963258f2f2137e58246c2f2ece280acd"
     },
     {
       "id": "paperclipai:bundled:product:product-design",
@@ -596,7 +610,7 @@
       "category": "software-development",
       "slug": "product-engineering",
       "name": "Product Engineering",
-      "description": "Bundled engineering team that pairs a CTO with a senior coder, infrastructure engineer, technical researcher, and QA engineer to deliver, review, verify, and support product changes.",
+      "description": "Bundled engineering team that pairs a CTO with a senior coder, infrastructure engineer, technical researcher, and dual QA reviewers to deliver, review, verify, and support product changes.",
       "path": "catalog/bundled/software-development/product-engineering",
       "entrypoint": "TEAM.md",
       "schema": "agentcompanies/v1",
@@ -613,7 +627,7 @@
         "code-review"
       ],
       "counts": {
-        "agents": 5,
+        "agents": 6,
         "projects": 1,
         "tasks": 0,
         "routines": 1,
@@ -625,9 +639,10 @@
         "cto"
       ],
       "agentSlugs": [
+        "claude-qa",
+        "codex-qa",
         "cto",
         "infra-engineer",
-        "qa",
         "researcher",
         "senior-coder"
       ],
@@ -639,6 +654,7 @@
           "type": "catalog",
           "ref": "brainstorming",
           "agentSlugs": [
+            "claude-qa",
             "researcher"
           ],
           "resolved": true,
@@ -659,9 +675,10 @@
           "type": "catalog",
           "ref": "codegraph-impact-analysis",
           "agentSlugs": [
+            "claude-qa",
+            "codex-qa",
             "cto",
             "infra-engineer",
-            "qa",
             "researcher",
             "senior-coder"
           ],
@@ -798,7 +815,8 @@
           "type": "catalog",
           "ref": "qa-acceptance",
           "agentSlugs": [
-            "qa"
+            "claude-qa",
+            "codex-qa"
           ],
           "resolved": true,
           "catalogSkillId": "paperclipai:bundled:quality:qa-acceptance",
@@ -808,8 +826,9 @@
           "type": "catalog",
           "ref": "receiving-code-review",
           "agentSlugs": [
+            "claude-qa",
+            "codex-qa",
             "cto",
-            "qa",
             "senior-coder"
           ],
           "resolved": true,
@@ -850,7 +869,7 @@
           "type": "catalog",
           "ref": "systematic-debugging",
           "agentSlugs": [
-            "qa",
+            "codex-qa",
             "senior-coder"
           ],
           "resolved": true,
@@ -892,7 +911,7 @@
           "type": "catalog",
           "ref": "test-driven-development",
           "agentSlugs": [
-            "qa",
+            "codex-qa",
             "senior-coder"
           ],
           "resolved": true,
@@ -913,9 +932,10 @@
           "type": "catalog",
           "ref": "trellis-development-workflow",
           "agentSlugs": [
+            "claude-qa",
+            "codex-qa",
             "cto",
             "infra-engineer",
-            "qa",
             "researcher",
             "senior-coder"
           ],
@@ -939,9 +959,10 @@
           "type": "catalog",
           "ref": "using-superpowers",
           "agentSlugs": [
+            "claude-qa",
+            "codex-qa",
             "cto",
             "infra-engineer",
-            "qa",
             "researcher",
             "senior-coder"
           ],
@@ -953,9 +974,9 @@
           "type": "catalog",
           "ref": "verification-before-completion",
           "agentSlugs": [
+            "codex-qa",
             "cto",
             "infra-engineer",
-            "qa",
             "senior-coder"
           ],
           "resolved": true,
@@ -966,6 +987,7 @@
           "type": "catalog",
           "ref": "writing-plans",
           "agentSlugs": [
+            "claude-qa",
             "cto",
             "researcher"
           ],
@@ -980,8 +1002,8 @@
         {
           "path": "TEAM.md",
           "kind": "team",
-          "sizeBytes": 4446,
-          "sha256": "f39ddcd2a34182a380b2a15e0f3cc4365518bd9f8a9a75288d3a11dcc9add7d9"
+          "sizeBytes": 5216,
+          "sha256": "dbacca68053c364eca459d105d01b75e0e790b5cc5a4170b4c8a2633251bc094"
         },
         {
           "path": ".paperclip.yaml",
@@ -990,40 +1012,46 @@
           "sha256": "54babf05ba130ec54a143abf01581d99c0ac2936fd0d929bf0e0edd00e29d861"
         },
         {
+          "path": "agents/claude-qa/AGENTS.md",
+          "kind": "agent",
+          "sizeBytes": 1852,
+          "sha256": "f9677150f81081a2c5683d66fa7e5d4f3f74af6b472e9e641ff913b683ed306e"
+        },
+        {
+          "path": "agents/codex-qa/AGENTS.md",
+          "kind": "agent",
+          "sizeBytes": 1850,
+          "sha256": "8669c6e2374aee8faf07cb8e5646fd70c604114f383bac628e129e14899bc155"
+        },
+        {
           "path": "agents/cto/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 3082,
-          "sha256": "08b7b18649da2f0121704098ec234c80e1f288fa7e251644daaa0cc6044f4e82"
+          "sizeBytes": 3505,
+          "sha256": "6897b0dd07cc844de2f161f04120b1d883aa1e7e18617fe8fb83625518df4030"
         },
         {
           "path": "agents/infra-engineer/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 1598,
-          "sha256": "de93dc2775d7b70e55cc4a7d599e951aea63bbc5c373eca4fc1c54b0cc5fd755"
-        },
-        {
-          "path": "agents/qa/AGENTS.md",
-          "kind": "agent",
-          "sizeBytes": 1859,
-          "sha256": "654df7de63add3027164980470277a984d49a128d8caa7f704e7ff1f4c01d30a"
+          "sizeBytes": 1737,
+          "sha256": "d33e604258d3ff92274ed75d37360939ff4e59e36cc0e9baeeb28543e6df4422"
         },
         {
           "path": "agents/researcher/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 1373,
-          "sha256": "a62112978c0ac913edcc5fac283262b0e46b019bdbd43c861843c3326e61872a"
+          "sizeBytes": 1500,
+          "sha256": "101599deb4d6c75f8738e54967bc00b37840bc818d1844eadee12907dc4df524"
         },
         {
           "path": "agents/senior-coder/AGENTS.md",
           "kind": "agent",
-          "sizeBytes": 2158,
-          "sha256": "725f5362f3a34ab39f7c456c95ac2b88579108b6603cc738b05ae51530614826"
+          "sizeBytes": 2335,
+          "sha256": "bfdbc24687523d948b44f3d85d971ba8c3a0bcfdcc9f6ebc190ea95cf7d28a7e"
         },
         {
           "path": "projects/product-engineering/PROJECT.md",
           "kind": "project",
-          "sizeBytes": 456,
-          "sha256": "f2f0f7f42d1b07f5f12dba502e919ab39c5f809f43b7710f0feb8e0a2d32e5e0"
+          "sizeBytes": 504,
+          "sha256": "d0a5c2f3be2f0b614258e0e22270a28c549d63ad03e897b622ba0f297447611f"
         },
         {
           "path": "projects/product-engineering/tasks/weekly-engineering-sync/TASK.md",
@@ -1034,7 +1062,7 @@
       ],
       "trustLevel": "assets",
       "compatibility": "compatible",
-      "contentHash": "sha256:b2c4148d777e8f72e8ce2d24a6fd283a17ed4c1fded1bedc4a2a50a4c9cebd1d"
+      "contentHash": "sha256:a2afa0d471765f99089fc83da67a60d8adb04e403d667a5aa2cb6d25dfbbfcba"
     },
     {
       "id": "paperclipai:optional:content:content-machine",

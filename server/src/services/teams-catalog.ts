@@ -683,13 +683,17 @@ async function readCatalogTeamSourceFiles(team: CatalogTeam): Promise<Record<str
  */
 const FALLBACK_SAFE_CATALOG_ADAPTER_TYPE = "claude_local";
 const CATALOG_AGENT_DEFAULT_ADAPTER_TYPES: Record<string, string> = {
-  ceo: "codex_local",
+  ceo: "claude_local",
   cto: "codex_local",
-  "ux-designer": "codex_local",
+  "infra-engineer": "codex_local",
+  researcher: "claude_local",
+  "ux-designer": "claude_local",
   productlead: "claude_local",
   "product-lead": "claude_local",
-  "senior-coder": "claude_local",
-  qa: "claude_local",
+  "senior-coder": "codex_local",
+  "codex-qa": "codex_local",
+  "claude-qa": "claude_local",
+  qa: "codex_local",
 };
 
 function defaultSafeCatalogAdapterType() {
@@ -955,7 +959,9 @@ export function teamsCatalogService(db: Db) {
         sourceCompanyId: companyId,
       },
     );
-    warnings.push(...await prepareSkillInstalls(companyId, prepared));
+    if (importInput.include?.skills !== false) {
+      warnings.push(...await prepareSkillInstalls(companyId, prepared));
+    }
     result.warnings.push(...warnings);
     await logCatalogEvent("company.team_catalog_installed", companyId, prepared.team, options.actor, {
       warningCount: result.warnings.length,

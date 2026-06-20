@@ -1,6 +1,6 @@
 ---
 name: Core Exec Team
-description: Default leadership and execution team for bootstrapping a Paperclip company with CEO, CTO, Product Lead, UX Designer, Infrastructure Engineer, Technical Researcher, QA, starter project, and a recurring CEO heartbeat review task.
+description: Default leadership and execution team for bootstrapping a Paperclip company with CEO, CTO, Product Lead, UX Designer, Infrastructure Engineer, Technical Researcher, dual QA, starter project, and a recurring CEO heartbeat review task.
 schema: agentcompanies/v1
 slug: core-exec-team
 category: company-defaults
@@ -12,7 +12,8 @@ includes:
   - agents/ux-designer/AGENTS.md
   - agents/infra-engineer/AGENTS.md
   - agents/researcher/AGENTS.md
-  - agents/qa/AGENTS.md
+  - agents/codex-qa/AGENTS.md
+  - agents/claude-qa/AGENTS.md
   - projects/first-project/PROJECT.md
 defaultInstall: true
 recommendedForCompanyTypes:
@@ -54,19 +55,26 @@ The Core Exec Team is the bundled default install for a new Paperclip company. I
 - `CEO` — strategy, prioritization, delegation. Uses `task-planning` and `issue-triage` to keep the inbox moving.
 - `CTO` — technical execution and engineering oversight. Reports to CEO. Uses `github-pr-workflow` and architecture-review skills for code review, risk checks, and merge hygiene.
 - `ProductLead` — planning lead. Reports to CEO. Drafts lightweight product/engineering plans and asks CTO/Codex for technical critique before board approval.
-- `UXDesigner` — product design and UX-quality lead. Reports to ProductLead and collaborates with CTO/QA on user-facing work.
+- `UXDesigner` — product design and UX-quality lead. Reports to ProductLead and collaborates with CTO/CodexQA/ClaudeQA on user-facing work.
 - `InfraEngineer` — local development infrastructure owner. Reports to CTO. Prepares shared Docker PostgreSQL/Redis and project-isolated databases, schemas, and service notes.
 - `Researcher` — technical/product research specialist. Reports to ProductLead. Compares authoritative industry approaches, competitor/app patterns, and vendor docs before planning.
-- `QA` — verifies fixes and captures evidence. Reports to CTO. Uses `qa-acceptance` for structured acceptance reports.
+- `CodexQA` — executable QA gate. Reports to CTO. Verifies fixes with commands, browser/API checks, logs, screenshots, and concrete pass/fail evidence.
+- `ClaudeQA` — acceptance QA gate. Reports to CTO. Reviews plan fit, product intent, edge cases, UX quality, and CodexQA evidence before approving.
 - `first-project` — starter project under the CTO for converting the company goal into the first implementation task.
 - `first-heartbeat` — recurring CEO heartbeat to review priorities and confirm the next useful task.
 
 ## Workflow skills
 
 - `trellis-development-workflow` keeps planning, implementation, review, and durable spec updates aligned with Trellis-managed repositories.
-- `codegraph-impact-analysis` gives planning, engineering, and QA a graph-backed first pass for exploration, dependency impact, and review triage.
+- `codegraph-impact-analysis` gives planning, engineering, and both QA gates a graph-backed first pass for exploration, dependency impact, and review triage.
 - `development-infrastructure` lets the InfraEngineer reuse shared Docker services while isolating each project by database/schema/key prefix.
 - `technical-research` gives ProductLead and CTO a source-backed way to compare current industry approaches before committing to a plan.
+- `qa-acceptance` makes acceptance explicit: CodexQA and ClaudeQA must both post passing verdicts before a feature is accepted.
+
+## Adapter defaults
+
+- Claude Code is the default for planning, synthesis, product/design direction, research, executive coordination, and acceptance reasoning: CEO, ProductLead, Researcher, UXDesigner, and ClaudeQA.
+- Codex is the default for code execution, debugging, infrastructure setup, technical review, and executable verification: CTO, InfraEngineer, CodexQA, and engineering implementers.
 
 ## Migration notes
 

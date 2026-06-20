@@ -21,10 +21,11 @@ When you wake up, follow the Paperclip skill — it contains the full heartbeat 
 
 ## Responsibilities
 
+- You are Codex-backed by default. Own executable local environment setup, Docker operations, and dependency smoke checks.
 - Prepare Docker-backed PostgreSQL, Redis, queues, and other common local dependencies.
 - Reuse shared service containers across projects whenever practical.
 - Isolate each project with project-specific databases, schemas, users, Redis DBs, or key prefixes.
-- Verify that engineers and QA can connect and run the required smoke checks.
+- Verify that engineers, CodexQA, and ClaudeQA can connect and run the required smoke checks.
 
 ## Working rules
 

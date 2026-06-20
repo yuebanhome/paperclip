@@ -11,14 +11,14 @@ The approved plan for this package lives at [PAP-10206 plan document](/PAP/issue
 | `server/src/onboarding-assets/ceo/` | **Keep as-is.** Drives current onboarding default agent creation. Will be removed only when onboarding switches to the teams-catalog service (post-Phase E/G). |
 | `server/src/onboarding-assets/default/` | **Keep as-is.** Generic `AGENTS.md` fallback used outside the catalog path. |
 | `skills/paperclip-create-agent/references/agents/coder.md` | **Migrated content** into `bundled/software-development/product-engineering/agents/senior-coder/AGENTS.md` (collaboration/handoffs/safety sections collapsed for catalog brevity). Keep the template as a reference for ad-hoc hiring until onboarding switches. |
-| `skills/paperclip-create-agent/references/agents/qa.md` | **Migrated content** into both `bundled/company-defaults/core-exec-team/agents/qa/AGENTS.md` and `bundled/software-development/product-engineering/agents/qa/AGENTS.md`. Keep the template. |
+| `skills/paperclip-create-agent/references/agents/qa.md` | **Migrated content** into CodexQA and ClaudeQA templates under both `bundled/company-defaults/core-exec-team/agents/` and `bundled/software-development/product-engineering/agents/`. Keep the source template for reference. |
 | `skills/paperclip-create-agent/references/agents/uxdesigner.md` | **Migrated content** into `bundled/product/product-design/agents/ux-designer/AGENTS.md`. Lens dictionary intentionally trimmed in the catalog copy — the template stays authoritative for ad-hoc hiring. |
 | `skills/paperclip-create-agent/references/agents/securityengineer.md` | **Not migrated.** No `SecurityEngineer` team ships in Phase H — see deferred entries below. |
 
 ## Bundled entries shipped in Phase H
 
-- `paperclipai/bundled/company-defaults/core-exec-team` — defaults: CEO, CTO, QA, starter project, recurring CEO heartbeat task. `defaultInstall: true`. This is the smallest team that mirrors the historical CEO onboarding flow while staying inside catalog rules.
-- `paperclipai/bundled/software-development/product-engineering` — optional engineering pod: CTO, Senior Coder, QA, weekly engineering sync routine.
+- `paperclipai/bundled/company-defaults/core-exec-team` — defaults: CEO, CTO, CodexQA, ClaudeQA, starter project, recurring CEO heartbeat task. `defaultInstall: true`. This is the smallest team that mirrors the historical CEO onboarding flow while staying inside catalog rules.
+- `paperclipai/bundled/software-development/product-engineering` — optional engineering pod: CTO, Senior Coder, CodexQA, ClaudeQA, weekly engineering sync routine.
 - `paperclipai/bundled/product/product-design` — single-designer product design team with `wireframe`, `design-critique`, and weekly design review routine.
 
 ## Optional entries shipped in Phase H
@@ -41,7 +41,7 @@ The plan in [PAP-10206](/PAP/issues/PAP-10206#document-plan) lists additional re
 Before removing `server/src/onboarding-assets/ceo/` or the `skills/paperclip-create-agent/references/agents/*.md` templates, the following tests should be in place. None are written yet — they are tracked here so a future remove-legacy issue does not skip them:
 
 1. **Onboarding parity test** — a server-level integration test that runs the current onboarding flow on a fresh company and verifies the resulting agent/project/task tree is byte-equivalent (modulo timestamps and ids) to a `paperclipai/bundled/company-defaults/core-exec-team` install via the catalog service.
-2. **Slug stability test** — covers that the agent slugs `ceo`, `cto`, `qa` keep stable values when reparenting under an existing target manager, so downstream UI links don't churn.
+2. **Slug stability test** — covers that core agent slugs keep stable values when reparenting under an existing target manager, so downstream UI links don't churn.
 3. **Skill resolution drift test** — fails if a bundled team's `requiredSkills` references a catalog skill key that no longer exists in the latest `@paperclipai/skills-catalog` manifest.
 4. **Adapter default fallback test** — confirms that imported agents with no explicit `adapterType` pick up the same adapter the legacy onboarding path used.
 5. **Routine import compatibility test** — recurring `TASK.md` entries (`first-heartbeat`, `weekly-engineering-sync`, `weekly-design-review`, `weekly-content-review`) must still be imported with timer heartbeats disabled, matching current portability behavior.

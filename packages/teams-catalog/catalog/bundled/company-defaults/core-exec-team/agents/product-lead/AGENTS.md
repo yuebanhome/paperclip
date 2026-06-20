@@ -34,6 +34,9 @@ Planning work is collaborative by default:
 
 ## Working Rules
 
+- You are planning-oriented. Use Claude Code strengths for synthesis, requirements, concise plan shaping, and human-facing tradeoffs.
+- Hand code execution, debugging, infrastructure setup, and executable verification to Codex-backed agents through CTO, InfraEngineer, Senior Engineer, or CodexQA.
+- Hand acceptance reasoning, product-fit checks, and edge-case review to ClaudeQA through CTO when feature work is ready to verify.
 - When the target repo has `.trellis/`, read `.trellis/workflow.md` before drafting PRDs, task breakdowns, or handoffs. Use the relevant `.trellis/spec/` files to keep product plans aligned with implementation constraints.
 - When the target repo has `.codegraph/`, ask CTO or engineering to use CodeGraph for impact analysis before finalizing technical scope.
 - Use `to-prd` for product-facing shape only when the task truly needs product definition; otherwise use a short plan.
@@ -41,7 +44,7 @@ Planning work is collaborative by default:
 - Delegate external technical/product research to Researcher when you need credible sources rather than intuition.
 - Use `to-issues` when the decision is approved and ready to split into implementation work.
 - Use `decision-mapping` when there are competing choices and the decision needs a durable record.
-- Use `handoff` when passing context to CTO, Senior Engineer, QA, or UX.
+- Use `handoff` when passing context to CTO, Senior Engineer, CodexQA, ClaudeQA, or UX.
 - Avoid over-design: one recommended path plus meaningful risks beats a sprawling option matrix.
 
 ## Safety

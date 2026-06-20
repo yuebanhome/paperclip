@@ -255,6 +255,18 @@ describe("teamsCatalogService", () => {
     );
   });
 
+  it("skips post-import catalog skill installs when skills are excluded", async () => {
+    const svc = teamsCatalogService({} as any);
+
+    await svc.installCatalogTeam("company-1", "core-exec-team", {
+      include: { skills: false },
+    });
+
+    expect(mockCompanyPortabilityService.importBundle).toHaveBeenCalled();
+    expect(mockCompanySkillService.installFromCatalog).not.toHaveBeenCalled();
+    expect(mockCompanySkillService.importFromSource).not.toHaveBeenCalled();
+  });
+
   it("injects role-aware safe adapter defaults for bundled agents when no overrides are supplied", async () => {
     const svc = teamsCatalogService({} as any);
 
@@ -262,11 +274,14 @@ describe("teamsCatalogService", () => {
 
     const [importInput] = mockCompanyPortabilityService.importBundle.mock.calls.at(-1)!;
     expect(importInput.adapterOverrides).toEqual({
-      ceo: { adapterType: "codex_local" },
+      ceo: { adapterType: "claude_local" },
+      "claude-qa": { adapterType: "claude_local" },
+      "codex-qa": { adapterType: "codex_local" },
       cto: { adapterType: "codex_local" },
+      "infra-engineer": { adapterType: "codex_local" },
       "product-lead": { adapterType: "claude_local" },
-      qa: { adapterType: "claude_local" },
-      "ux-designer": { adapterType: "codex_local" },
+      researcher: { adapterType: "claude_local" },
+      "ux-designer": { adapterType: "claude_local" },
     });
   });
 
@@ -280,11 +295,14 @@ describe("teamsCatalogService", () => {
 
       const [importInput] = mockCompanyPortabilityService.importBundle.mock.calls.at(-1)!;
       expect(importInput.adapterOverrides).toEqual({
-        ceo: { adapterType: "codex_local" },
+        ceo: { adapterType: "claude_local" },
+        "claude-qa": { adapterType: "claude_local" },
+        "codex-qa": { adapterType: "codex_local" },
         cto: { adapterType: "codex_local" },
+        "infra-engineer": { adapterType: "codex_local" },
         "product-lead": { adapterType: "claude_local" },
-        qa: { adapterType: "claude_local" },
-        "ux-designer": { adapterType: "codex_local" },
+        researcher: { adapterType: "claude_local" },
+        "ux-designer": { adapterType: "claude_local" },
       });
     } finally {
       if (previousDefault === undefined) {
@@ -301,15 +319,18 @@ describe("teamsCatalogService", () => {
     await svc.installCatalogTeam("company-1", "product-design");
     const [designInput] = mockCompanyPortabilityService.importBundle.mock.calls.at(-1)!;
     expect(designInput.adapterOverrides).toEqual({
-      "ux-designer": { adapterType: "codex_local" },
+      "ux-designer": { adapterType: "claude_local" },
     });
 
     await svc.installCatalogTeam("company-1", "product-engineering");
     const [engineeringInput] = mockCompanyPortabilityService.importBundle.mock.calls.at(-1)!;
     expect(engineeringInput.adapterOverrides).toEqual({
+      "claude-qa": { adapterType: "claude_local" },
+      "codex-qa": { adapterType: "codex_local" },
       cto: { adapterType: "codex_local" },
-      qa: { adapterType: "claude_local" },
-      "senior-coder": { adapterType: "claude_local" },
+      "infra-engineer": { adapterType: "codex_local" },
+      researcher: { adapterType: "claude_local" },
+      "senior-coder": { adapterType: "codex_local" },
     });
   });
 
@@ -337,11 +358,14 @@ describe("teamsCatalogService", () => {
 
     const [importInput] = mockCompanyPortabilityService.importBundle.mock.calls.at(-1)!;
     expect(importInput.adapterOverrides).toEqual({
-      ceo: { adapterType: "codex_local" },
+      ceo: { adapterType: "claude_local" },
+      "claude-qa": { adapterType: "claude_local" },
+      "codex-qa": { adapterType: "codex_local" },
       cto: { adapterType: "opencode_local", adapterConfig: { model: "anthropic/claude-opus-4" } },
+      "infra-engineer": { adapterType: "codex_local" },
       "product-lead": { adapterType: "claude_local" },
-      qa: { adapterType: "claude_local" },
-      "ux-designer": { adapterType: "codex_local" },
+      researcher: { adapterType: "claude_local" },
+      "ux-designer": { adapterType: "claude_local" },
     });
     // Caller-supplied object must not be mutated in place.
     expect(callerOverrides).toEqual({
@@ -355,9 +379,12 @@ describe("teamsCatalogService", () => {
     const result = await svc.installCatalogTeam("company-1", "core-exec-team", {
       adapterOverrides: {
         ceo: { adapterType: "opencode_local" },
+        "claude-qa": { adapterType: "opencode_local" },
+        "codex-qa": { adapterType: "opencode_local" },
         cto: { adapterType: "opencode_local" },
+        "infra-engineer": { adapterType: "opencode_local" },
         "product-lead": { adapterType: "opencode_local" },
-        qa: { adapterType: "opencode_local" },
+        researcher: { adapterType: "opencode_local" },
         "ux-designer": { adapterType: "opencode_local" },
       },
     });
