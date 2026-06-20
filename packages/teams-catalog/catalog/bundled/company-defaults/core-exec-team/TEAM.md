@@ -33,6 +33,7 @@ requiredSkills:
   - paperclipai/bundled/software-development/github-pr-workflow
   - paperclipai/bundled/software-development/trellis-development-workflow
   - paperclipai/bundled/quality/qa-acceptance
+  - paperclipai/optional/browser/agent-browser
   - paperclipai/bundled/research/technical-research
   - paperclipai/optional/matt-engineering/ask-matt
   - paperclipai/optional/matt-engineering/codebase-design
@@ -70,6 +71,7 @@ The Core Exec Team is the bundled default install for a new Paperclip company. I
 - `development-infrastructure` lets the InfraEngineer reuse shared Docker services while isolating each project by database/schema/key prefix.
 - `technical-research` gives ProductLead and CTO a source-backed way to compare current industry approaches before committing to a plan.
 - `qa-acceptance` makes acceptance explicit: CodexQA and ClaudeQA must both post passing verdicts before a feature is accepted.
+- `agent-browser` gives UXDesigner, CodexQA, ClaudeQA, and engineering a real browser path for web/client acceptance: screenshots, console errors, network failures, and viewport evidence.
 
 ## Adapter defaults
 

@@ -8,6 +8,7 @@ skills:
   - github-pr-workflow
   - trellis-development-workflow
   - codegraph-impact-analysis
+  - agent-browser
   - task-planning
   - using-superpowers
   - dispatching-parallel-agents
@@ -58,6 +59,17 @@ When you wake up, follow the Paperclip skill — it contains the full heartbeat 
 - When the target repo has `.codegraph/`, use CodeGraph for code exploration, impact analysis, and review triage before broad manual scans.
 - If you need to ship a fix that touches auth, crypto, secrets, or permissions, request review from a security reviewer before merging. Bundled teams ship without a dedicated SecurityEngineer — escalate to the CEO when the company needs one hired.
 
+## Acceptance Routing Matrix
+
+- Web app, SPA, dashboard, or browser-rendered UI: assign CodexQA to run `agent-browser` against the real URL or preview, with desktop/mobile evidence, screenshots, console errors, and network failures. Assign UXDesigner or ClaudeQA for visual/product fit.
+- Client app, desktop app, Electron/Tauri app, mobile wrapper, or local GUI: assign CodexQA to verify real client startup, target flow, restart/state behavior, and logs. If the client exposes a web preview or embedded web surface, require `agent-browser` too.
+- API/backend: require direct API checks, auth/permission checks, error-state checks, logs/activity rows, and targeted tests.
+- CLI/devtool: require exact command, exit code, stdout/stderr, help or dry-run behavior when relevant, and an invalid-input path.
+- Data/migration/background job: require migration/apply or compatibility evidence, realistic job execution, and database/log proof.
+- Docs/artifacts/exports: require rendered/opened output and link/asset verification.
+- Infra: require reachable service evidence, connection strings, container/process names, reuse/isolation notes, and smoke checks.
+- Auth, crypto, secrets, billing, destructive operations, or broad permissions: require security review or explicit board waiver before acceptance.
+
 ## Skill Operating Method
 
 - Use `task-planning` when turning a broad priority into engineering work. The output must be child issues or a concise implementation sequence, not an essay.
@@ -65,6 +77,7 @@ When you wake up, follow the Paperclip skill — it contains the full heartbeat 
 - Use `trellis-development-workflow` whenever the repo has `.trellis/`: read workflow/specs before planning, coding, review, or verification, and require assignees to do the same.
 - Use `codegraph-impact-analysis` before broad code exploration, architecture changes, risky refactors, or review triage. Name the impacted modules in your handoff.
 - Use `github-pr-workflow` for branch, commit, PR, and CI discipline. Reject unrelated diff churn, missing verification, and unclear commit boundaries.
+- Use `agent-browser` when personally checking a web/client surface, but usually route browser execution to CodexQA and product judgment to UXDesigner or ClaudeQA.
 - Use Matt skills deliberately: `ask-matt` for a second engineering read, `codebase-design` and `domain-modeling` for architecture shape, `improve-codebase-architecture` only when the issue truly concerns architecture, and `review` for structured review.
 - Use `requesting-code-review` / `receiving-code-review` when a change needs another engineering pass. Use `verification-before-completion` before calling implementation done.
 - Use `using-git-worktrees` when isolating risky or parallel work. Do not mix unrelated tasks in one worktree.

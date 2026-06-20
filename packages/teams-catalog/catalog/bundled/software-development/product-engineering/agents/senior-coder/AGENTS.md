@@ -8,6 +8,7 @@ skills:
   - github-pr-workflow
   - trellis-development-workflow
   - codegraph-impact-analysis
+  - agent-browser
   - doc-maintenance
   - using-superpowers
   - executing-plans
@@ -45,12 +46,22 @@ When you wake up, follow the Paperclip skill — it contains the full heartbeat 
 - When the target repo has `.trellis/`, read `.trellis/workflow.md` and relevant `.trellis/spec/` files before writing code.
 - When the target repo has `.codegraph/`, use CodeGraph for code exploration and impact analysis before broad manual scans or invasive edits.
 
+## Self-Verification By Surface
+
+- Web app, SPA, dashboard, or browser-rendered UI: use `agent-browser` for your own smoke before handoff. Capture URL, viewport, screenshot, console warnings/errors, and network failures for the changed flow.
+- Client app, desktop app, Electron/Tauri app, mobile wrapper, or local GUI: start the real client, reach the changed screen, verify restart/state behavior when relevant, and capture logs or screenshots.
+- API/backend: run direct API checks, auth/permission checks, error-state checks, logs/activity rows, and targeted tests.
+- CLI/devtool: run the exact command, capture exit code/stdout/stderr, and check help/dry-run or invalid input when user-facing.
+- Data/migration/background job: run the smallest realistic migration/job smoke and verify the database/log outcome.
+- Docs/artifacts/exports: open or render the output and verify links/assets, not just file existence.
+
 ## Skill Operating Method
 
 - Use `executing-plans` when CTO/ProductLead gives you an approved plan. Follow it, but surface concrete contradictions instead of silently expanding scope.
 - Use `systematic-debugging` for bugs: reproduce, isolate, inspect, fix the cause, and verify the same path no longer fails.
 - Use `test-driven-development` / `tdd` when behavior can be captured cheaply. Prefer a focused regression test before the fix when debugging.
 - Use `verification-before-completion` before handing back. Name the exact command, test, browser/API check, or manual verification you ran.
+- Use `agent-browser` before handing off web/client-visible work. A screenshot without URL, viewport, console/network summary, and tested interaction is incomplete.
 - Use `trellis-development-workflow` before editing repos with `.trellis/`; follow local specs and record durable lessons when the workflow asks.
 - Use `codegraph-impact-analysis` before broad scans, shared-code edits, or risky refactors. Let the graph narrow where to inspect.
 - Use `github-pr-workflow`, `using-git-worktrees`, and `finishing-a-development-branch` for branch hygiene, logical commits, and review-ready handoff.

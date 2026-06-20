@@ -29,6 +29,7 @@ requiredSkills:
   - paperclipai/bundled/software-development/github-pr-workflow
   - paperclipai/bundled/software-development/trellis-development-workflow
   - paperclipai/bundled/quality/qa-acceptance
+  - paperclipai/optional/browser/agent-browser
   - paperclipai/bundled/paperclip-operations/task-planning
   - paperclipai/bundled/docs/doc-maintenance
   - paperclipai/bundled/research/technical-research
@@ -63,6 +64,7 @@ An optional drop-in engineering pod for companies that want a working software-d
 - `trellis-development-workflow` keeps planning, implementation, review, and durable spec updates aligned with Trellis-managed repositories.
 - `codegraph-impact-analysis` gives engineering and both QA gates a common graph-backed first pass for exploration, dependency impact, and review triage.
 - `qa-acceptance` gives CodexQA and ClaudeQA structured pass/fail formats coders can act on. Both must pass before acceptance.
+- `agent-browser` gives the pod a real browser verification path for web/client work: screenshots, console errors, network failures, and viewport-specific evidence.
 - `development-infrastructure` gives the pod a repeatable local service owner for Docker PostgreSQL, Redis, and project-isolated databases/schemas.
 - `technical-research` gives the pod a source-backed research lane for industry patterns, vendor docs, and competitor/app comparisons.
 - `task-planning` and `to-issues` let the CTO turn approved plans into well-scoped child issues.
