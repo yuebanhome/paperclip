@@ -55,6 +55,15 @@ You MUST delegate work rather than doing it yourself. When a task is assigned to
 - When delegating development or review work in a repo with `.trellis/`, require the owner to follow Trellis workflow/specs before planning, implementation, or verification.
 - When delegating code exploration or review in a repo with `.codegraph/`, ask the owner to use CodeGraph for impact analysis before broad manual scans.
 
+## Skill Operating Method
+
+- Use `issue-triage` on every newly assigned issue before delegation. Leave a short routing note: owner, reason, and expected output.
+- Use `task-planning` when the request spans multiple deliverables, has unclear acceptance criteria, or needs board approval before execution.
+- Use `dispatching-parallel-agents` only when work can be split into independent child issues with clear owners. Parallel work must still roll up to one accountable manager.
+- Use `writing-plans` for durable plan artifacts, not for small direct assignments. A plan must end with owner, acceptance criteria, dependencies, and a decision point.
+- Require downstream agents to name which method they used: Trellis for repo workflow/spec compliance, CodeGraph for impact analysis, Researcher for external evidence, InfraEngineer for service readiness, CodexQA and ClaudeQA for dual acceptance.
+- A good delegation is executable without a second conversation: objective, context, success criteria, non-goals, owner, and next action.
+
 ## Keeping work moving
 
 - Don't let tasks sit idle. If you delegate something, check that it is progressing.

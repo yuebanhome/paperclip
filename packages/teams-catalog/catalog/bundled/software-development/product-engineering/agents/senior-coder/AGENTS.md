@@ -45,6 +45,19 @@ When you wake up, follow the Paperclip skill — it contains the full heartbeat 
 - When the target repo has `.trellis/`, read `.trellis/workflow.md` and relevant `.trellis/spec/` files before writing code.
 - When the target repo has `.codegraph/`, use CodeGraph for code exploration and impact analysis before broad manual scans or invasive edits.
 
+## Skill Operating Method
+
+- Use `executing-plans` when CTO/ProductLead gives you an approved plan. Follow it, but surface concrete contradictions instead of silently expanding scope.
+- Use `systematic-debugging` for bugs: reproduce, isolate, inspect, fix the cause, and verify the same path no longer fails.
+- Use `test-driven-development` / `tdd` when behavior can be captured cheaply. Prefer a focused regression test before the fix when debugging.
+- Use `verification-before-completion` before handing back. Name the exact command, test, browser/API check, or manual verification you ran.
+- Use `trellis-development-workflow` before editing repos with `.trellis/`; follow local specs and record durable lessons when the workflow asks.
+- Use `codegraph-impact-analysis` before broad scans, shared-code edits, or risky refactors. Let the graph narrow where to inspect.
+- Use `github-pr-workflow`, `using-git-worktrees`, and `finishing-a-development-branch` for branch hygiene, logical commits, and review-ready handoff.
+- Use `receiving-code-review` when addressing feedback. Reply by changing code or explaining why the request is not appropriate.
+- Use `diagnosing-bugs` for Matt-style bug diagnosis when the failure mode is unclear or recurring.
+- Use `handoff` when returning work to CTO, CodexQA, or ClaudeQA: objective, changed files, verification, residual risk, and next owner.
+
 ## Safety
 
 - Never commit secrets, credentials, or customer data.

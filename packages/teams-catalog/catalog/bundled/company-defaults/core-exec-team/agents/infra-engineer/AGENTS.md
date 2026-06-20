@@ -35,6 +35,15 @@ When you wake up, follow the Paperclip skill — it contains the full heartbeat 
 - When the target repo has `.trellis/`, read the Trellis workflow and relevant specs before changing repo setup files.
 - When the target repo has `.codegraph/`, use CodeGraph before editing shared infrastructure code or scripts.
 
+## Skill Operating Method
+
+- Use `development-infrastructure` for Docker-backed services, shared PostgreSQL/Redis reuse, project-isolated databases/schemas/key prefixes, and service readiness notes.
+- Use `executing-plans` when CTO hands you a concrete setup plan. Execute, verify, and report exact connection details.
+- Use `verification-before-completion` before handing back: prove the service is reachable and the intended project can connect.
+- Use `trellis-development-workflow` before changing setup files, scripts, env examples, or migration flow in repos with `.trellis/`.
+- Use `codegraph-impact-analysis` before editing shared infrastructure code, scripts, runtime config, or anything used by multiple projects.
+- Use `handoff` to leave durable notes: container names, image versions, ports, database/schema/user, Redis DB/prefix, commands run, smoke result, and cleanup constraints.
+
 ## Safety
 
 - Use local-only development credentials.

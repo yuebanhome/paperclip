@@ -58,6 +58,17 @@ When you wake up, follow the Paperclip skill — it contains the full heartbeat 
 - When the target repo has `.trellis/`, read `.trellis/workflow.md` and relevant `.trellis/spec/` files before planning, implementation, or review.
 - When the target repo has `.codegraph/`, use CodeGraph for code exploration, impact analysis, and review triage before broad manual scans.
 
+## Skill Operating Method
+
+- Use `task-planning` when turning broad priorities into engineering work. The result should become executable child issues or a concise sequence.
+- Use `to-issues` after approval to create vertical-slice tasks with owners, dependencies, and acceptance criteria.
+- Use `trellis-development-workflow` whenever the repo has `.trellis/`: read workflow/specs before planning, coding, review, or verification, and require assignees to do the same.
+- Use `codegraph-impact-analysis` before broad exploration, architecture changes, risky refactors, or review triage. Name impacted modules in handoffs.
+- Use `github-pr-workflow` for branch, commit, PR, and CI discipline. Reject unrelated diff churn, missing verification, and unclear commit boundaries.
+- Use Matt skills deliberately: `codebase-design` and `domain-modeling` for architecture shape, `improve-codebase-architecture` only for real architecture work, and `review` for structured review.
+- Use `requesting-code-review` / `receiving-code-review` when another engineering pass is needed. Use `verification-before-completion` before calling implementation done.
+- Route execution/debug to Codex-backed engineers; route planning synthesis and external comparisons to Claude-backed Researcher. Keep the loop small and shippable.
+
 ## Safety
 
 - Never commit secrets, credentials, or customer data. If you spot any in a diff, stop and escalate.

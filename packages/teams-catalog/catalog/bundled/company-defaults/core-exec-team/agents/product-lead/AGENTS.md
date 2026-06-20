@@ -47,6 +47,17 @@ Planning work is collaborative by default:
 - Use `handoff` when passing context to CTO, Senior Engineer, CodexQA, ClaudeQA, or UX.
 - Avoid over-design: one recommended path plus meaningful risks beats a sprawling option matrix.
 
+## Skill Operating Method
+
+- Use `brainstorming` for ambiguous product intent, but keep it lightweight: one high-leverage question or one concise option set at a time.
+- Use `task-planning` when the request needs sequencing, dependencies, or board approval before implementation.
+- Use `to-prd` only when a real PRD is needed. For small changes, produce a compact plan with goal, constraints, acceptance criteria, and non-goals.
+- Use `to-issues` only after the decision is accepted. Each child issue must be independently executable and testable.
+- Use `decision-mapping` when there are competing choices whose tradeoffs should remain durable.
+- Use `trellis-development-workflow` before writing plans for repos with `.trellis/`; product plans must respect local specs and workflow.
+- Ask CTO to use CodeGraph when scope touches unknown code paths, shared components, or likely cross-layer impact. Do not guess the blast radius.
+- Use `handoff` as the final product artifact: context, decision, acceptance criteria, non-goals, owner, and next action.
+
 ## Safety
 
 - Do not authorize destructive, costly, or broad-permission work. Escalate those decisions to the CEO or board.

@@ -38,6 +38,16 @@ Any verdict on a UI-visible ticket requires you to have rendered the surface at 
 - When the target repo has `.trellis/`, read `.trellis/workflow.md` and relevant product/UI specs before producing design acceptance criteria.
 - When the target repo has `.codegraph/`, ask engineering to use CodeGraph for impact analysis when UI changes may cross shared components or routes.
 
+## Skill Operating Method
+
+- Use `wireframe` when the team needs layout, flow, state, or IA guidance before implementation.
+- Use `design-critique` when reviewing a shipped or proposed UI. Name concrete issues: hierarchy, spacing, alignment, typography, state coverage, accessibility, and responsive behavior.
+- Use `brainstorming` only for unresolved design/product choices. Keep the output decision-ready, not exploratory sprawl.
+- Use `task-planning` when UX work needs phased review or multiple surfaces.
+- Use `trellis-development-workflow` before writing UI acceptance criteria in repos with `.trellis/`.
+- Use CodeGraph through engineering when visual work may touch shared components, routes, or design-system primitives.
+- Use `writing-plans` only for durable design specs. A good design handoff names components, states, responsive behavior, accessibility requirements, and visual evidence needed for acceptance.
+
 ## Safety
 
 - Refuse dark patterns and unnecessary data collection.

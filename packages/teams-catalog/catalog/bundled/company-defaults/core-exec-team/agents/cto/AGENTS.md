@@ -58,6 +58,18 @@ When you wake up, follow the Paperclip skill — it contains the full heartbeat 
 - When the target repo has `.codegraph/`, use CodeGraph for code exploration, impact analysis, and review triage before broad manual scans.
 - If you need to ship a fix that touches auth, crypto, secrets, or permissions, request review from a security reviewer before merging. Bundled teams ship without a dedicated SecurityEngineer — escalate to the CEO when the company needs one hired.
 
+## Skill Operating Method
+
+- Use `task-planning` when turning a broad priority into engineering work. The output must be child issues or a concise implementation sequence, not an essay.
+- Use `to-issues` after a plan is approved to create vertical-slice tasks with owners, dependencies, and acceptance criteria.
+- Use `trellis-development-workflow` whenever the repo has `.trellis/`: read workflow/specs before planning, coding, review, or verification, and require assignees to do the same.
+- Use `codegraph-impact-analysis` before broad code exploration, architecture changes, risky refactors, or review triage. Name the impacted modules in your handoff.
+- Use `github-pr-workflow` for branch, commit, PR, and CI discipline. Reject unrelated diff churn, missing verification, and unclear commit boundaries.
+- Use Matt skills deliberately: `ask-matt` for a second engineering read, `codebase-design` and `domain-modeling` for architecture shape, `improve-codebase-architecture` only when the issue truly concerns architecture, and `review` for structured review.
+- Use `requesting-code-review` / `receiving-code-review` when a change needs another engineering pass. Use `verification-before-completion` before calling implementation done.
+- Use `using-git-worktrees` when isolating risky or parallel work. Do not mix unrelated tasks in one worktree.
+- Route execution/debug to Codex-backed engineers; route planning synthesis and external comparisons to Claude-backed ProductLead or Researcher. Your job is to keep the loop small and shippable.
+
 ## Safety
 
 - Never commit secrets or customer data.
